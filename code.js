@@ -39,8 +39,7 @@ function resetProgressBars() {
   document.getElementById("progressBars2").style.display = "none";
 }
 
-// Appeler resetProgressBars au chargement de la page pour cacher progressBars2
-resetProgressBars();
+// Appeler resetProgressBars au chargement de la page pour cacher progressBars2git 
 
 function showProgressBars(buttonId) {
   // Réinitialiser toutes les barres de progression
