@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/mobile.css">
+    <script src="code.js" defer></script>
+  </head>
+  <body>
+    <ul class="background">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+   </ul>
+    <section>
+    <nav>
+      <h1>William</h1>
+      <div class="navigation">
+        <a href="#accueil">Accueil</a>
+        <a href="#dossier">À Propos</a>
+        <a href="#compétences">Compétences</a>
+        <a href="#portfolio">PortFolio</a>
+      </div>
+    </nav>
+    </section>
+    <section id ="accueil">
+      <div class="accueil">
+        
+        <h1>Hey !</h1>
+        <p>
+          Je me présente William actuellement en Bachelor développement web & application
+        <br>
+          Vous trouverez toutes les informations me concernant ici.
+        </p>
+        </div>
+        </section>
+    <section id="dossier">
+        <div class="dossier">
+          <h2>À PROPOS</h2>
+          <div id ="images">
+          <img src ="https://v2m7z5y4.rocketcdn.me/wp-content/uploads/2023/06/Les-languages-informatique-pour-le-developpement-web.jpg">
+          </div>
+          <div id ="moi">
+          <h3>Salut, moi c'est William Lin. Je suis en première année de développement et d'application à l'Efrei. 
+             Passionné par l'informatique depuis l'enfance, j'ai décidé d'intégrer l'établissement Efrei. Étant curieux et passionné, j'aime relever les défis lors de mes formations.
+          </h3>
+          <a href="documents/William Lin (3).pdf" download="CV-William_Lin.pdf">
+            <button id="buttoncv">Télécharger mon CV</button>
+          </a>
+        </div>
+        </div>
+    </section>
+    <section id ="compétences">
+      <div class="compétences">
+        <h3>COMPÉTENCES</h3>
+          <article>
+            Elles sont en constantes améliorations car pour moi on en
+            apprend 
+            <br>tous les jours, d’autant plus en étant impliqué, curieux et passionné.
+          </article>
+          <div id="progressBar1" class="progress-container">
+            <div id="progresshtml">
+              <h4>HTML</h4>
+              <div id="progressbar">
+                <div id="progressbarhtml"></div>
+              </div>
+            </div>
+            <div id="progresscss">
+              <h4>CSS</h4>
+              <div id="progressbar">
+                <div id="progressbarcss"></div>
+              </div>
+            </div>
+            <div id="progressjavascript">
+              <h4>JAVASCRIPT</h4>
+              <div id="progressbar">
+                <div id="progressbarjavascript"></div>
+              </div>
+            </div>
+          </div>
+          </section>
+        </div>
+        <section id="portfolio">
+          <div class="portfolio">
+            <div id ="portfoliopage">
+              <h5>PORTFOLIO</h5>
+              <img class="imgmes" id="MesService" src="images/MesService.png" style="width:100%;max-width:100%">
+              <div id="popupMesService" class="popupMesService">
+              <div class ="popup-content">
+            <h2>Mes Services Étudiants</h2>
+            <p>Description : Refonte du site Mes Services Étudiants</p>
+            <ul>
+              <li>Améliorations visuelles du site</li>
+              <li>Ajout d'une barre de Navigation</li>
+              <li>Ajout d'un menu burger</li>
+              <li>Amélioration de l'utilisation et de la praticité du site</li>
+            </ul>
+          <img class="MesService.content" id="img01">
+        </div>
+        <span class="close">&times;</span>
+        </div>
+        <img class="imgtodo" id="TodoList" src="images/TO DO LIST.png" style="width:100%;max-width:100%">
+        <div id="popuptodolist" class="popuptodolist">
+          <div class ="popup-content">
+          <h2>TodoList</h2>
+          <p>Description : Créations d'une Todo List</p>
+            <ul>
+              <li>Mise en place d'un filtre pour les tâches.</li>
+              <li>Mise en place d'un bouton pour modifier les noms des tâches.</li>
+              <li>Possibilité de cocher les tâches terminées.</li>
+              <li>Possibilité de choisir la date</li>
+            </ul>
+            <img class="TODOLIST.content" id="img02">
+            </div>
+            <span class="close">&times;</span>
+          </div>
+        </div>
+      </div>
+    <footer>&copy; Copyright William Lin | Tous droits réservés !</footer>
+  </body>
+</html>
