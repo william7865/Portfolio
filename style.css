@@ -330,9 +330,9 @@ button:hover{
     display: flex;
     border: 2px solid white;
     border-radius: 30px;
-    width: 50%;
+    width: 65%;
     text-align: end;
-    height: 10px;
+    height: 15px;
 }
   
 #progressbar a {
@@ -671,9 +671,9 @@ footer{
     .popup-content {
         width: 90%;
     }
-    #imag01{
-        height: auto;
-        width: auto;
+    #img02,
+    #img01{
+        margin-top: 70px;
     }
     main {
         width: 90%;
