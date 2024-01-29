@@ -1,9 +1,3 @@
-/* Votre code CSS existant ... */
-
-/* Media Queries pour les écrans jusqu'à 768px de largeur */
-@media only screen and (max-width: 768px) {
-    /* Styles spécifiques pour les écrans jusqu'à 768px de largeur */
-}
 
 /* Media Queries pour les écrans jusqu'à 480px de largeur */
 @media only screen and (max-width: 480px) {
@@ -128,9 +122,9 @@
     .popup-content {
         width: 90%;
     }
-    #imag01{
-        height: auto;
-        width: auto;
+    #img02,
+    #img01{
+        margin-top: 70px;
     }
     main {
         width: 90%;
