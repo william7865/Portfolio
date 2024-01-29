@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/mobile.css">
+    <link rel="stylesheet" href="mobile.css">
     <script src="code.js" defer></script>
   </head>
   <body>
@@ -67,28 +67,52 @@
             apprend 
             <br>tous les jours, d’autant plus en étant impliqué, curieux et passionné.
           </article>
-          <div id="progressBar1" class="progress-container">
+          <script type="text/javascript" src="js/javascript.js"></script>
+          <div class="progressbutton">
+            <button onclick="showProgressBars('button1')">Front-end</button>
+            <button onclick="showProgressBars('button2')">Back-end</button>
+          </div>
+          <div id="progressBars1" class="progress-container" style="display: flex">
             <div id="progresshtml">
               <h4>HTML</h4>
               <div id="progressbar">
-                <div id="progressbarhtml"></div>
+                <div id="progressbarhtml"><a>70% </a></div>
               </div>
             </div>
             <div id="progresscss">
               <h4>CSS</h4>
               <div id="progressbar">
-                <div id="progressbarcss"></div>
+                <div id="progressbarcss"><a>65%</a></div>
               </div>
             </div>
             <div id="progressjavascript">
               <h4>JAVASCRIPT</h4>
               <div id="progressbar">
-                <div id="progressbarjavascript"></div>
+                <div id="progressbarjavascript"><a>30%</a></div>
               </div>
             </div>
           </div>
-          </section>
-        </div>
+          <div id="progressBars2" class="progress-container" style="display: none">
+            <div id="progressbdd">
+              <h4>BDD</h4>
+              <div id="progressbar">
+                <div id="progressbarbdd"><a>80%</a></div>
+              </div>
+            </div>
+            <div id="progressmysql">
+              <h4>MYSQL</h4>
+              <div id="progressbar">
+                <div id="progressbarmysql"><a>45%</a></div>
+              </div>
+            </div>
+            <div id="progresscliunix">
+              <h4>CLI UNIX</h4>
+              <div id="progressbar">
+                <div id="progressbarcliunix"><a>40%</a></div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section id="portfolio">
           <div class="portfolio">
             <div id ="portfoliopage">

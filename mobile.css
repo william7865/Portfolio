@@ -49,6 +49,11 @@
     .progress-container {
         width: 80%;
     }
+    .progressbutton button{
+        width: 100%;
+        font-size: 12px;
+        padding: 1px;
+    }
     .portfolio h5 {
         font-size: 40px;
     }
@@ -59,6 +64,10 @@
     }
     .popup-content {
         width: 80%;
+    }
+    #img02,
+    #img01{
+        margin-top: 70px;
     }
     main {
         width: 80%;
@@ -112,6 +121,11 @@
     }
     .progress-container {
         width: 90%;
+    }
+    .progressbutton button{
+        width: 100%;
+        font-size: 12px;
+        padding: 1px;
     }
     .portfolio h5 {
         font-size: 30px;
