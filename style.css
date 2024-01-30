@@ -469,7 +469,7 @@ text-align: end;
   /*Progress Bar Cli*/
   #progressbarcliunix {
     background-color: rgb(205, 205, 205);
-    width: 30%;
+    width: 60%;
     border-radius: 50px;
     animation: progress 0.8s ease-in-out forwards;
   }
