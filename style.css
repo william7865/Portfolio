@@ -649,6 +649,7 @@ text-align: end;
 /* copyright*/
 footer{
     background:rgb(70,70,70);
+    position: absolute;
     width: 100%;
     display: flex;
     justify-content: space-around;
