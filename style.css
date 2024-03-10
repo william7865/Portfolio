@@ -218,6 +218,7 @@ nav h1 {
     position: relative;
     width: 100%;
     margin: 0.5em;
+    border-radius: 2%;
 }
 
 .dossier h3 {
