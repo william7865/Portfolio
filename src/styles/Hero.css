@@ -1,0 +1,80 @@
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    height: 100vh;
+    padding: 0 5%;
+    color: #fff;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centre le contenu horizontalement */
+    max-width: 1400px;
+    width: 100%;
+    gap: 6rem; /* Garder un espace entre l'image et le texte */
+}
+
+.profile-picture {
+    flex-shrink: 0;
+    width: 600px; /* Augmenter la taille de l'image */
+    height: 600px; /* Augmenter la taille de l'image */
+    border-radius: 50%;
+    overflow: hidden;
+    border: 12px solid #00ffab; /* Augmenter l'épaisseur de la bordure et utiliser une couleur de contraste */
+    box-shadow: 0 6px 25px rgba(0, 255, 171, 0.6); /* Ombre pour un effet plus marqué */
+    transition: all 0.3s ease; /* Animation fluide pour le survol */
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-text {
+    max-width: 750px;
+    text-align: left; /* Assurez-vous que le texte soit à gauche du conteneur */
+}
+
+.hero h1 {
+    font-size: 4.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero h1 span {
+    color: #00ffab;
+}
+
+.hero p {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.hire-btn {
+    display: inline-block;
+    padding: 16px 32px;
+    font-size: 1.5rem;
+    color: #00ffab;
+    background: transparent;
+    border: 3px solid #00ffab;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.hire-btn:hover {
+    color: #fff;
+    background: #00ffab;
+}
+
+/* Effet au survol de l'image */
+.profile-picture:hover {
+    border: 12px solid #fff; /* Bordure blanche plus marquée au survol */
+    box-shadow: 0 10px 30px rgba(0, 255, 171, 0.9); /* Ombre plus grande au survol */
+}

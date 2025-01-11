@@ -1,0 +1,25 @@
+#about {
+    padding: 50px 20px;
+    background-color: #0f1125;
+    text-align: center;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .feature {
+    max-width: 200px;
+  }
+  
+  .feature img {
+    width: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .feature h3 {
+    background-color: #06d4a3;
+  }
+  
