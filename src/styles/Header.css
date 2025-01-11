@@ -1,0 +1,67 @@
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* Aligne les éléments à droite */
+    align-items: center;
+    padding: 20px 40px; /* Assurez-vous que le padding à droite est suffisant */
+    background-color: rgba(0, 0, 0, 0.7); /* Fond noir semi-transparent */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: fixed; /* Position fixe pour suivre lors du scroll */
+    top: 0; /* Fixe la navbar en haut de la page */
+    left: 0; /* Assurez-vous qu'il est collé à gauche du viewport */
+    right: 0; /* Assurez-vous qu'il est collé à droite du viewport */
+    z-index: 1000; /* Assure que la navbar soit toujours au-dessus du contenu */
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 50px; /* Espacement plus grand entre les éléments de la navbar */
+    margin: 0;
+  }
+  
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem; /* Taille du texte */
+    font-weight: 500;
+    transition: color 0.3s, transform 0.3s;
+  }
+  
+  .navbar a:hover {
+    color: #06d4a3;
+    transform: translateY(-2px);
+  }
+  
+  .navbar a.contact-btn {
+    background-color: #fff;
+    padding: 14px 30px; /* Augmenter la taille du bouton */
+    border-radius: 30px;
+    color: #000;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .navbar a.contact-btn:hover {
+    color: #fff;
+    background-color: #06d4a3;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column; /* Aligner verticalement sur mobile */
+      align-items: center;
+      padding: 20px;
+    }
+  
+    .navbar ul {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+  
+    .navbar a.contact-btn {
+      padding: 12px 30px;
+    }
+  }
+  
