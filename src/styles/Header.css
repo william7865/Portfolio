@@ -1,67 +1,66 @@
 .navbar {
     display: flex;
-    justify-content: flex-end; /* Aligne les éléments à droite */
+    justify-content: flex-end;
     align-items: center;
-    padding: 20px 40px; /* Assurez-vous que le padding à droite est suffisant */
-    background-color: rgba(0, 0, 0, 0.7); /* Fond noir semi-transparent */
+    padding: 20px 40px;
+    background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    position: fixed; /* Position fixe pour suivre lors du scroll */
-    top: 0; /* Fixe la navbar en haut de la page */
-    left: 0; /* Assurez-vous qu'il est collé à gauche du viewport */
-    right: 0; /* Assurez-vous qu'il est collé à droite du viewport */
-    z-index: 1000; /* Assure que la navbar soit toujours au-dessus du contenu */
-  }
-  
-  .navbar ul {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
     list-style: none;
     display: flex;
-    gap: 50px; /* Espacement plus grand entre les éléments de la navbar */
+    gap: 50px;
     margin: 0;
-  }
-  
-  .navbar a {
+}
+
+.navbar a {
     color: #fff;
     text-decoration: none;
-    font-size: 1.2rem; /* Taille du texte */
+    font-size: 1.2rem;
     font-weight: 500;
     transition: color 0.3s, transform 0.3s;
-  }
-  
-  .navbar a:hover {
+}
+
+.navbar a:hover {
     color: #06d4a3;
     transform: translateY(-2px);
-  }
-  
-  .navbar a.contact-btn {
+}
+
+.navbar a.contact-btn {
     background-color: #fff;
-    padding: 14px 30px; /* Augmenter la taille du bouton */
+    padding: 14px 30px;
     border-radius: 30px;
     color: #000;
     font-weight: 600;
     transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  .navbar a.contact-btn:hover {
+}
+
+.navbar a.contact-btn:hover {
     color: #fff;
     background-color: #06d4a3;
     transform: translateY(-2px);
-  }
-  
-  @media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
     .navbar {
-      flex-direction: column; /* Aligner verticalement sur mobile */
-      align-items: center;
-      padding: 20px;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
     }
-  
+
     .navbar ul {
-      flex-direction: column;
-      gap: 15px;
-      text-align: center;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
-  
+
     .navbar a.contact-btn {
-      padding: 12px 30px;
+        padding: 12px 30px;
     }
-  }
-  
+}
