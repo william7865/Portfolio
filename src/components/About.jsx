@@ -28,7 +28,7 @@ function About() {
         <div className="about-text">
           <h2>À PROPOS DE MOI</h2>
           <p>
-            Moi c'est <strong>William</strong>, un développeur passionné par le <strong>design</strong> 
+            Moi c'est <strong>William</strong>, un développeur passionné par le <strong>design </strong> 
             et le <strong>développement web</strong>. J'aime concevoir des solutions innovantes et 
             efficaces, en intégrant des technologies modernes pour répondre aux besoins des utilisateurs.
           </p>

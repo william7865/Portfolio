@@ -3,19 +3,19 @@ import '../styles/Hero.css';
 
 function Hero() {
   return (
-    <section className="hero">
+    <section id="hero" className="hero">
       <div className="hero-content">
         <div className="profile-picture">
           <img src="ton-image.jpg" alt="Photo de William Lin" />
         </div>
         <div className="hero-text">
           <h1>
-            Hi, I’m <br /> <span>William Lin</span>
+            <span>William Lin</span>
           </h1>
           <p>
-            A freelance <span>Full Stack Developer</span> with a passion for creating modern and performant web solutions.
+            "La programmation n’est pas seulement un métier, c’est une manière de résoudre des problèmes et d’apporter des solutions créatives."
           </p>
-          <button className="hire-btn">Hire me!</button>
+          <button className="hire-btn">Contactez-moi !</button>
         </div>
       </div>
     </section>
