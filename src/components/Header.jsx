@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-scroll';
 import '../styles/Header.css';
+import logo from '../images/logo.png';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +17,11 @@ function Header() {
   return (
     <header>
       <nav className="navbar">
+        <div className="logo">
+          <Link to="hero" className="logo-link" smooth={true} duration={500} onClick={closeMenu}>
+            <img src={logo} alt="Logo" />
+          </Link>
+        </div>
         <div className="navbar-toggle" onClick={toggleMenu}>
           <span className="bar"></span>
           <span className="bar"></span>
