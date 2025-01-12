@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/Hero.css';
+import profil from '../images/profil.jpg';
 
 function Hero() {
   return (
     <section id="hero" className="hero">
       <div className="hero-content">
         <div className="profile-picture">
-          <img src="ton-image.jpg" alt="Photo de William Lin" />
+          <img src={profil} alt="Photo de William Lin" />
         </div>
         <div className="hero-text">
           <h1>
