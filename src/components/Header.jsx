@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-scroll';
 import '../styles/Header.css';
 
 function Header() {
@@ -6,6 +7,10 @@ function Header() {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -17,10 +22,26 @@ function Header() {
           <span className="bar"></span>
         </div>
         <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
-          <li><a href="#hero">Accueil</a></li>
-          <li><a href="#about">A Propos</a></li>
-          <li><a href="#projects">Projets</a></li>
-          <li className="contact-link"><a href="#contact" className="contact-btn">Contact</a></li>
+          <li>
+            <Link to="hero" smooth={true} duration={500} onClick={closeMenu}>
+              Accueil
+            </Link>
+          </li>
+          <li>
+            <Link to="about" smooth={true} duration={500} onClick={closeMenu}>
+              A Propos
+            </Link>
+          </li>
+          <li>
+            <Link to="projects" smooth={true} duration={500} onClick={closeMenu}>
+              Projets
+            </Link>
+          </li>
+          <li className="contact-link">
+            <Link to="contact" smooth={true} duration={500} className="contact-btn" onClick={closeMenu}>
+              Contact
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

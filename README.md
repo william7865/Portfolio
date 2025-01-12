@@ -7,6 +7,8 @@ Bienvenue sur mon portfolio ! Ce projet présente mes compétences, mes projets 
 - [Aperçu](#aperçu)
 - [Fonctionnalités](#fonctionnalités)
 - [Technologies utilisées](#technologies-utilisées)
+- [Bibliothèques utilisées](#bibliothèques-utilisées)
+- [Utilisation](#utilisation)
 - [Contact](#contact)
 
 ## Aperçu
@@ -27,8 +29,17 @@ Ce portfolio a été créé pour mettre en valeur mes compétences en développe
 - CSS
 - HTML
 - JavaScript
+
+## Bibliothèques utilisées
+
 - [React Icons](https://react-icons.github.io/react-icons/)
 - [Google Fonts](https://fonts.google.com/)
+- [AOS (Animate On Scroll)](https://michalsnik.github.io/aos/)
+- [React Scroll](https://github.com/fisshy/react-scroll)
+
+## Utilisation
+
+1. Ouvrez [http://localhost:3000](http://localhost:3000) pour voir l'application dans votre navigateur.
 
 ## Contact
 
