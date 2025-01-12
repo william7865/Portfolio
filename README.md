@@ -8,7 +8,6 @@ Bienvenue sur mon portfolio ! Ce projet présente mes compétences, mes projets 
 - [Fonctionnalités](#fonctionnalités)
 - [Technologies utilisées](#technologies-utilisées)
 - [Bibliothèques utilisées](#bibliothèques-utilisées)
-- [Utilisation](#utilisation)
 - [Contact](#contact)
 
 ## Aperçu
@@ -37,13 +36,9 @@ Ce portfolio a été créé pour mettre en valeur mes compétences en développe
 - [AOS (Animate On Scroll)](https://michalsnik.github.io/aos/)
 - [React Scroll](https://github.com/fisshy/react-scroll)
 
-## Utilisation
-
-1. Ouvrez [http://localhost:3000](http://localhost:3000) pour voir l'application dans votre navigateur.
-
 ## Contact
 
-Pour toute question ou demande de collaboration, vous pouvez me contacter via le formulaire de contact sur le site ou par email à [linwilliam14@gmail.com](mailto:linwilliam14@gmail.com).
+Pour toute question ou demande de collaboration, vous pouvez me contacter via le site ou par email à [linwilliam14@gmail.com](mailto:linwilliam14@gmail.com).
 
 ---
 
