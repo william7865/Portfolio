@@ -51,7 +51,7 @@
 
 .cv-button {
     display: inline-block;
-    background-color: #00ffab;
+    border: 1px solid #00ffab;
     color: #fff;
     padding: 12px 25px;
     font-size: 1.2rem;

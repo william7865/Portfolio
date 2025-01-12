@@ -1,15 +1,21 @@
 .navbar {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.logo img {
+    height: 50px;
+    margin-left: 30px;
+    cursor: pointer;
 }
 
 .navbar ul {
@@ -24,27 +30,32 @@
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 500;
+    position: relative;
     transition: color 0.3s, transform 0.3s;
 }
 
-.navbar a:hover {
-    color: #00ffab;
-    transform: translateY(-2px);
+.navbar a:not(.contact-btn):not(.logo-link)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: #00ffab;
+    transition: width 0.3s ease, left 0.3s ease;
 }
 
+.navbar a:not(.contact-btn):not(.logo-link):hover::after {
+    width: 100%;
+    left: 0;
+}
 .navbar a.contact-btn {
     background-color: #fff;
-    padding: 14px 30px;
+    padding: 10px 20px;
     border-radius: 30px;
     color: #000;
     font-weight: 600;
     transition: background-color 0.3s, transform 0.3s;
-}
-
-.navbar a.contact-btn:hover {
-    color: #fff;
-    background-color: #00ffab;
-    transform: translateY(-2px);
 }
 
 .navbar-toggle {
@@ -81,7 +92,7 @@
     .navbar {
         flex-direction: column;
         align-items: center;
-        padding: 20px;
+        padding: 10px 20px;
     }
 
     .navbar ul {

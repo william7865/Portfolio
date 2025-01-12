@@ -6,12 +6,13 @@
     height: 100vh;
     padding: 0 5%;
     color: #fff;
+    position: relative;
 }
 
 .hero-content {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Aligne les éléments vers le haut au départ */
+    justify-content: flex-start;
     max-width: 1400px;
     width: 100%;
     gap: 6rem;
@@ -23,7 +24,7 @@
     height: 500px;
     border-radius: 50%;
     overflow: hidden;
-    border: 12px solid #00ffab;
+    border: 8px solid #00ffab;
     box-shadow: 0 6px 25px rgba(0, 255, 171, 0.6);
     transition: all 0.3s ease;
 }
@@ -76,8 +77,35 @@
 }
 
 .profile-picture:hover {
-    border: 12px solid #fff;
+    border: 8px solid #fff;
     box-shadow: 0 10px 30px rgba(0, 255, 171, 0.9);
+}
+
+.hero-links {
+    position: absolute;
+    flex-direction: column;
+    bottom: 20px;
+    left: 50px;
+    display: flex;
+    gap: 10px;
+}
+
+.hero-links a {
+    color: #0077b5;
+    font-size: 3rem;
+    transition: color 0.3s;
+}
+
+.hero-links a:hover {
+    color: #005582;
+}
+
+.hero-links a:nth-child(2) {
+    color: #d44638;
+}
+
+.hero-links a:nth-child(2):hover {
+    color: #a83224;
 }
 
 @media (max-width: 1024px) {
@@ -104,6 +132,15 @@
     .hire-btn {
         padding: 14px 28px;
         font-size: 1.4rem;
+    }
+
+    .hero-links {
+        bottom: 15px;
+        left: 30px;
+    }
+
+    .hero-links a {
+        font-size: 2.5rem;
     }
 }
 
@@ -133,6 +170,15 @@
     .hire-btn {
         padding: 12px 24px;
         font-size: 1.3rem;
+    }
+
+    .hero-links {
+        bottom: 10px;
+        left: 20px;
+    }
+
+    .hero-links a {
+        font-size: 2rem;
     }
 }
 
@@ -165,5 +211,14 @@
     .hire-btn {
         padding: 10px 20px;
         font-size: 1.2rem;
+    }
+
+    .hero-links {
+        bottom: 5px;
+        left: 10px;
+    }
+
+    .hero-links a {
+        font-size: 1.5rem;
     }
 }
