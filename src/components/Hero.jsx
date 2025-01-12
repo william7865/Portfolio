@@ -15,7 +15,7 @@ function Hero() {
           <p>
             "La programmation n’est pas seulement un métier, c’est une manière de résoudre des problèmes et d’apporter des solutions créatives."
           </p>
-          <button className="hire-btn">Contactez-moi !</button>
+          <a href="#contact" className="hire-btn">Contactez-moi !</a>
         </div>
       </div>
     </section>

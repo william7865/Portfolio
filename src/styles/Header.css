@@ -28,7 +28,7 @@
 }
 
 .navbar a:hover {
-    color: #06d4a3;
+    color: #00ffab;
     transform: translateY(-2px);
 }
 
@@ -43,7 +43,7 @@
 
 .navbar a.contact-btn:hover {
     color: #fff;
-    background-color: #06d4a3;
+    background-color: #00ffab;
     transform: translateY(-2px);
 }
 

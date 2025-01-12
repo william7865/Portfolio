@@ -1,0 +1,136 @@
+.contact-section {
+    padding: 70px 50px;
+    background-color: #121212;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 75vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.contact-text {
+    text-align: left;
+    width: 50%;
+}
+
+.contact-text h2 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.contact-text h2::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 5px;
+    background-color: #00ffab;
+    margin-top: 10px;
+}
+
+.contact-text p {
+    font-size: 1.4rem;
+    color: #d3d3d3;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    justify-content: center;
+    gap: 20px;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.social-link {
+    font-size: 2.5rem;
+    color: #d3d3d3;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+
+.social-link:hover {
+    color: #00ffab;
+}
+
+@media (max-width: 1024px) {
+    .contact-section {
+        padding: 50px 30px;
+        justify-content: center;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-text {
+        width: 100%;
+        text-align: center;
+    }
+
+    .contact-text h2 {
+        font-size: 3.2rem;
+    }
+
+    .contact-text p {
+        font-size: 1.2rem;
+    }
+
+    .social-links {
+        width: 100%;
+        margin-left: 0;
+        align-items: center;
+    }
+
+    .social-link {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 40px 20px;
+    }
+
+    .contact-text h2 {
+        font-size: 2.8rem;
+    }
+
+    .contact-text p {
+        font-size: 1.1rem;
+    }
+
+    .social-link {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-section {
+        padding: 30px 15px;
+    }
+
+    .contact-text h2 {
+        font-size: 2.4rem;
+    }
+
+    .contact-text p {
+        font-size: 1rem;
+    }
+
+    .social-link {
+        font-size: 1.5rem;
+    }
+}
