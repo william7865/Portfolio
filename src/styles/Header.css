@@ -47,6 +47,39 @@
     transform: translateY(-2px);
 }
 
+/* Styles pour le bouton hamburger */
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+}
+
+.navbar-toggle .bar {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+/* Styles pour la liste de liens en mode mobile (initialement cachée) */
+.navbar-links {
+    display: flex;
+    gap: 50px;
+}
+
+.navbar-links.active {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacement entre les éléments */
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+}
+
+/* Cache les liens de navigation dans le menu burger en mode mobile */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -55,12 +88,18 @@
     }
 
     .navbar ul {
+        display: none; /* Cache les liens de navigation par défaut */
         flex-direction: column;
-        gap: 15px;
+        gap: 20px; /* Espacement entre les éléments */
         text-align: center;
+        width: 100%;
     }
 
-    .navbar a.contact-btn {
-        padding: 12px 30px;
+    .navbar ul.active {
+        display: flex; /* Affiche les liens lorsqu'ils sont activés */
+    }
+
+    .navbar-toggle {
+        display: flex; /* Affiche le bouton burger */
     }
 }

@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Header.css';
 
 function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header>
       <nav className="navbar">
-        <ul>
+        <div className="navbar-toggle" onClick={toggleMenu}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </div>
+        <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
           <li><a href="#hero">Accueil</a></li>
           <li><a href="#about">A Propos</a></li>
           <li><a href="#projects">Projets</a></li>
