@@ -46,18 +46,25 @@
 .social-links {
     display: flex;
     flex-direction: column;
-    width: 30%;
     justify-content: center;
     gap: 20px;
-    margin-left: 20px;
-    text-align: center;
+    margin-left: 200px;
 }
 
 .social-link {
-    font-size: 2.5rem;
+    font-size: 5rem;
     color: #d3d3d3;
     transition: color 0.3s;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.social-text {
+    margin-left: 8px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #d3d3d3;
 }
 
 .social-link:hover {
@@ -97,6 +104,10 @@
     .social-link {
         font-size: 2rem;
     }
+
+    .social-text {
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -115,6 +126,10 @@
     .social-link {
         font-size: 1.8rem;
     }
+
+    .social-text {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -132,5 +147,9 @@
 
     .social-link {
         font-size: 1.5rem;
+    }
+
+    .social-text {
+        font-size: 0.9rem;
     }
 }
