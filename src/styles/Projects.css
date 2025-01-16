@@ -116,6 +116,12 @@
 .project-link:hover {
     background-color: #00cc8c;
 }
+@media (max-width: 1280px) {
+    .projects-content h2 {
+        margin-left: 0;
+        text-align: center;
+    }
+}
 
 @media (max-width: 1024px) {
     .projects-content h2 {
