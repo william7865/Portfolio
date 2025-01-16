@@ -94,6 +94,10 @@
         align-items: center;
         padding: 10px 20px;
     }
+    div.logo img {
+        margin-left: 0;
+    }
+
 
     .navbar ul {
         display: none;
