@@ -35,8 +35,8 @@ function About() {
           <p>
             Je suis <strong>curieux</strong> et <strong>rigoureux</strong>. J’aime accepter des défis lors de mes formations.
           </p>
-          <a href="/CV.pdf" className="cv-button" download target="_blank" rel="noopener noreferrer">
-               Voir mon CV
+          <a href="./CV.pdf" className="cv-button" target="_blank" rel="noopener noreferrer">
+            Voir mon CV
           </a>
 
         </div>
