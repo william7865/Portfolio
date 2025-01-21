@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/About.css';
 import dev from '../images/dev.jpeg';
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaPhp, FaDocker, FaGithub } from 'react-icons/fa';
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaPhp, FaDocker, FaGithub ,FaVuejs} from 'react-icons/fa';
 import { SiMysql, SiPostgresql, SiSymfony, SiFigma } from 'react-icons/si';
 
 function About() {
@@ -10,6 +10,7 @@ function About() {
     { name: 'CSS', icon: <FaCss3Alt />, category: 'Frontend', color: '#1572B6' },
     { name: 'JavaScript', icon: <FaJs />, category: 'Frontend', color: '#F7DF1E' },
     { name: 'ReactJs', icon: <FaReact />, category: 'Frontend', color: '#61DAFB' },
+    { name: 'VueJs', icon: <FaVuejs />, category: 'Frontend', color: '#4FC08D' },
     { name: 'NodeJS', icon: <FaNodeJs />, category: 'Backend', color: '#339933' },
     { name: 'PHP', icon: <FaPhp />, category: 'Backend', color: '#777BB4' },
     { name: 'MySql', icon: <SiMysql />, category: 'Database', color: '#4479A1' },
