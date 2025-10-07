@@ -9,7 +9,7 @@ const Contact = () => {
                 <div className="contact-text">
                     <h2>DISCUTONS ENSEMBLE DE VOTRE PROJET</h2>
                     <p>
-                        Je suis actuellement à la recherche d'une alternance dans le domaine du développement web ou de la conception de dispositifs interactifs. Disponible à partir de septembre 2025, je recherche un rythme d'alternance de 2 semaines en entreprise et 1 semaine de cours. N'hésitez pas à me contacter pour échanger sur la manière dont je pourrais apporter de la valeur à votre entreprise.
+                    Je suis actuellement à la recherche d'une alternance, disponible dès maintenant. Mon objectif est de devenir <strong>Développeur Full&nbsp;Stack</strong> et de mettre mes compétences en <strong>Front-end</strong> et <strong>Back-end</strong> au service de projets ambitieux. N'hésitez pas à me contacter pour échanger sur la manière dont je pourrais apporter de la valeur à votre entreprise.
                     </p>
                 </div>
 
