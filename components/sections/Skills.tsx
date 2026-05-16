@@ -5,6 +5,7 @@ import { useState } from 'react';
 import skillsData from '@/content/data/skills.json';
 import { Seal } from '@/components/motifs/Seal';
 import { CalligraphyStroke } from '@/components/motifs/CalligraphyStroke';
+import { Reveal } from '@/components/system/Reveal';
 
 type Skill = {
   name: string;
@@ -50,11 +51,17 @@ export function Skills() {
       className="relative py-32 px-6 lg:px-10"
     >
       <div className="max-w-5xl mx-auto">
-        <div className="kicker mb-3">{t('kicker')}</div>
-        <h2 id="skills-title" className="display text-5xl md:text-6xl mb-3 text-[var(--color-ivory)]">
-          <em>{t('title')}</em>
-        </h2>
-        <p className="lede italic opacity-70 max-w-md mb-20">{t('subtitle')}</p>
+        <Reveal>
+          <div className="kicker mb-3">{t('kicker')}</div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 id="skills-title" className="display text-5xl md:text-6xl mb-3 text-[var(--color-ivory)]">
+            <em>{t('title')}</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p className="lede italic opacity-70 max-w-md mb-20">{t('subtitle')}</p>
+        </Reveal>
 
         <div className="space-y-24">
           {order.map((cat) => (
