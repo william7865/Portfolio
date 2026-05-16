@@ -6,7 +6,6 @@ const withNextIntl = createNextIntlPlugin('./lib/i18n.ts');
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  typedRoutes: true,
   outputFileTracingRoot: import.meta.dirname
 };
 
