@@ -421,7 +421,7 @@ Cinq eggs principaux (déclencheurs du *Egg Hunter*) :
 Et un easter egg console (non compté) :
 
 - **ASCII art volant** logué dans la console au chargement, avec un message
-  "Tu inspectes le DOM ? On est faits pour s'entendre. → linwilliam14@gmail.com".
+  "Tu inspectes le DOM ? On est faits pour s'entendre. → contact via le formulaire".
 
 ---
 
