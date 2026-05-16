@@ -1,0 +1,50 @@
+---
+title: "Restaurant SPA — template multilingue Arcsolu"
+year: 2024
+role: "Front"
+duration: "5 semaines"
+team: "Solo (sur brief client)"
+my_role_detail: "Design Figma + dev React"
+tags: [React.js, Figma, i18n]
+hero: "/images/projects/restaurant.png"
+repo: null
+demo: null
+tier: 3
+---
+
+## Le contexte
+
+Mission via Arcsolu (agence) : un template SPA réutilisable pour leurs clients
+restaurateurs. Doit être personnalisable (couleurs, contenu, langue) sans
+redev complet à chaque déploiement.
+
+## Le scouting
+
+- **Site statique multi-pages** — SEO fort mais lourd à personnaliser par client.
+- **SPA React avec config JSON** — un seul build, chaque client a son `config.json`.
+- **WordPress** — rejeté, demande de l'hébergement spécifique.
+
+Choix : **SPA React + fichier de config par client**. Permet de livrer un client
+en quelques heures sans toucher au code.
+
+## La stratégie
+
+- **Design Figma en amont** — composants, palette, mobile/desktop. Validé avant
+  une ligne de code.
+- **i18n via JSON par langue** — 9 langues prévues, structure cohérente
+  `messages/{fr,en,es,…}.json`.
+- **Sections en data-driven** — chaque section lit le `config.json`,
+  un client = un fichier.
+
+## Le rallye
+
+- Trouver le bon découpage des composants pour qu'ils restent re-stylisables sans
+  ré-écriture (props de couleurs, slots).
+- Le système i18n a demandé plusieurs passes : pas trop verbeux pour les clients
+  qui éditent en CMS, assez structuré pour les pluriels et formats date.
+
+## Le score final
+
+- Template multilingue prêt, ré-utilisable.
+- **Ce que j'ai appris** : un projet "template" est en réalité un projet "produit"
+  miniature — il faut penser API et docs, pas juste UI.
