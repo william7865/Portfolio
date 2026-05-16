@@ -7,11 +7,13 @@ import { GoldDust } from '@/components/motifs/GoldDust';
 import { SilkVeil } from '@/components/motifs/SilkVeil';
 import { Seal } from '@/components/motifs/Seal';
 import { useEasterEgg } from '@/components/providers/EasterEggProvider';
+import { useIdlePulse } from '@/lib/useIdlePulse';
 
 export function Hero() {
   const t = useTranslations('hero');
   const { sealClick } = useEasterEgg();
   const [pulseKey, setPulseKey] = useState(0);
+  const idlePulse = useIdlePulse(30_000);
 
   function handleSealClick() {
     setPulseKey((k) => k + 1);
@@ -124,9 +126,19 @@ export function Hero() {
               )}
             </AnimatePresence>
             <motion.div
+              key={`idle-${idlePulse}`}
+              animate={
+                idlePulse > 0
+                  ? { scale: [1, 1.08, 0.98, 1.04, 1] }
+                  : { scale: 1 }
+              }
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.88 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+              transition={
+                idlePulse > 0
+                  ? { duration: 1.4, times: [0, 0.3, 0.55, 0.8, 1], ease: 'easeOut' }
+                  : { type: 'spring', stiffness: 500, damping: 18 }
+              }
               className="relative"
               style={{ zIndex: 1 }}
             >

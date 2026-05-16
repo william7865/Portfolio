@@ -9,18 +9,18 @@ export function Gate() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
 
-  const scale = useTransform(scrollYProgress, [0, 0.45, 0.9, 1], [0.6, 1, 4.5, 8]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [12, 4, -8]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.4, 0.85, 1], [0.65, 1, 3.6, 6]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.45, 1], [10, 3, -6]);
+  const opacity = useTransform(scrollYProgress, [0, 0.12, 0.82, 1], [0, 1, 1, 0]);
   const glow = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0]);
-  const innerOpacity = useTransform(scrollYProgress, [0.6, 0.95], [1, 0]);
+  const innerOpacity = useTransform(scrollYProgress, [0.55, 0.9], [1, 0]);
 
   return (
     <section
       ref={ref}
       aria-label="The Gate"
       className="relative"
-      style={{ height: '180vh' }}
+      style={{ height: '120vh' }}
     >
       <div
         className="sticky top-0 h-screen overflow-hidden flex items-center justify-center"

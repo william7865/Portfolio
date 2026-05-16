@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { TangFrame } from '@/components/motifs/TangFrame';
 import { GoldDust } from '@/components/motifs/GoldDust';
 import { useSfxContext } from '@/components/providers/SfxProvider';
@@ -95,19 +95,73 @@ export function Correspondance() {
               rotate: status === 'success' ? -0.4 : 0
             }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="parchment p-8 md:p-10 mx-auto max-w-xl relative"
+            className="parchment p-8 md:p-10 mx-auto max-w-xl relative overflow-hidden"
           >
+            <AnimatePresence mode="wait">
             {status === 'success' ? (
-              <div className="text-center py-8">
-                <div className="seal mx-auto" style={{ width: 96, height: 96, fontSize: 40, transform: 'rotate(-6deg)' }}>
+              <motion.div
+                key="success"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-center py-12 relative"
+              >
+                {/* Big cinnabar seal — flies in from above and stamps */}
+                <motion.div
+                  initial={{ y: -260, rotate: -28, scale: 1.6, opacity: 0 }}
+                  animate={{
+                    y: [-260, 8, 0, 0, 0],
+                    rotate: [-28, -12, -4, -8, -6],
+                    scale: [1.6, 1.18, 0.96, 1.04, 1],
+                    opacity: [0, 1, 1, 1, 1]
+                  }}
+                  transition={{
+                    duration: 1.05,
+                    times: [0, 0.32, 0.55, 0.78, 1],
+                    ease: [0.34, 1.56, 0.64, 1]
+                  }}
+                  className="seal mx-auto"
+                  style={{ width: 112, height: 112, fontSize: 48 }}
+                >
                   收
-                </div>
-                <p className="font-display italic text-2xl mt-6" style={{ color: 'var(--color-vermillion)' }}>
+                </motion.div>
+
+                {/* Ink ring residue around the stamp */}
+                <motion.div
+                  aria-hidden="true"
+                  initial={{ scale: 0.6, opacity: 0 }}
+                  animate={{ scale: [0.6, 1.6, 2], opacity: [0, 0.45, 0] }}
+                  transition={{ duration: 0.9, delay: 0.45, ease: 'easeOut' }}
+                  className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+                  style={{
+                    top: 'calc(3rem + 0px)',
+                    width: 112,
+                    height: 112,
+                    borderRadius: 2,
+                    background: 'var(--color-cinnabar)',
+                    transform: 'translate(-50%, 0) rotate(-6deg)'
+                  }}
+                />
+
+                <motion.p
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.85, duration: 0.6 }}
+                  className="font-display italic text-2xl mt-8"
+                  style={{ color: 'var(--color-vermillion)' }}
+                >
                   {t('success')}
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
             ) : (
-              <form onSubmit={onSubmit} noValidate className="space-y-6">
+              <motion.form
+                key="form"
+                onSubmit={onSubmit}
+                noValidate
+                initial={false}
+                exit={{ opacity: 0, scale: 0.96, y: -8 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-6">
                 <div>
                   <label htmlFor="name">{t('fields.name')}</label>
                   <input
@@ -187,8 +241,9 @@ export function Correspondance() {
                     </p>
                   )}
                 </div>
-              </form>
+              </motion.form>
             )}
+            </AnimatePresence>
           </motion.div>
         </TangFrame>
         </Reveal>

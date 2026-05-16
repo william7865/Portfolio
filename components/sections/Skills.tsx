@@ -63,19 +63,34 @@ export function Skills() {
           <p className="lede italic opacity-70 max-w-md mb-20">{t('subtitle')}</p>
         </Reveal>
 
-        <div className="space-y-24">
-          {order.map((cat) => (
-            <div key={cat} className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-x-12 gap-y-6">
+        <div className="space-y-32 md:space-y-40">
+          {order.map((cat, idx) => (
+            <div key={cat} className="relative">
+              {/* Decorative divider between categories */}
+              {idx > 0 && (
+                <div
+                  aria-hidden="true"
+                  className="absolute -top-20 md:-top-24 left-0 right-0 flex items-center gap-4 opacity-60"
+                >
+                  <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--color-gold)]/45 to-transparent" />
+                  <span className="font-display-hanzi text-[var(--color-gold)] text-lg leading-none">
+                    ·
+                  </span>
+                  <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--color-gold)]/45 to-transparent" />
+                </div>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-x-14 gap-y-8">
               {/* Category column */}
               <div className="md:sticky md:top-32 self-start">
+                <div className="kicker-mono mb-3 opacity-80">№ {String(idx + 1).padStart(2, '0')}</div>
                 <div
-                  className="font-display-hanzi text-7xl text-[var(--color-gold-bright)] leading-none mb-2"
-                  style={{ textShadow: '0 0 18px rgba(233,196,106,0.4)' }}
+                  className="font-display-hanzi text-8xl text-[var(--color-gold-bright)] leading-none mb-3"
+                  style={{ textShadow: '0 0 22px rgba(233,196,106,0.45)' }}
                 >
                   {CATEGORY_HANZI[cat].glyph}
                 </div>
-                <div className="kicker-mono">{cat}</div>
-                <div className="font-display italic text-[var(--color-gold)] opacity-70 mt-1">
+                <div className="kicker">{cat}</div>
+                <div className="font-display italic text-[var(--color-gold)] opacity-70 mt-2 text-lg">
                   {CATEGORY_HANZI[cat].label}
                 </div>
               </div>
@@ -132,6 +147,7 @@ export function Skills() {
                   </li>
                 ))}
               </ul>
+              </div>
             </div>
           ))}
         </div>
