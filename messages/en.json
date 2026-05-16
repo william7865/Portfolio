@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "now": "Now",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "service": {
+    "tagline": "Full Stack developer. Available for apprenticeship — September 2026.",
+    "cta": "Get in touch",
+    "zone": "Service · starting zone"
+  },
+  "rallye": {
+    "title": "Rally",
+    "subtitle": "About",
+    "cvButton": "View my CV",
+    "contactButton": "Get in touch"
+  },
+  "smashes": {
+    "title": "Smashes",
+    "subtitle": "Projects",
+    "viewCase": "Replay analysis",
+    "code": "Code"
+  },
+  "drop": {
+    "title": "Drop shot",
+    "subtitle": "What I'm working on now",
+    "cta": "See the full page",
+    "teaser": "Rebuilding this portfolio in Next.js 15. Reading: Tidy First? (Kent Beck). On the court: Thursday night sessions with the EFREI club."
+  },
+  "matchpoint": {
+    "title": "Match Point",
+    "subtitle": "Let's talk",
+    "lead": "I'm looking for a Full Stack apprenticeship starting September 2026. If my profile speaks to you, the form below lands straight in my inbox.",
+    "name": "Your name",
+    "email": "Your email",
+    "message": "Your message",
+    "send": "Decisive smash →",
+    "sending": "Sending…",
+    "success": "Received — I'll reply within 48h.",
+    "error": "Send failed. Try again or email me: linwilliam14@gmail.com",
+    "validation": {
+      "name": "Please enter your name (min 2 chars)",
+      "email": "Invalid email",
+      "message": "A bit longer, please (min 20 chars)"
+    }
+  },
+  "score": {
+    "label": "SET 1",
+    "ariaLive": "Score: {points} out of 21",
+    "matchPoint": "Match Point.",
+    "continue": "continue exploring →"
+  },
+  "lang": {
+    "switch": "FR",
+    "label": "Switch language"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Skill court",
+    "lead": "Hover a skill to see level, last used date, and proofs.",
+    "level": "Level",
+    "lastUsed": "Last used",
+    "proofs": "Proofs"
+  },
+  "now": {
+    "title": "Now",
+    "subtitle": "Drop shot"
+  },
+  "projects_page": {
+    "title": "Projects",
+    "subtitle": "Smashes"
+  },
+  "arcade": {
+    "title": "Welcome, summoner.",
+    "subtitle": "Arcade Mode",
+    "achievements": "Achievements",
+    "minigame": "Badminton mini-game (V1.2 — coming soon)",
+    "championSelect": "Adaptive CV Champion Select (V1.1)",
+    "achievementsTitle": "Achievements",
+    "unlocked": "✓ unlocked",
+    "locked": "·····"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "built": "Built with Next.js · Deployed on Vercel",
+    "toggleArcadeOff": "switch to arcade mode",
+    "toggleArcadeOn": "mode"
+  },
+  "notFound": {
+    "label": "Out",
+    "title": "404.",
+    "lead": "The shuttle landed out. No point — back to serve.",
+    "back": "← Back to court"
+  },
+  "skipLink": "Skip to content",
+  "caseStudy": {
+    "label": "Replay analysis"
+  }
+}
