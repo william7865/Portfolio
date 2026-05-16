@@ -9,7 +9,7 @@ export default function AchievementsPage() {
   const t = useTranslations('arcade');
   return (
     <section className="px-6 md:px-16 py-24 max-w-3xl mx-auto">
-      <p className="font-mono text-xs tracking-widest text-court-line uppercase">
+      <p className="font-mono text-xs tracking-widest text-court uppercase">
         {t('subtitle')}
       </p>
       <h1 className="font-display italic text-6xl mt-2">{t('achievementsTitle')}</h1>

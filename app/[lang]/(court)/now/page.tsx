@@ -19,7 +19,7 @@ export default async function NowPage() {
   return (
     <section className="px-6 md:px-16 py-24 max-w-2xl mx-auto prose-like">
       <NowTracker />
-      <p className="font-mono text-xs tracking-widest text-court-line uppercase">Drop shot</p>
+      <p className="font-mono text-xs tracking-widest text-court uppercase">Drop shot</p>
       <h1 className="font-display italic text-6xl mt-2">Now</h1>
       <div className="mt-10 space-y-6 leading-relaxed">{content}</div>
     </section>

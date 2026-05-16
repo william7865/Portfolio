@@ -10,34 +10,61 @@ export function Rallye() {
   const about = cv.about[locale];
 
   return (
-    <ScoredSection id="rallye" className="px-6 md:px-16 py-24 max-w-6xl mx-auto">
-      <p className="font-mono text-xs tracking-widest text-court-line uppercase">
-        Rallye · {t('subtitle')}
-      </p>
-      <h2 className="font-display italic text-5xl md:text-6xl mt-2">{t('title')}</h2>
-      <div className="grid md:grid-cols-2 gap-12 mt-12">
-        <div className="space-y-4 text-lg leading-relaxed">
-          {about.map((p) => (
-            <p key={p.slice(0, 20)}>{p}</p>
+    <ScoredSection id="rallye" className="relative px-6 md:px-10 py-32">
+      {/* Section header — asymmetric */}
+      <div className="grid grid-cols-12 gap-6 mb-16">
+        <div className="col-span-12 md:col-span-3 label-mono text-court self-end">
+          02 — RALLYE
+        </div>
+        <div className="col-span-12 md:col-span-9">
+          <h2 className="display-black-condensed text-mega text-ink">
+            About<span className="text-court">.</span>
+          </h2>
+        </div>
+      </div>
+
+      <div className="rule-double mb-12"></div>
+
+      {/* Editorial body with marginalia + skill court */}
+      <div className="grid grid-cols-12 gap-6 md:gap-10">
+        {/* Marginalia */}
+        <aside className="col-span-12 md:col-span-2 label-mono text-ink-soft md:pt-2">
+          <div className="space-y-1">
+            <div>NOTES</div>
+            <div className="text-court">marges du carnet</div>
+            <div className="mt-6 hidden md:block">↓</div>
+          </div>
+        </aside>
+
+        {/* Body text */}
+        <div className="col-span-12 md:col-span-6 dropcap">
+          {about.map((p, i) => (
+            <p key={i} className="editorial-body text-lg md:text-xl leading-[1.55] text-ink-soft mt-4 first:mt-0">
+              {p}
+            </p>
           ))}
-          <div className="flex flex-wrap gap-3 pt-4">
+
+          <div className="mt-10 flex flex-wrap gap-3 items-center">
             <a
               href="/CV.pdf"
               target="_blank"
               rel="noopener"
-              className="px-5 py-2 bg-ink text-hall-floor font-mono text-xs hover:bg-court-line"
+              className="magnetic inline-flex items-center gap-2 bg-ink text-paper px-5 py-3 label-mono hover:bg-court"
             >
-              {t('cvButton')} →
+              {t('cvButton')} <span aria-hidden>↗</span>
             </a>
             <a
               href={`mailto:${cv.email}`}
-              className="px-5 py-2 border border-ink font-mono text-xs hover:bg-ink hover:text-hall-floor"
+              className="magnetic inline-flex items-center gap-2 border-2 border-ink px-5 py-3 label-mono hover:bg-ink hover:text-paper"
             >
-              {t('contactButton')} →
+              {t('contactButton')} <span aria-hidden>→</span>
             </a>
           </div>
         </div>
-        <div>
+
+        {/* Skill court — compact */}
+        <div className="col-span-12 md:col-span-4">
+          <div className="label-mono text-ink-soft mb-3">SKILL · COURT</div>
           <SkillCourt />
         </div>
       </div>

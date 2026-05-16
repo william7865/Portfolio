@@ -1,12 +1,16 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-hall-floor: #F2EEE2;
-  --color-ink: #0F1419;
+  /* Paper, ink, and four accents — sport magazine palette */
+  --color-paper: #ECE5D3;
+  --color-paper-deep: #DDD2B5;
+  --color-ink: #1A1410;
+  --color-ink-soft: #3A2E22;
   --color-shuttle: #F4D04A;
-  --color-court-line: #B7472A;
-  --color-net-green: #5C7A6B;
-  --color-muted: #8A8576;
+  --color-court: #B7472A;
+  --color-net: #4A5E4F;
+  --color-chalk: #FAF7EE;
+  --color-muted: #8B7E68;
   --color-lol-blue: #1C8CE8;
   --color-penta-magenta: #9B30A8;
 }
@@ -14,31 +18,144 @@
 @layer base {
   html { color-scheme: light; }
   body {
-    background-color: var(--color-hall-floor);
+    background-color: var(--color-paper);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  ::selection { background: var(--color-shuttle); color: var(--color-ink); }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-shuttle);
+  }
+
   :focus-visible {
-    outline: 3px solid var(--color-shuttle);
-    outline-offset: 3px;
-    border-radius: 2px;
+    outline: 3px solid var(--color-court);
+    outline-offset: 4px;
   }
+
+  .tabular { font-feature-settings: 'tnum' 1, 'ss01' 1; font-variant-numeric: tabular-nums; }
 }
 
+/* ============ DISPLAY UTILITIES (Bricolage Grotesque variable axes) ============ */
+.display-black-condensed {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 96, 'wdth' 75;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.82;
+}
+
+.display-bold-wide {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 48, 'wdth' 100;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.editorial-italic {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'SOFT' 80;
+}
+
+.editorial-body {
+  font-family: var(--font-editorial);
+  font-variation-settings: 'opsz' 14, 'SOFT' 30;
+  font-weight: 400;
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ============ GRAIN TEXTURE OVERLAY ============ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.8 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ============ EDITORIAL RULES ============ */
+.rule-double {
+  border-top: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  height: 5px;
+}
+.rule-thick { border-top: 3px solid var(--color-ink); }
+
+/* ============ MAGNETIC HOVER ============ */
+.magnetic {
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+.magnetic:hover { transform: translateY(-2px); }
+
+/* ============ DUOTONE PORTRAIT ============ */
+.duotone-court {
+  filter: grayscale(100%) contrast(1.15) brightness(1.02) sepia(0.4) hue-rotate(60deg) saturate(1.4);
+  mix-blend-mode: multiply;
+}
+
+/* ============ MARQUEE ============ */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+}
+
+/* ============ HERO LETTER REVEAL ============ */
+@keyframes letter-up {
+  from { transform: translate3d(0, 110%, 0); opacity: 0; }
+  to   { transform: translate3d(0, 0, 0);   opacity: 1; }
+}
+.letter-reveal > span {
+  display: inline-block;
+  animation: letter-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ============ ARCADE MODE OVERRIDES ============ */
+body[data-mode="arcade"] .display-black-condensed,
 body[data-mode="arcade"] h1,
 body[data-mode="arcade"] h2 {
-  text-shadow: 1px 0 0 var(--color-lol-blue), -1px 0 0 var(--color-penta-magenta);
+  text-shadow: 2px 0 0 var(--color-lol-blue), -2px 0 0 var(--color-penta-magenta);
 }
 
+/* ============ PROSE STYLES ============ */
 .prose-like h2 {
   font-family: var(--font-display);
-  font-style: italic;
-  font-size: 2rem;
-  margin-top: 2rem;
+  font-variation-settings: 'opsz' 96, 'wdth' 75;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  letter-spacing: -0.025em;
+  margin-top: 3rem;
+  line-height: 0.95;
+}
+.prose-like h2::before {
+  content: "→ ";
+  color: var(--color-court);
+  margin-right: 0.25em;
 }
 .prose-like h2 + p { margin-top: 0.75rem; }
+.prose-like p { font-family: var(--font-editorial); font-size: 1.1rem; line-height: 1.65; }
 .prose-like ul, .prose-like ol { padding-left: 1.5rem; }
-.prose-like li { margin-top: 0.4rem; }
-.prose-like em { color: var(--color-court-line); font-style: italic; }
-.prose-like strong { color: var(--color-ink); }
+.prose-like li { margin-top: 0.4rem; font-family: var(--font-editorial); }
+.prose-like em { color: var(--color-court); font-style: italic; }
+.prose-like strong { color: var(--color-ink); font-weight: 700; }
+.prose-like code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-paper-deep);
+  padding: 0.1em 0.35em;
+}

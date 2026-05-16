@@ -19,9 +19,13 @@ export function Scoreboard() {
         role="status"
         aria-live="polite"
         aria-label={t('ariaLive', { points: state.points })}
-        className="fixed top-4 right-4 z-50 bg-ink text-hall-floor px-3 py-2 font-mono text-xs tracking-widest"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-ink text-shuttle px-4 py-3 border-2 border-ink shadow-[4px_4px_0_var(--color-court)]"
       >
-        {t('label')} · {String(state.points).padStart(2, '0')} — 21
+        <span className="label-mono text-paper opacity-50">{t('label')}</span>
+        <span className="display-black-condensed tabular text-3xl leading-none">
+          {String(state.points).padStart(2, '0')}
+        </span>
+        <span className="label-mono text-paper opacity-50">— 21</span>
       </div>
       <MatchPointScene visible={show} onClose={() => setShow(false)} />
     </>
