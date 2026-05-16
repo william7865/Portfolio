@@ -1,0 +1,79 @@
+{
+  "skipLink": "Skip to content",
+  "mute": {
+    "on": "Sound on",
+    "off": "Sound off"
+  },
+  "hero": {
+    "kicker": "PROLOGUE · 序幕",
+    "lede": "Code as calligraphy. Precise, intentional, readable.",
+    "role": "Full Stack Developer · Paris",
+    "scrollCue": "Act I"
+  },
+  "works": {
+    "kicker": "ACT I · WORKS",
+    "title": "The Handscroll",
+    "subtitle": "Three pieces pulled from the studio notebook.",
+    "scrollHint": "Scroll to unroll",
+    "viewCase": "Read the case",
+    "endNote": "End of scroll",
+    "byline": "William Lin · 林"
+  },
+  "skills": {
+    "kicker": "ACT II · SKILLS",
+    "title": "The Stroke",
+    "subtitle": "The gesture, the tool, the mark it leaves.",
+    "yearsLabel": "Years",
+    "proofLabel": "Proof"
+  },
+  "now": {
+    "kicker": "ACT III · NOW",
+    "title": "Journal",
+    "subtitle": "The current notebook — thoughts, reading, work in progress.",
+    "stamped": "Stamped",
+    "moonOf": "Moon of"
+  },
+  "gate": {
+    "kicker": "THE THRESHOLD · 入",
+    "label": "Cross the threshold",
+    "subtitle": "Into the last hall."
+  },
+  "final": {
+    "kicker": "FINAL ACT · 終",
+    "title": "Correspondence",
+    "subtitle": "Leave a word. I read everything, I rarely reply fast, never late.",
+    "fields": {
+      "name": "Your name",
+      "namePlaceholder": "Tao Yuanming",
+      "email": "Your email",
+      "emailPlaceholder": "tao@example.com",
+      "message": "Your message",
+      "messagePlaceholder": "A few lines is enough."
+    },
+    "send": "Seal and send",
+    "sending": "Sealing…",
+    "success": "Message sealed. I reply within 48h.",
+    "error": "Send failed. Try again or write to linwilliam14@gmail.com",
+    "validation": {
+      "name": "Your name (2 characters min)",
+      "email": "Invalid email",
+      "message": "A little longer, please — I read carefully (20 characters min)"
+    }
+  },
+  "footer": {
+    "signature": "BUILT WITH NEXT.JS · DEPLOYED ON VERCEL",
+    "cv": "Curriculum vitae · PDF"
+  },
+  "notFound": {
+    "kicker": "OFF THE SCROLL",
+    "title": "404.",
+    "lede": "This page slipped off the handscroll. Let's return to the prologue.",
+    "back": "← Back"
+  },
+  "masterScroll": {
+    "kicker": "HIDDEN SCROLL · 隱卷",
+    "title": "Master Scroll",
+    "lede": "You found a folded parchment at the bottom of a chest.",
+    "back": "← Back to the site"
+  }
+}

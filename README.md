@@ -1,45 +1,47 @@
-# Mon Portfolio
+# Portfolio · William Lin
 
-Bienvenue sur mon portfolio ! Ce projet présente mes compétences, mes projets et mon parcours professionnel.
+> Un portfolio comme un rouleau Tang. Cinq actes, une porte, une salle des correspondances.
 
-## Table des matières
+## Concept
 
-- [Aperçu](#aperçu)
-- [Fonctionnalités](#fonctionnalités)
-- [Technologies utilisées](#technologies-utilisées)
-- [Bibliothèques utilisées](#bibliothèques-utilisées)
-- [Contact](#contact)
+Refonte complète dans une direction **Tang impérial cinématique** — vermillon profond, ornement or, voile de soie, poussière dorée en suspension, calligraphie tracée au scroll.
 
-## Aperçu
+- **Prologue · Hero** — nom et identité, voile de soie, particules dorées
+- **Acte I · Works** — scroll horizontal en handscroll, chaque projet un panneau d'encre
+- **Acte II · Skills** — calligraphie tracée au scroll, sceau cinabre au hover
+- **Acte III · Now** — carnet du moment (MDX mensuel)
+- **The Gate** — traversée d'une porte impériale en perspective
+- **Acte Final · Correspondance** — salle du trône ornée, parchemin + sceau au submit
 
-Ce portfolio a été créé pour mettre en valeur mes compétences en développement web et mes projets. Il comprend des sections sur moi, mes compétences, mes projets et un formulaire de contact.
+**Easter egg** — tape `tang` au clavier, ou clique trois fois sur le sceau du hero, pour déverrouiller un rouleau caché.
 
-## Fonctionnalités
+## Stack
 
-- Présentation personnelle
-- Liste des compétences avec icônes
-- Galerie de projets avec descriptions et liens
-- Lien de contact
-- Design responsive
+Next.js 15 (App Router) · React 19 · TypeScript strict · Tailwind v4 · Framer Motion · next-intl (FR/EN) · MDX · Resend.
 
-## Technologies utilisées
+Polices : **Cormorant Garamond** (display) · **Ma Shan Zheng** (hanzi calligraphique) · **Noto Serif SC** · **Inter Tight** · **JetBrains Mono** — toutes via `next/font/google`.
 
-- React
-- CSS
-- HTML
-- JavaScript
+## Dev
 
-## Bibliothèques utilisées
+```bash
+npm install
+cp .env.example .env.local   # remplir les clés Resend
+npm run dev                  # http://localhost:3000 → redirige vers /fr
+npm run build
+npm run lint
+npm run typecheck
+```
 
-- [React Icons](https://react-icons.github.io/react-icons/)
-- [Google Fonts](https://fonts.google.com/)
-- [AOS (Animate On Scroll)](https://michalsnik.github.io/aos/)
-- [React Scroll](https://github.com/fisshy/react-scroll)
+## Déploiement
 
-## Contact
+Vercel. Variables d'environnement :
 
-Pour toute question ou demande de collaboration, vous pouvez me contacter via le site ou par email à [linwilliam14@gmail.com](mailto:linwilliam14@gmail.com).
+- `RESEND_API_KEY` (https://resend.com)
+- `CONTACT_TO_EMAIL`
+- `CONTACT_FROM_EMAIL`
+- `NEXT_PUBLIC_BASE_URL`
 
----
+## Spec & changements
 
-Merci d'avoir visité mon portfolio !
+- Spec actuelle : [`docs/superpowers/specs/2026-05-16-portfolio-imperial-cinematic-design.md`](docs/superpowers/specs/2026-05-16-portfolio-imperial-cinematic-design.md)
+- Spec précédente (badminton « match point ») : [`docs/superpowers/specs/2026-05-15-portfolio-match-point-design.md`](docs/superpowers/specs/2026-05-15-portfolio-match-point-design.md) — remplacée.
