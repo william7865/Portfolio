@@ -2,13 +2,24 @@
 
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function LocaleToggle() {
   const params = useParams();
   const pathname = usePathname();
   const current = (params?.lang as string) || 'fr';
   const next = current === 'fr' ? 'en' : 'fr';
-  const target = pathname.replace(`/${current}`, `/${next}`);
+
+  // SSR-safe target: start with the locale root, then upgrade to the deep link
+  // after mount. usePathname() resolves differently on server vs. client during
+  // streaming, which causes a hydration mismatch on the href.
+  const [target, setTarget] = useState(`/${next}`);
+
+  useEffect(() => {
+    if (!pathname) return;
+    const stripped = pathname.replace(new RegExp(`^/${current}(?=/|$)`), '');
+    setTarget(`/${next}${stripped || ''}`);
+  }, [pathname, current, next]);
 
   return (
     <Link
