@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { Seal } from '@/components/motifs/Seal';
+import { Reveal } from '@/components/system/Reveal';
 
 async function readLatestNow() {
   const dir = path.join(process.cwd(), 'content/now');
@@ -35,13 +36,19 @@ export async function Now() {
   return (
     <section aria-labelledby="now-title" className="relative py-32 px-6 lg:px-10">
       <div className="max-w-2xl mx-auto">
-        <div className="kicker mb-3">{t('kicker')}</div>
-        <h2 id="now-title" className="display text-5xl md:text-6xl mb-3 text-[var(--color-ivory)]">
-          <em>{t('title')}</em>
-        </h2>
-        <p className="lede italic opacity-70 max-w-md mb-12">{t('subtitle')}</p>
+        <Reveal>
+          <div className="kicker mb-3">{t('kicker')}</div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 id="now-title" className="display text-5xl md:text-6xl mb-3 text-[var(--color-ivory)]">
+            <em>{t('title')}</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p className="lede italic opacity-70 max-w-md mb-12">{t('subtitle')}</p>
+        </Reveal>
 
-        <div className="border border-[var(--color-gold)]/25 p-8 md:p-12 relative bg-[var(--color-vermillion-deep)]/35">
+        <Reveal delay={0.3} className="border border-[var(--color-gold)]/25 p-8 md:p-12 relative bg-[var(--color-vermillion-deep)]/35">
           <div className="absolute -top-3 left-8 px-3 bg-[var(--color-vermillion)] kicker-mono">
             {year} · {monthHanzi}月 · {dateLabel}
           </div>
@@ -56,7 +63,7 @@ export async function Now() {
               {t('stamped')} · {entry.slug}
             </span>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

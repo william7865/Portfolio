@@ -26,32 +26,52 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
     [0, 0.25, 0.6, 1],
     [0, 1, 1, 0]
   );
-  const scale = useTransform(scrollYProgress, [0.1, 0.5, 0.9], [0.92, 1, 1.04]);
-  const yLabel = useTransform(scrollYProgress, [0.1, 0.9], [40, -40]);
+  const scale = useTransform(scrollYProgress, [0.1, 0.5, 0.9], [0.86, 1.02, 1.12]);
+  const yLabel = useTransform(scrollYProgress, [0.1, 0.9], [60, -60]);
+  // Curtain panels part as the user scrolls through
+  const leftX = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '-22%']);
+  const rightX = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '22%']);
+  const curtainOpacity = useTransform(scrollYProgress, [0, 0.3, 0.9], [1, 0.95, 0.4]);
 
   return (
     <section
       ref={ref}
-      className="relative min-h-[80vh] overflow-hidden flex items-center justify-center"
+      className="relative min-h-screen overflow-hidden flex items-center justify-center"
       aria-label={label}
     >
-      {/* Silk pinstripes curtain */}
-      <div
+      {/* Two-panel silk curtain that parts as user scrolls */}
+      <motion.div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'repeating-linear-gradient(180deg, rgba(212,175,55,0.14) 0 1px, transparent 1px 9px), linear-gradient(180deg, var(--color-vermillion) 0%, var(--color-vermillion-bright) 50%, var(--color-vermillion) 100%)'
-        }}
-      />
-      <div
+        style={{ x: leftX, opacity: curtainOpacity }}
+        className="absolute top-0 bottom-0 left-0 w-1/2 pointer-events-none will-change-transform"
+      >
+        <div
+          className="w-full h-full"
+          style={{
+            background:
+              'repeating-linear-gradient(180deg, rgba(212,175,55,0.16) 0 1px, transparent 1px 9px), linear-gradient(90deg, var(--color-vermillion) 0%, var(--color-vermillion-bright) 100%)',
+            boxShadow: 'inset -30px 0 50px rgba(0,0,0,0.4)'
+          }}
+        />
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[var(--color-gold)] via-[var(--color-gold-deep)] to-[var(--color-gold)]" />
+        <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--color-gold)] via-[var(--color-gold-deep)] to-[var(--color-gold)]" />
+      </motion.div>
+      <motion.div
         aria-hidden="true"
-        className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[var(--color-gold)] via-[var(--color-gold-deep)] to-[var(--color-gold)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute right-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[var(--color-gold)] via-[var(--color-gold-deep)] to-[var(--color-gold)]"
-      />
+        style={{ x: rightX, opacity: curtainOpacity }}
+        className="absolute top-0 bottom-0 right-0 w-1/2 pointer-events-none will-change-transform"
+      >
+        <div
+          className="w-full h-full"
+          style={{
+            background:
+              'repeating-linear-gradient(180deg, rgba(212,175,55,0.16) 0 1px, transparent 1px 9px), linear-gradient(270deg, var(--color-vermillion) 0%, var(--color-vermillion-bright) 100%)',
+            boxShadow: 'inset 30px 0 50px rgba(0,0,0,0.4)'
+          }}
+        />
+        <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[var(--color-gold)] via-[var(--color-gold-deep)] to-[var(--color-gold)]" />
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--color-gold)] via-[var(--color-gold-deep)] to-[var(--color-gold)]" />
+      </motion.div>
 
       <motion.div
         style={{ opacity, scale }}
