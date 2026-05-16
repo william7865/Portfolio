@@ -1,101 +1,79 @@
 {
-  "nav": {
-    "home": "Accueil",
-    "projects": "Projets",
-    "now": "Now",
-    "skills": "Compétences",
-    "contact": "Contact"
+  "skipLink": "Passer au contenu",
+  "mute": {
+    "on": "Activer le son",
+    "off": "Couper le son"
   },
-  "service": {
-    "tagline": "Développeur Full Stack. Disponible en alternance — septembre 2026.",
-    "cta": "Contactez-moi",
-    "zone": "Service · zone départ"
+  "hero": {
+    "kicker": "PROLOGUE · 序幕",
+    "lede": "Le code comme calligraphie. Précis, intentionnel, lisible.",
+    "role": "Développeur Full Stack · Paris",
+    "scrollCue": "Acte I"
   },
-  "rallye": {
-    "title": "Rallye",
-    "subtitle": "À propos",
-    "cvButton": "Voir mon CV",
-    "contactButton": "Me contacter"
+  "works": {
+    "kicker": "ACTE I · WORKS",
+    "title": "Le rouleau",
+    "subtitle": "Trois ouvrages tirés du carnet d'atelier.",
+    "scrollHint": "Faites défiler pour dérouler",
+    "viewCase": "Lire l'analyse",
+    "endNote": "Fin du rouleau",
+    "byline": "William Lin · 林"
   },
-  "smashes": {
-    "title": "Smashes",
-    "subtitle": "Projets",
-    "viewCase": "Replay analysis",
-    "code": "Code"
+  "skills": {
+    "kicker": "ACTE II · SKILLS",
+    "title": "Le tracé",
+    "subtitle": "Le geste, l'outil, et la trace qu'il laisse.",
+    "yearsLabel": "Années",
+    "proofLabel": "Preuve"
   },
-  "drop": {
-    "title": "Drop shot",
-    "subtitle": "Entraînement du moment",
-    "cta": "Voir la page complète",
-    "teaser": "Refonte de ce portfolio en Next.js 15. Lecture en cours : Tidy First? (Kent Beck). Côté terrain : sessions du jeudi soir avec l'asso EFREI."
+  "now": {
+    "kicker": "ACTE III · NOW",
+    "title": "Journal",
+    "subtitle": "Le carnet du moment — pensées, lectures, chantiers en cours.",
+    "stamped": "Cacheté",
+    "moonOf": "Lune de"
   },
-  "matchpoint": {
-    "title": "Match Point",
-    "subtitle": "Discutons ensemble",
-    "lead": "Je cherche une alternance Full Stack démarrant septembre 2026. Si mon profil vous parle, le formulaire ci-dessous arrive directement dans ma boîte.",
-    "name": "Votre nom",
-    "email": "Votre email",
-    "message": "Votre message",
-    "send": "Smash décisif →",
+  "gate": {
+    "kicker": "L'ENTRÉE · 入",
+    "label": "Franchir le seuil",
+    "subtitle": "On entre dans la dernière salle."
+  },
+  "final": {
+    "kicker": "ACTE FINAL · 終",
+    "title": "Correspondance",
+    "subtitle": "Laissez un mot. Je lis tout, je réponds rarement vite, jamais en retard.",
+    "fields": {
+      "name": "Votre nom",
+      "namePlaceholder": "Tao Yuanming",
+      "email": "Votre email",
+      "emailPlaceholder": "tao@example.fr",
+      "message": "Votre message",
+      "messagePlaceholder": "Quelques lignes suffisent."
+    },
+    "send": "Sceller et envoyer",
     "sending": "Envoi en cours…",
-    "success": "Reçu — je réponds sous 48h.",
-    "error": "Échec d'envoi. Réessayez ou écrivez-moi : linwilliam14@gmail.com",
+    "success": "Message scellé. Je réponds sous 48h.",
+    "error": "Échec de l'envoi. Réessayez ou écrivez à linwilliam14@gmail.com",
     "validation": {
       "name": "Indiquez votre nom (2 caractères min)",
       "email": "Email invalide",
-      "message": "Un peu plus long, please (20 caractères min)"
+      "message": "Un peu plus long, je vous lis attentivement (20 caractères min)"
     }
   },
-  "score": {
-    "label": "SET 1",
-    "ariaLive": "Score : {points} sur 21",
-    "matchPoint": "Match Point.",
-    "continue": "continuer la visite →"
-  },
-  "lang": {
-    "switch": "EN",
-    "label": "Switch language"
-  },
-  "skills": {
-    "title": "Skills",
-    "subtitle": "Court de compétences",
-    "lead": "Hover une compétence pour voir le niveau, la dernière utilisation, et les preuves.",
-    "level": "Niveau",
-    "lastUsed": "Dernière utilisation",
-    "proofs": "Preuves"
-  },
-  "now": {
-    "title": "Now",
-    "subtitle": "Drop shot"
-  },
-  "projects_page": {
-    "title": "Projets",
-    "subtitle": "Smashes"
-  },
-  "arcade": {
-    "title": "Welcome, summoner.",
-    "subtitle": "Arcade Mode",
-    "achievements": "Achievements",
-    "minigame": "Mini-jeu badminton (V1.2 — coming soon)",
-    "championSelect": "CV adaptatif Champion Select (V1.1)",
-    "achievementsTitle": "Achievements",
-    "unlocked": "✓ unlocked",
-    "locked": "·····"
-  },
   "footer": {
-    "rights": "Tous droits réservés",
-    "built": "Built with Next.js · Deployed on Vercel",
-    "toggleArcadeOff": "switch to arcade mode",
-    "toggleArcadeOn": "mode"
+    "signature": "BUILT WITH NEXT.JS · DEPLOYED ON VERCEL",
+    "cv": "Curriculum vitae · PDF"
   },
   "notFound": {
-    "label": "Out",
+    "kicker": "HORS DU ROULEAU",
     "title": "404.",
-    "lead": "Le volant est tombé hors du court. Pas de point, on revient au service.",
-    "back": "← Retour au court"
+    "lede": "La page est sortie du rouleau. Revenons au prologue.",
+    "back": "← Retour"
   },
-  "skipLink": "Passer au contenu",
-  "caseStudy": {
-    "label": "Replay analysis"
+  "masterScroll": {
+    "kicker": "ROULEAU CACHÉ · 隱卷",
+    "title": "Master Scroll",
+    "lede": "Vous avez trouvé un parchemin replié au fond d'un coffre.",
+    "back": "← Retour au site"
   }
 }

@@ -1,50 +1,47 @@
-# Portfolio William Lin — MATCH POINT
+# Portfolio · William Lin
 
-> The cursor is a shuttlecock. The portfolio is a court. A match plays out as you visit.
+> Un portfolio comme un rouleau Tang. Cinq actes, une porte, une salle des correspondances.
 
 ## Concept
 
-A complete rebuild of William Lin's portfolio with a singular design direction inspired by **badminton** (EFREI Bad club, casual player) and **video games** (Minecraft, League of Legends).
+Refonte complète dans une direction **Tang impérial cinématique** — vermillon profond, ornement or, voile de soie, poussière dorée en suspension, calligraphie tracée au scroll.
 
-- **Pro mode (default)** — sober, editorial, recruiter-friendly
-- **Arcade mode (unlockable)** — HUD overlay, achievements, easter eggs
-- **Unlock** — Konami code (`↑ ↑ ↓ ↓ ← → ← → B A`) or "switch to arcade mode" button in footer
+- **Prologue · Hero** — nom et identité, voile de soie, particules dorées
+- **Acte I · Works** — scroll horizontal en handscroll, chaque projet un panneau d'encre
+- **Acte II · Skills** — calligraphie tracée au scroll, sceau cinabre au hover
+- **Acte III · Now** — carnet du moment (MDX mensuel)
+- **The Gate** — traversée d'une porte impériale en perspective
+- **Acte Final · Correspondance** — salle du trône ornée, parchemin + sceau au submit
 
-A live scoreboard climbs `0 → 21` as you explore. Reaching 21 triggers the **Match Point** celebration.
+**Easter egg** — tape `tang` au clavier, ou clique trois fois sur le sceau du hero, pour déverrouiller un rouleau caché.
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript strict · Tailwind v4 · Framer Motion · next-intl · MDX · Resend · Vitest · Playwright.
+Next.js 15 (App Router) · React 19 · TypeScript strict · Tailwind v4 · Framer Motion · next-intl (FR/EN) · MDX · Resend.
+
+Polices : **Cormorant Garamond** (display) · **Ma Shan Zheng** (hanzi calligraphique) · **Noto Serif SC** · **Inter Tight** · **JetBrains Mono** — toutes via `next/font/google`.
 
 ## Dev
 
 ```bash
 npm install
-cp .env.example .env.local   # fill in Resend keys
-npm run dev                  # http://localhost:3000 → redirects to /fr
+cp .env.example .env.local   # remplir les clés Resend
+npm run dev                  # http://localhost:3000 → redirige vers /fr
 npm run build
 npm run lint
 npm run typecheck
-npm test                     # vitest
-npm run e2e                  # playwright (run `npx playwright install` first)
 ```
 
-## Deploy
+## Déploiement
 
-Vercel. Set env vars:
+Vercel. Variables d'environnement :
 
 - `RESEND_API_KEY` (https://resend.com)
-- `CONTACT_TO_EMAIL` (default: `linwilliam14@gmail.com`)
-- `CONTACT_FROM_EMAIL` (default: `onboarding@resend.dev`)
-- `NEXT_PUBLIC_BASE_URL` (default: `https://williamlin.dev`)
+- `CONTACT_TO_EMAIL`
+- `CONTACT_FROM_EMAIL`
+- `NEXT_PUBLIC_BASE_URL`
 
-After merging `feat/match-point-v1` → `master`, Production deploys to https://williamlin.dev.
+## Spec & changements
 
-## Design spec & plan
-
-- Spec: [`docs/superpowers/specs/2026-05-15-portfolio-match-point-design.md`](docs/superpowers/specs/2026-05-15-portfolio-match-point-design.md)
-- Plan: [`docs/superpowers/plans/2026-05-16-portfolio-v1-mvp.md`](docs/superpowers/plans/2026-05-16-portfolio-v1-mvp.md)
-
-## Easter egg
-
-Try the Konami code on the homepage. 🕹️
+- Spec actuelle : [`docs/superpowers/specs/2026-05-16-portfolio-imperial-cinematic-design.md`](docs/superpowers/specs/2026-05-16-portfolio-imperial-cinematic-design.md)
+- Spec précédente (badminton « match point ») : [`docs/superpowers/specs/2026-05-15-portfolio-match-point-design.md`](docs/superpowers/specs/2026-05-15-portfolio-match-point-design.md) — remplacée.

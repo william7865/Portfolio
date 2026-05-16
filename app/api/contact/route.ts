@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       from,
       to,
       replyTo: email,
-      subject: `[Portfolio] Nouveau match point — ${name}`,
+      subject: `[Portfolio · Correspondance] ${name}`,
       text: `De : ${name} <${email}>\n\n${message}`
     });
     return NextResponse.json({ ok: true });

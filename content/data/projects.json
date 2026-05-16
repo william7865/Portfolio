@@ -1,6 +1,8 @@
 [
   {
     "slug": "matchfit",
+    "hanzi": "健",
+    "hanziLabel": "vigueur",
     "title": "MatchFit",
     "tagline": {
       "fr": "Application web de coaching sportif",
@@ -9,39 +11,37 @@
     "year": 2024,
     "role": "Full Stack",
     "tags": ["Vue.js", "PHP", "PostgreSQL", "Docker", "GitHub Actions"],
-    "image": "/images/projects/matchfit.png",
     "repo": "https://github.com/william7865/MatchFit",
-    "demo": null,
-    "tier": 4
+    "demo": null
   },
   {
     "slug": "ecommerce",
+    "hanzi": "市",
+    "hanziLabel": "marché",
     "title": "Site E-Commerce",
     "tagline": {
       "fr": "Catalogue produits + admin sécurisé",
       "en": "Product catalog + secure admin"
     },
     "year": 2024,
-    "role": "Back/Front",
+    "role": "Back / Front",
     "tags": ["PHP", "MySQL"],
-    "image": "/images/projects/ecommerce.png",
     "repo": "https://github.com/william7865/E_commerce",
-    "demo": null,
-    "tier": 3
+    "demo": null
   },
   {
     "slug": "restaurant",
+    "hanzi": "膳",
+    "hanziLabel": "festin",
     "title": "Restaurant SPA",
     "tagline": {
-      "fr": "Template multilingue pour clients Arcsolu",
-      "en": "Multilingual template for Arcsolu clients"
+      "fr": "Template multilingue pour clients",
+      "en": "Multilingual template for clients"
     },
     "year": 2024,
     "role": "Front",
     "tags": ["React.js", "Figma", "i18n"],
-    "image": "/images/projects/restaurant.png",
     "repo": null,
-    "demo": null,
-    "tier": 3
+    "demo": null
   }
 ]
