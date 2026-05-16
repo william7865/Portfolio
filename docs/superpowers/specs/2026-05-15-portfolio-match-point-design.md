@@ -166,7 +166,7 @@ un événement +1 dans le score (et débloque l'achievement *Polyglot*).
   - Toggle FR ⇄ EN
   - Now page visitée
   - Easter egg trouvé
-  - Form contact rempli (1 point) puis envoyé (smash décisif, +2 jusqu'à plafond 21)
+  - Form contact rempli (1 point), envoyé (smash décisif, +2 — la somme reste plafonnée à 21)
 - À 21 : transition vers une scène "MATCH POINT" — confetti SVG de plumes, mot
   "MATCH POINT" en Migra italique géant, applause optionnel, achievement *Set Won*.
 - Persisté en `localStorage` (clé `mp.score`). Au retour, reprendre où on en était sans
@@ -383,7 +383,7 @@ Système de règles centralisé dans `lib/achievements.ts`. Chaque achievement :
 | Minecraft         | diamond_pickaxe     | Click rapide 64× sur un element              |
 | Minecraft         | creeper_404         | Page 404 visitée                             |
 | Bad / EFREI       | smash_feather       | 10× clicks rapides sur une plume             |
-| Bad / EFREI       | efrei_alumni        | "EFREI" tapé n'importe où                   |
+| Bad / EFREI       | efrei_bad           | "EFREI" tapé n'importe où                   |
 | Bad / EFREI       | gg_wp               | CV print déclenché                           |
 | Bad / LoL         | baron_steal         | Route `/baron` visitée (cachée)              |
 | Mini-jeu          | first_rally         | 1 rally gagné contre WL.AI                   |
@@ -412,8 +412,8 @@ Cinq eggs principaux (déclencheurs du *Egg Hunter*) :
    Effet : XP orb Minecraft animé (SVG), toast "+1 XP William", son crafting optionnel.
 3. **Click sur le score** — cliquer 5× sur le scoreboard.
    Effet : score affiche `999` brièvement + achievement.
-4. **Mention EFREI** — taper "EFREI" lettre par lettre.
-   Effet : mascotte EFREI apparaît un instant en bas, achievement *EFREI Alumni*.
+4. **Mention EFREI** — taper "EFREI" lettre par lettre (déclenche une seule fois par session).
+   Effet : référence visuelle à la mascotte EFREI un instant en bas, achievement *EFREI Bad*.
 5. **Route cachée `/baron`** — entrer manuellement l'URL.
    Effet : page secrète avec un "buff Baron" (overlay coloré 60s), achievement
    *Baron Steal*.
