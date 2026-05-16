@@ -8,6 +8,7 @@ import { Footer } from '@/components/system/Footer';
 import { InkCursor } from '@/components/system/InkCursor';
 import { ScrollToTop } from '@/components/system/ScrollToTop';
 import { ScrollProgress } from '@/components/system/ScrollProgress';
+import { StructuredData } from '@/components/system/StructuredData';
 import { SfxProvider } from '@/components/providers/SfxProvider';
 import { EasterEggProvider } from '@/components/providers/EasterEggProvider';
 
@@ -31,6 +32,7 @@ export default async function LangLayout({
       <SfxProvider>
         <EasterEggProvider>
           <SkipLink />
+          <StructuredData lang={lang} />
           <InkCursor />
           <ScrollProgress />
           <Header />
