@@ -1,12 +1,27 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
 import projectsData from '@/content/data/projects.json';
 import { GoldRoller } from '@/components/motifs/GoldRoller';
 import { Seal } from '@/components/motifs/Seal';
 import { useIsMobile } from '@/lib/useIsMobile';
+
+function TechChip({ label }: { label: string }) {
+  return (
+    <span
+      className="inline-flex items-center font-mono text-[10px] tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm"
+      style={{
+        background: 'rgba(74,10,14,0.06)',
+        border: '1px solid rgba(74,10,14,0.35)',
+        color: 'rgba(74,10,14,0.85)'
+      }}
+    >
+      {label}
+    </span>
+  );
+}
 
 type Project = {
   slug: string;
@@ -97,16 +112,9 @@ function ProjectPanel({
           {p.role}
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5">
           {p.tags.map((tag) => (
-            <Seal
-              key={tag}
-              glyph={tag.slice(0, 2)}
-              size={32}
-              rotate={(tag.length % 6) - 3}
-              ariaLabel={tag}
-              style={{ fontSize: 10 }}
-            />
+            <TechChip key={tag} label={tag} />
           ))}
         </div>
       </div>
@@ -235,6 +243,27 @@ function WorksHandscroll({
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const x = useTransform(scrollYProgress, [0.05, 0.95], ['0vw', `-${projects.length * 78}vw`]);
 
+  // Keyboard nav: ArrowRight/ArrowLeft = jump one panel (= one viewport-height
+  // of vertical scroll, since the handscroll is bound to scrollYProgress)
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!ref.current) return;
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return;
+
+      e.preventDefault();
+      const step = window.innerHeight;
+      window.scrollBy({ top: e.key === 'ArrowRight' ? step : -step, behavior: 'smooth' });
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   return (
     <section
       aria-labelledby="works-title"
@@ -253,6 +282,7 @@ function WorksHandscroll({
 
         <div className="absolute bottom-10 left-0 right-0 z-20 text-center kicker-mono opacity-50 pointer-events-none">
           ↓ {t('scrollHint')} →
+          <span className="ml-2 opacity-50 hidden md:inline">· ← → keys</span>
         </div>
 
         <div className="absolute inset-0 flex items-center pl-[10vw]">
