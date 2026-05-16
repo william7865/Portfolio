@@ -23,7 +23,7 @@ export function ProjectCard({ project }: { project: Project }) {
   const href = `/${locale}/projects/${project.slug}`;
 
   return (
-    <article className="border border-ink/15 bg-hall-floor hover:bg-ink/[.02] transition-colors">
+    <article className="border border-ink/15 bg-paper hover:bg-ink/[.02] transition-colors">
       <Link href={href} prefetch onClick={() => emit({ type: 'project_click', id: project.slug })}>
         <div className="relative aspect-[16/10] bg-muted/10">
           <Image
@@ -54,7 +54,7 @@ export function ProjectCard({ project }: { project: Project }) {
           <Link
             href={href}
             onClick={() => emit({ type: 'project_click', id: project.slug })}
-            className="font-mono text-xs text-court-line hover:underline"
+            className="font-mono text-xs text-court hover:underline"
           >
             → {t('viewCase')}
           </Link>

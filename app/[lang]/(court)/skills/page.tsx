@@ -3,7 +3,7 @@ import { SkillCourt } from '@/components/skill-court/SkillCourt';
 export default function SkillsPage() {
   return (
     <section className="px-6 md:px-16 py-24 max-w-6xl mx-auto">
-      <p className="font-mono text-xs tracking-widest text-court-line uppercase">
+      <p className="font-mono text-xs tracking-widest text-court uppercase">
         Court de compétences
       </p>
       <h1 className="font-display italic text-6xl mt-2">Skills</h1>

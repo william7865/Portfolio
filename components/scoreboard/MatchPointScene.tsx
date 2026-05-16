@@ -16,7 +16,7 @@ export function MatchPointScene({
         <motion.div
           role="dialog"
           aria-label="Match point celebration"
-          className="fixed inset-0 z-[10000] bg-hall-floor/95 flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[10000] bg-paper/95 flex flex-col items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

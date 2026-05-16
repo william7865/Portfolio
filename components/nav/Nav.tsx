@@ -9,38 +9,31 @@ export function Nav() {
   return (
     <nav
       aria-label="Primary"
-      className="sticky top-0 z-40 bg-hall-floor/85 backdrop-blur border-b border-ink/10"
+      className="fixed top-0 left-0 right-0 z-40 px-6 md:px-10 py-4 flex items-center justify-between mix-blend-difference text-paper"
     >
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3">
-        <Link href={base} className="font-display italic text-xl tracking-tight">
-          William Lin
-        </Link>
-        <ul className="flex items-center gap-6 font-mono text-xs uppercase tracking-widest">
-          <li>
-            <Link href={base} className="hover:text-court-line">
-              {t('home')}
-            </Link>
-          </li>
-          <li>
-            <Link href={`${base}/projects`} className="hover:text-court-line">
-              {t('projects')}
-            </Link>
-          </li>
-          <li>
-            <Link href={`${base}/now`} className="hover:text-court-line">
-              {t('now')}
-            </Link>
-          </li>
-          <li>
-            <Link href={`${base}/skills`} className="hover:text-court-line">
-              {t('skills')}
-            </Link>
-          </li>
-          <li>
-            <LangSwitch />
-          </li>
-        </ul>
-      </div>
+      <Link href={base} className="label-mono">
+        WL <span className="opacity-50">·</span> 2026
+      </Link>
+      <ul className="flex items-center gap-6 label-mono">
+        <li className="hidden md:block">
+          <Link href={`${base}/projects`} className="hover:text-shuttle">
+            {t('projects')}
+          </Link>
+        </li>
+        <li className="hidden md:block">
+          <Link href={`${base}/now`} className="hover:text-shuttle">
+            {t('now')}
+          </Link>
+        </li>
+        <li className="hidden md:block">
+          <Link href={`${base}/skills`} className="hover:text-shuttle">
+            {t('skills')}
+          </Link>
+        </li>
+        <li>
+          <LangSwitch />
+        </li>
+      </ul>
     </nav>
   );
 }

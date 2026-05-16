@@ -7,7 +7,7 @@ export function ArcadeToggle() {
   const t = useTranslations('footer');
   if (!unlocked) {
     return (
-      <button onClick={unlock} className="hover:text-court-line text-muted">
+      <button onClick={unlock} className="hover:text-court text-muted">
         {t('toggleArcadeOff')} <span aria-hidden>🕹️</span>
       </button>
     );
@@ -15,7 +15,7 @@ export function ArcadeToggle() {
   return (
     <button
       onClick={toggleMode}
-      className="hover:text-court-line"
+      className="hover:text-court"
       aria-pressed={mode === 'arcade'}
     >
       {t('toggleArcadeOn')}: <strong>{mode}</strong>

@@ -58,7 +58,7 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <p className="font-mono text-sm text-court-line" role="status">
+      <p className="font-mono text-sm text-court" role="status">
         {t('success')}
       </p>
     );
@@ -72,9 +72,9 @@ export function ContactForm() {
           {...register('name')}
           type="text"
           autoComplete="name"
-          className="w-full mt-1 px-3 py-2 bg-transparent border border-ink/30 focus:border-court-line outline-none"
+          className="w-full mt-1 px-3 py-2 bg-transparent border border-ink/30 focus:border-court outline-none"
         />
-        {errors.name && <span className="text-xs text-court-line">{errors.name.message}</span>}
+        {errors.name && <span className="text-xs text-court">{errors.name.message}</span>}
       </label>
       <label className="block">
         <span className="font-mono text-xs text-muted uppercase tracking-widest">{t('email')}</span>
@@ -82,28 +82,28 @@ export function ContactForm() {
           {...register('email')}
           type="email"
           autoComplete="email"
-          className="w-full mt-1 px-3 py-2 bg-transparent border border-ink/30 focus:border-court-line outline-none"
+          className="w-full mt-1 px-3 py-2 bg-transparent border border-ink/30 focus:border-court outline-none"
         />
-        {errors.email && <span className="text-xs text-court-line">{errors.email.message}</span>}
+        {errors.email && <span className="text-xs text-court">{errors.email.message}</span>}
       </label>
       <label className="block">
         <span className="font-mono text-xs text-muted uppercase tracking-widest">{t('message')}</span>
         <textarea
           {...register('message')}
           rows={5}
-          className="w-full mt-1 px-3 py-2 bg-transparent border border-ink/30 focus:border-court-line outline-none"
+          className="w-full mt-1 px-3 py-2 bg-transparent border border-ink/30 focus:border-court outline-none"
         />
-        {errors.message && <span className="text-xs text-court-line">{errors.message.message}</span>}
+        {errors.message && <span className="text-xs text-court">{errors.message.message}</span>}
       </label>
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="px-6 py-3 bg-ink text-hall-floor font-mono text-sm hover:bg-court-line disabled:opacity-50"
+        className="px-6 py-3 bg-ink text-paper font-mono text-sm hover:bg-court disabled:opacity-50"
       >
         {status === 'sending' ? t('sending') : t('send')}
       </button>
       {status === 'error' && (
-        <p className="text-xs text-court-line" role="alert">
+        <p className="text-xs text-court" role="alert">
           {t('error')}
         </p>
       )}

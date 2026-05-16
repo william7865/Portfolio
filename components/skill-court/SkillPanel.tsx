@@ -12,7 +12,7 @@ export function SkillPanel({ skill }: { skill: Skill | null }) {
   if (!skill) return null;
   return (
     <div
-      className="absolute top-2 right-2 max-w-xs bg-ink text-hall-floor p-4 font-mono text-xs space-y-2"
+      className="absolute top-2 right-2 max-w-xs bg-ink text-paper p-4 font-mono text-xs space-y-2"
       role="status"
       aria-live="polite"
     >
@@ -24,7 +24,7 @@ export function SkillPanel({ skill }: { skill: Skill | null }) {
       <div>
         {t('lastUsed')} · {skill.lastUsed}
       </div>
-      <div className="pt-2 border-t border-hall-floor/20">
+      <div className="pt-2 border-t border-paper/20">
         {t('proofs')} :
         <ul className="list-disc list-inside">
           {skill.proofs.map((p) => (

@@ -21,7 +21,7 @@ export default async function CaseStudyPage({
     return (
       <article className="px-6 md:px-16 py-24 max-w-3xl mx-auto prose-like">
         <CaseStudyTracker slug={slug} />
-        <p className="font-mono text-xs tracking-widest text-court-line uppercase">
+        <p className="font-mono text-xs tracking-widest text-court uppercase">
           Replay analysis
         </p>
         <h1 className="font-display italic text-5xl md:text-6xl mt-2">

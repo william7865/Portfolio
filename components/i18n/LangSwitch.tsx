@@ -17,7 +17,7 @@ export function LangSwitch() {
       href={otherPath}
       prefetch
       onClick={() => emit({ type: 'lang_switch' })}
-      className="font-mono text-xs uppercase tracking-widest hover:text-court-line"
+      className="font-mono text-xs uppercase tracking-widest hover:text-court"
       aria-label={`${t('label')} → ${other.toUpperCase()}`}
     >
       {t('switch')}

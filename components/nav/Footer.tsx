@@ -10,7 +10,7 @@ export function Footer({ arcadeToggle }: { arcadeToggle?: React.ReactNode }) {
             href="https://github.com/william7865"
             target="_blank"
             rel="noopener"
-            className="hover:text-court-line"
+            className="hover:text-court"
           >
             GitHub
           </a>
@@ -18,11 +18,11 @@ export function Footer({ arcadeToggle }: { arcadeToggle?: React.ReactNode }) {
             href="https://www.linkedin.com/in/william-lin-623165295/"
             target="_blank"
             rel="noopener"
-            className="hover:text-court-line"
+            className="hover:text-court"
           >
             LinkedIn
           </a>
-          <a href="mailto:linwilliam14@gmail.com" className="hover:text-court-line">
+          <a href="mailto:linwilliam14@gmail.com" className="hover:text-court">
             Email
           </a>
           {arcadeToggle}

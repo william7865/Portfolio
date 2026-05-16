@@ -1,5 +1,5 @@
 import '../globals.css';
-import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Bricolage_Grotesque, Fraunces, JetBrains_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -11,18 +11,18 @@ import { ArcadeProvider } from '@/components/arcade/ArcadeProvider';
 import { AchievementsProvider } from '@/components/achievements/AchievementsProvider';
 import { ToastHost } from '@/components/achievements/ToastHost';
 
-const display = Instrument_Serif({
-  weight: '400',
-  style: 'italic',
+const display = Bricolage_Grotesque({
   subsets: ['latin'],
   variable: '--font-display',
-  display: 'swap'
+  display: 'swap',
+  axes: ['opsz', 'wdth']
 });
 
-const sans = Inter_Tight({
+const editorial = Fraunces({
   subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap'
+  variable: '--font-editorial',
+  display: 'swap',
+  axes: ['opsz', 'SOFT']
 });
 
 const mono = JetBrains_Mono({
@@ -53,9 +53,10 @@ export default async function LangLayout({
   return (
     <html
       lang={lang}
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      className={`${display.variable} ${editorial.variable} ${mono.variable}`}
     >
-      <body className="font-sans bg-hall-floor text-ink">
+      <body className="font-editorial bg-paper text-ink relative">
+        <div className="grain-overlay" aria-hidden="true" />
         <NextIntlClientProvider messages={messages}>
           <ScoreProvider>
             <ArcadeProvider>

@@ -21,10 +21,10 @@ export function ToastHost() {
           key={t.id}
           role="status"
           aria-live="polite"
-          className="bg-ink text-hall-floor font-mono text-xs px-4 py-3 border-l-2 border-shuttle pointer-events-auto max-w-xs"
+          className="bg-ink text-paper font-mono text-xs px-4 py-3 border-l-2 border-shuttle pointer-events-auto max-w-xs"
         >
           <div className="text-shuttle">🏆 {t.title}</div>
-          <div className="text-hall-floor/80 mt-0.5">{t.description}</div>
+          <div className="text-paper/80 mt-0.5">{t.description}</div>
         </div>
       ))}
     </div>
