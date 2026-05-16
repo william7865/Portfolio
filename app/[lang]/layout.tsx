@@ -4,6 +4,9 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/lib/i18n';
+import { ShuttleCursor } from '@/components/cursor/ShuttleCursor';
+import { ScoreProvider } from '@/components/scoreboard/ScoreProvider';
+import { Scoreboard } from '@/components/scoreboard/Scoreboard';
 
 const display = Instrument_Serif({
   weight: '400',
@@ -50,7 +53,13 @@ export default async function LangLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="font-sans bg-hall-floor text-ink">
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ScoreProvider>
+            <ShuttleCursor />
+            <Scoreboard />
+            {children}
+          </ScoreProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
