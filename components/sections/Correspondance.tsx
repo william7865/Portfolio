@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,6 +24,15 @@ export function Correspondance() {
   const t = useTranslations('final');
   const { play } = useSfxContext();
   const [status, setStatus] = useState<Status>('idle');
+  const successRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (status === 'success' && successRef.current) {
+      // Wait for the seal-stamp animation to settle before pulling focus
+      const id = setTimeout(() => successRef.current?.focus(), 1000);
+      return () => clearTimeout(id);
+    }
+  }, [status]);
 
   const {
     register,
@@ -101,10 +110,14 @@ export function Correspondance() {
             {status === 'success' ? (
               <motion.div
                 key="success"
+                ref={successRef}
+                tabIndex={-1}
+                role="status"
+                aria-live="polite"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center py-12 relative"
+                className="text-center py-12 relative outline-none"
               >
                 {/* Big cinnabar seal — flies in from above and stamps */}
                 <motion.div
