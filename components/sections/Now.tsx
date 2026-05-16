@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { Seal } from '@/components/motifs/Seal';
+import { CalligraphyStroke } from '@/components/motifs/CalligraphyStroke';
 import { Reveal } from '@/components/system/Reveal';
 
 async function readLatestNow() {
@@ -48,20 +49,72 @@ export async function Now() {
           <p className="lede italic opacity-70 max-w-md mb-12">{t('subtitle')}</p>
         </Reveal>
 
-        <Reveal delay={0.3} className="border border-[var(--color-gold)]/25 p-8 md:p-12 relative bg-[var(--color-vermillion-deep)]/35">
-          <div className="absolute -top-3 left-8 px-3 bg-[var(--color-vermillion)] kicker-mono">
-            {year} · {monthHanzi}月 · {dateLabel}
-          </div>
+        <Reveal delay={0.3}>
+          <div className="relative">
+            {/* Decorative inked frame — corner strokes */}
+            <span
+              aria-hidden="true"
+              className="absolute -top-2 -left-2 w-10 h-10 border-t-2 border-l-2 border-[var(--color-gold)]/70 pointer-events-none"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute -top-2 -right-2 w-10 h-10 border-t-2 border-r-2 border-[var(--color-gold)]/70 pointer-events-none"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-2 -left-2 w-10 h-10 border-b-2 border-l-2 border-[var(--color-gold)]/70 pointer-events-none"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-2 -right-2 w-10 h-10 border-b-2 border-r-2 border-[var(--color-gold)]/70 pointer-events-none"
+            />
 
-          <article className="prose-tang">
-            <MDXRemote source={entry.content} />
-          </article>
+            <div className="border border-[var(--color-gold)]/25 p-8 md:p-14 relative bg-[var(--color-vermillion-deep)]/40">
+              {/* Date header — big monthHanzi block on the left */}
+              <div className="flex items-start gap-6 mb-8 pb-6 border-b border-[var(--color-gold)]/20">
+                <div
+                  className="font-display-hanzi leading-none text-[var(--color-gold-bright)] shrink-0"
+                  style={{
+                    fontSize: 'clamp(3rem, 6vw, 4.5rem)',
+                    textShadow: '0 0 18px rgba(233,196,106,0.5)'
+                  }}
+                >
+                  {monthHanzi}
+                </div>
+                <div className="pt-2">
+                  <div className="kicker-mono mb-1">{t('moonOf')}</div>
+                  <div className="font-display italic text-2xl md:text-3xl text-[var(--color-ivory)]">
+                    {dateLabel}
+                  </div>
+                  <div className="font-mono text-xs tracking-[0.22em] uppercase opacity-50 mt-1">
+                    {year} · entry {entry.slug}
+                  </div>
+                </div>
+              </div>
 
-          <div className="mt-10 flex items-center gap-4 pt-6 border-t border-[var(--color-gold)]/15">
-            <Seal glyph="記" size={36} rotate={-5} />
-            <span className="font-mono text-xs tracking-[0.22em] uppercase opacity-50">
-              {t('stamped')} · {entry.slug}
-            </span>
+              {/* Inked decorative stroke */}
+              <div aria-hidden="true" className="mb-6 -mx-2 opacity-80">
+                <CalligraphyStroke
+                  paths={['M 5 50 Q 30 14, 60 50 T 95 50']}
+                  viewBox="0 0 100 60"
+                  strokeWidth={2.4}
+                  width={140}
+                  height={40}
+                  eager
+                />
+              </div>
+
+              <article className="prose-tang">
+                <MDXRemote source={entry.content} />
+              </article>
+
+              <div className="mt-12 flex items-center gap-4 pt-6 border-t border-[var(--color-gold)]/20">
+                <Seal glyph="記" size={40} rotate={-5} />
+                <span className="font-mono text-xs tracking-[0.22em] uppercase opacity-50">
+                  {t('stamped')}
+                </span>
+              </div>
+            </div>
           </div>
         </Reveal>
       </div>
