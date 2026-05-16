@@ -7,6 +7,9 @@ import { locales, type Locale } from '@/lib/i18n';
 import { ShuttleCursor } from '@/components/cursor/ShuttleCursor';
 import { ScoreProvider } from '@/components/scoreboard/ScoreProvider';
 import { Scoreboard } from '@/components/scoreboard/Scoreboard';
+import { ArcadeProvider } from '@/components/arcade/ArcadeProvider';
+import { AchievementsProvider } from '@/components/achievements/AchievementsProvider';
+import { ToastHost } from '@/components/achievements/ToastHost';
 
 const display = Instrument_Serif({
   weight: '400',
@@ -55,9 +58,14 @@ export default async function LangLayout({
       <body className="font-sans bg-hall-floor text-ink">
         <NextIntlClientProvider messages={messages}>
           <ScoreProvider>
-            <ShuttleCursor />
-            <Scoreboard />
-            {children}
+            <ArcadeProvider>
+              <AchievementsProvider>
+                <ShuttleCursor />
+                <Scoreboard />
+                <ToastHost />
+                {children}
+              </AchievementsProvider>
+            </ArcadeProvider>
           </ScoreProvider>
         </NextIntlClientProvider>
       </body>
