@@ -1,0 +1,47 @@
+[
+  {
+    "slug": "matchfit",
+    "title": "MatchFit",
+    "tagline": {
+      "fr": "Application web de coaching sportif",
+      "en": "Sport coaching web app"
+    },
+    "year": 2024,
+    "role": "Full Stack",
+    "tags": ["Vue.js", "PHP", "PostgreSQL", "Docker", "GitHub Actions"],
+    "image": "/images/projects/matchfit.png",
+    "repo": "https://github.com/william7865/MatchFit",
+    "demo": null,
+    "tier": 4
+  },
+  {
+    "slug": "ecommerce",
+    "title": "Site E-Commerce",
+    "tagline": {
+      "fr": "Catalogue produits + admin sécurisé",
+      "en": "Product catalog + secure admin"
+    },
+    "year": 2024,
+    "role": "Back/Front",
+    "tags": ["PHP", "MySQL"],
+    "image": "/images/projects/ecommerce.png",
+    "repo": "https://github.com/william7865/E_commerce",
+    "demo": null,
+    "tier": 3
+  },
+  {
+    "slug": "restaurant",
+    "title": "Restaurant SPA",
+    "tagline": {
+      "fr": "Template multilingue pour clients Arcsolu",
+      "en": "Multilingual template for Arcsolu clients"
+    },
+    "year": 2024,
+    "role": "Front",
+    "tags": ["React.js", "Figma", "i18n"],
+    "image": "/images/projects/restaurant.png",
+    "repo": null,
+    "demo": null,
+    "tier": 3
+  }
+]
