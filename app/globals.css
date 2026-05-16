@@ -1,2 +1,27 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: system-ui, sans-serif; }
+@import 'tailwindcss';
+
+@theme {
+  --color-hall-floor: #F2EEE2;
+  --color-ink: #0F1419;
+  --color-shuttle: #F4D04A;
+  --color-court-line: #B7472A;
+  --color-net-green: #5C7A6B;
+  --color-muted: #8A8576;
+  --color-lol-blue: #1C8CE8;
+  --color-penta-magenta: #9B30A8;
+}
+
+@layer base {
+  html { color-scheme: light; }
+  body {
+    background-color: var(--color-hall-floor);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--color-shuttle); color: var(--color-ink); }
+  :focus-visible {
+    outline: 3px solid var(--color-shuttle);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
