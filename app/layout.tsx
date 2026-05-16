@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="fr"
       className={`${cormorant.variable} ${maShan.variable} ${notoSerifSc.variable} ${interTight.variable} ${jetbrains.variable}`}
     >
-      <body className="relative min-h-screen">{children}</body>
+      <body className="relative min-h-screen" suppressHydrationWarning>{children}</body>
     </html>
   );
 }

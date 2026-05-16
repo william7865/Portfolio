@@ -70,8 +70,11 @@ export function EasterEggProvider({ children }: { children: ReactNode }) {
       sealCount.current = 0;
       if (sealTimer.current) clearTimeout(sealTimer.current);
       unlock();
+    } else {
+      // Tactile feedback on each non-unlock click
+      play('tap', 0.35);
     }
-  }, [unlock]);
+  }, [unlock, play]);
 
   return <Ctx.Provider value={{ unlocked, sealClick }}>{children}</Ctx.Provider>;
 }
