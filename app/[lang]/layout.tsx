@@ -6,6 +6,8 @@ import { SkipLink } from '@/components/system/SkipLink';
 import { Header } from '@/components/system/Header';
 import { Footer } from '@/components/system/Footer';
 import { InkCursor } from '@/components/system/InkCursor';
+import { ScrollToTop } from '@/components/system/ScrollToTop';
+import { ScrollProgress } from '@/components/system/ScrollProgress';
 import { SfxProvider } from '@/components/providers/SfxProvider';
 import { EasterEggProvider } from '@/components/providers/EasterEggProvider';
 
@@ -30,10 +32,12 @@ export default async function LangLayout({
         <EasterEggProvider>
           <SkipLink />
           <InkCursor />
+          <ScrollProgress />
           <Header />
           <main id="main" className="relative">
             {children}
           </main>
+          <ScrollToTop />
           <Footer />
         </EasterEggProvider>
       </SfxProvider>

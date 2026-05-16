@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { TangFrame } from '@/components/motifs/TangFrame';
 import { GoldDust } from '@/components/motifs/GoldDust';
 import { useSfxContext } from '@/components/providers/SfxProvider';
+import { Reveal } from '@/components/system/Reveal';
 
 const schema = z.object({
   name: z.string().min(2),
@@ -59,7 +60,7 @@ export function Correspondance() {
       <GoldDust count={20} />
 
       <div className="relative z-10 max-w-3xl mx-auto">
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <div className="kicker mb-3">{t('kicker')}</div>
           <h2
             id="final-title"
@@ -82,9 +83,10 @@ export function Correspondance() {
             </span>
           </h2>
           <p className="lede italic opacity-80 max-w-md mx-auto mt-4">{t('subtitle')}</p>
-        </div>
+        </Reveal>
 
-        <TangFrame>
+        <Reveal delay={0.15}>
+          <TangFrame>
           {/* Parchment */}
           <motion.div
             initial={false}
@@ -189,6 +191,7 @@ export function Correspondance() {
             )}
           </motion.div>
         </TangFrame>
+        </Reveal>
       </div>
     </section>
   );
