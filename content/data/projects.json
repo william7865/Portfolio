@@ -1,0 +1,47 @@
+[
+  {
+    "slug": "matchfit",
+    "hanzi": "健",
+    "hanziLabel": "vigueur",
+    "title": "MatchFit",
+    "tagline": {
+      "fr": "Application web de coaching sportif",
+      "en": "Sport coaching web app"
+    },
+    "year": 2024,
+    "role": "Full Stack",
+    "tags": ["Vue.js", "PHP", "PostgreSQL", "Docker", "GitHub Actions"],
+    "repo": "https://github.com/william7865/MatchFit",
+    "demo": null
+  },
+  {
+    "slug": "forkmap",
+    "hanzi": "圖",
+    "hanziLabel": "carte",
+    "title": "ForkMap",
+    "tagline": {
+      "fr": "Carte interactive de restaurants — OpenStreetMap + Foursquare",
+      "en": "Interactive restaurant map — OpenStreetMap + Foursquare"
+    },
+    "year": 2026,
+    "role": "Full Stack",
+    "tags": ["Next.js 15", "TypeScript", "Leaflet", "Supabase", "Overpass API"],
+    "repo": "https://github.com/william7865/forkmap",
+    "demo": "https://forkmap.vercel.app"
+  },
+  {
+    "slug": "restaurant",
+    "hanzi": "膳",
+    "hanziLabel": "festin",
+    "title": "Restaurant SPA",
+    "tagline": {
+      "fr": "Template multilingue pour clients",
+      "en": "Multilingual template for clients"
+    },
+    "year": 2024,
+    "role": "Front",
+    "tags": ["React.js", "Figma", "i18n"],
+    "repo": null,
+    "demo": null
+  }
+]

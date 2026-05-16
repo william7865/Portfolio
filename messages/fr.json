@@ -1,0 +1,79 @@
+{
+  "skipLink": "Passer au contenu",
+  "mute": {
+    "on": "Activer le son",
+    "off": "Couper le son"
+  },
+  "hero": {
+    "kicker": "PROLOGUE · 序幕",
+    "lede": "Le code comme calligraphie. Précis, intentionnel, lisible.",
+    "role": "Développeur Full Stack · Paris",
+    "scrollCue": "Acte I"
+  },
+  "works": {
+    "kicker": "ACTE I · WORKS",
+    "title": "Le rouleau",
+    "subtitle": "Trois ouvrages tirés du carnet d'atelier.",
+    "scrollHint": "Faites défiler pour dérouler",
+    "viewCase": "Lire l'analyse",
+    "endNote": "Fin du rouleau",
+    "byline": "William Lin · 林"
+  },
+  "skills": {
+    "kicker": "ACTE II · SKILLS",
+    "title": "Le tracé",
+    "subtitle": "Le geste, l'outil, et la trace qu'il laisse.",
+    "yearsLabel": "Années",
+    "proofLabel": "Preuve"
+  },
+  "now": {
+    "kicker": "ACTE III · NOW",
+    "title": "Journal",
+    "subtitle": "Le carnet du moment — pensées, lectures, chantiers en cours.",
+    "stamped": "Cacheté",
+    "moonOf": "Lune de"
+  },
+  "gate": {
+    "kicker": "L'ENTRÉE · 入",
+    "label": "Franchir le seuil",
+    "subtitle": "On entre dans la dernière salle."
+  },
+  "final": {
+    "kicker": "ACTE FINAL · 終",
+    "title": "Correspondance",
+    "subtitle": "Laissez un mot. Je lis tout, je réponds rarement vite, jamais en retard.",
+    "fields": {
+      "name": "Votre nom",
+      "namePlaceholder": "Tao Yuanming",
+      "email": "Votre email",
+      "emailPlaceholder": "tao@example.fr",
+      "message": "Votre message",
+      "messagePlaceholder": "Quelques lignes suffisent."
+    },
+    "send": "Sceller et envoyer",
+    "sending": "Envoi en cours…",
+    "success": "Message scellé. Je réponds sous 48h.",
+    "error": "Échec de l'envoi. Réessayez ou écrivez à linwilliam14@gmail.com",
+    "validation": {
+      "name": "Indiquez votre nom (2 caractères min)",
+      "email": "Email invalide",
+      "message": "Un peu plus long, je vous lis attentivement (20 caractères min)"
+    }
+  },
+  "footer": {
+    "signature": "BUILT WITH NEXT.JS · DEPLOYED ON VERCEL",
+    "cv": "Curriculum vitae · PDF"
+  },
+  "notFound": {
+    "kicker": "HORS DU ROULEAU",
+    "title": "404.",
+    "lede": "La page est sortie du rouleau. Revenons au prologue.",
+    "back": "← Retour"
+  },
+  "masterScroll": {
+    "kicker": "ROULEAU CACHÉ · 隱卷",
+    "title": "Master Scroll",
+    "lede": "Vous avez trouvé un parchemin replié au fond d'un coffre.",
+    "back": "← Retour au site"
+  }
+}

@@ -1,0 +1,59 @@
+---
+title: "MatchFit — Plateforme coachs / élèves"
+year: 2024
+role: "Full Stack"
+duration: "3 mois"
+team: "4 personnes"
+my_role_detail: "Lead front Vue.js + intégration CI"
+tags: [Vue.js, PHP, PostgreSQL, Docker, GitHub Actions]
+hero: "/images/projects/matchfit.png"
+repo: "https://github.com/william7865/MatchFit"
+demo: null
+tier: 4
+---
+
+## Le contexte
+
+Projet d'équipe (4 personnes, 3 mois) à l'EFREI. Brief : construire une plateforme
+de mise en relation entre coachs sportifs et élèves, avec authentification, profils,
+recherche par sport, et notation.
+
+## Le scouting
+
+Trois options techniques sur la table :
+
+- **Stack monolithique PHP** — rapide à mettre en route, équipe à l'aise.
+- **Vue + API REST PHP** — séparation propre, on apprend la SPA.
+- **Full Node + React** — trop éloigné des cours en parallèle, risque de blocage.
+
+Choix : **Vue 3 + PHP custom + PostgreSQL**. Compromis : moderne sans s'éloigner
+des compétences solides de l'équipe.
+
+## La stratégie
+
+Décisions clés et trade-offs assumés :
+
+- **Docker dès le jour 1** pour aligner les environnements de dev (4 machines, 2 OS).
+  Coût : 1 jour de setup. Bénéfice : zéro bug "ça marche chez moi".
+- **GitHub Actions CI** — lint + tests à chaque push. Coût : 2h. Bénéfice : on
+  bloque les régressions avant la branche `main`.
+- **Pas de framework PHP** — Slim était envisagé puis écarté pour rester au plus
+  proche du PHP "pur" enseigné en cours.
+
+## Le rallye
+
+Trois moments-clés du dev :
+
+1. **L'auth** — première implémentation naïve avec sessions. Refonte vers JWT
+   après revue de code (sécurité + scalabilité).
+2. **La recherche par sport** — index PostgreSQL sur `(sport, ville)` après benchmark
+   qui montrait 800ms sur 10k profils. Passé à 40ms.
+3. **Le CI cassé en pleine deadline** — Docker compose dépréciait `version: '3'`.
+   Fix en 30 min, leçon : pin tes versions.
+
+## Le score final
+
+- **Fonctionnel** : auth, profils coach/élève, recherche, avis, notation, responsive.
+- **Tech** : Docker dev env, CI verte, 0 issue critique en démo.
+- **Ce que j'ai appris** : la valeur d'un environnement reproductible, l'art du
+  trade-off explicite, et que les bons index changent tout.
