@@ -52,7 +52,7 @@
     "send": "Sceller et envoyer",
     "sending": "Envoi en cours…",
     "success": "Message scellé. Je réponds sous 48h.",
-    "error": "Échec de l'envoi. Réessayez ou écrivez à linwilliam14@gmail.com",
+    "error": "L'envoi a échoué. Réessayez dans un instant, ou passez par LinkedIn.",
     "validation": {
       "name": "Indiquez votre nom (2 caractères min)",
       "email": "Email invalide",

@@ -52,7 +52,7 @@
     "send": "Seal and send",
     "sending": "Sealing…",
     "success": "Message sealed. I reply within 48h.",
-    "error": "Send failed. Try again or write to linwilliam14@gmail.com",
+    "error": "Send failed. Try again shortly, or reach out via LinkedIn.",
     "validation": {
       "name": "Your name (2 characters min)",
       "email": "Invalid email",
