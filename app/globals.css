@@ -26,6 +26,11 @@
   }
 }
 
+body[data-mode="arcade"] h1,
+body[data-mode="arcade"] h2 {
+  text-shadow: 1px 0 0 var(--color-lol-blue), -1px 0 0 var(--color-penta-magenta);
+}
+
 .prose-like h2 {
   font-family: var(--font-display);
   font-style: italic;
