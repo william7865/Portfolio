@@ -17,8 +17,8 @@ type Props = {
 };
 
 const variants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: ({ y, duration, delay }: { y: number; duration: number; delay: number }) => ({
+  hidden: ({ y }: { y: number }) => ({ opacity: 0, y }),
+  show: ({ duration, delay }: { duration: number; delay: number }) => ({
     opacity: 1,
     y: 0,
     transition: { duration, delay, ease: [0.16, 1, 0.3, 1] }
