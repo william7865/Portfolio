@@ -63,10 +63,19 @@ export function useSfx() {
   }, []);
 
   const play = useCallback(
-    (key: SoundKey, volume = 0.3) => {
+    async (key: SoundKey, volume = 0.3) => {
       if (!enabled) return;
       const ctx = getCtx();
       if (!ctx) return;
+      // Some browsers (Safari especially) keep the AudioContext suspended
+      // until resume() resolves. Await it on every play to be safe.
+      if (ctx.state === 'suspended') {
+        try {
+          await ctx.resume();
+        } catch {
+          /* ignore */
+        }
+      }
       const now = ctx.currentTime;
 
       try {
