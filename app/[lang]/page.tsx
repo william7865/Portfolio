@@ -1,0 +1,23 @@
+import { Hero } from '@/components/sections/Hero';
+import { Works } from '@/components/sections/Works';
+import { Skills } from '@/components/sections/Skills';
+import { Now } from '@/components/sections/Now';
+import { Gate } from '@/components/sections/Gate';
+import { Correspondance } from '@/components/sections/Correspondance';
+import { ActCurtain } from '@/components/system/ActCurtain';
+
+export default function HomePage() {
+  return (
+    <>
+      <Hero />
+      <ActCurtain hanzi="第一幕" label="ACT I · WORKS" />
+      <Works />
+      <ActCurtain hanzi="第二幕" label="ACT II · SKILLS" />
+      <Skills />
+      <ActCurtain hanzi="第三幕" label="ACT III · NOW" />
+      <Now />
+      <Gate />
+      <Correspondance />
+    </>
+  );
+}

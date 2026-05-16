@@ -1,101 +1,79 @@
 {
-  "nav": {
-    "home": "Home",
-    "projects": "Projects",
-    "now": "Now",
-    "skills": "Skills",
-    "contact": "Contact"
+  "skipLink": "Skip to content",
+  "mute": {
+    "on": "Sound on",
+    "off": "Sound off"
   },
-  "service": {
-    "tagline": "Full Stack developer. Available for apprenticeship — September 2026.",
-    "cta": "Get in touch",
-    "zone": "Service · starting zone"
+  "hero": {
+    "kicker": "PROLOGUE · 序幕",
+    "lede": "Code as calligraphy. Precise, intentional, readable.",
+    "role": "Full Stack Developer · Paris",
+    "scrollCue": "Act I"
   },
-  "rallye": {
-    "title": "Rally",
-    "subtitle": "About",
-    "cvButton": "View my CV",
-    "contactButton": "Get in touch"
-  },
-  "smashes": {
-    "title": "Smashes",
-    "subtitle": "Projects",
-    "viewCase": "Replay analysis",
-    "code": "Code"
-  },
-  "drop": {
-    "title": "Drop shot",
-    "subtitle": "What I'm working on now",
-    "cta": "See the full page",
-    "teaser": "Rebuilding this portfolio in Next.js 15. Reading: Tidy First? (Kent Beck). On the court: Thursday night sessions with the EFREI club."
-  },
-  "matchpoint": {
-    "title": "Match Point",
-    "subtitle": "Let's talk",
-    "lead": "I'm looking for a Full Stack apprenticeship starting September 2026. If my profile speaks to you, the form below lands straight in my inbox.",
-    "name": "Your name",
-    "email": "Your email",
-    "message": "Your message",
-    "send": "Decisive smash →",
-    "sending": "Sending…",
-    "success": "Received — I'll reply within 48h.",
-    "error": "Send failed. Try again or email me: linwilliam14@gmail.com",
-    "validation": {
-      "name": "Please enter your name (min 2 chars)",
-      "email": "Invalid email",
-      "message": "A bit longer, please (min 20 chars)"
-    }
-  },
-  "score": {
-    "label": "SET 1",
-    "ariaLive": "Score: {points} out of 21",
-    "matchPoint": "Match Point.",
-    "continue": "continue exploring →"
-  },
-  "lang": {
-    "switch": "FR",
-    "label": "Switch language"
+  "works": {
+    "kicker": "ACT I · WORKS",
+    "title": "The Handscroll",
+    "subtitle": "Three pieces pulled from the studio notebook.",
+    "scrollHint": "Scroll to unroll",
+    "viewCase": "Read the case",
+    "endNote": "End of scroll",
+    "byline": "William Lin · 林"
   },
   "skills": {
-    "title": "Skills",
-    "subtitle": "Skill court",
-    "lead": "Hover a skill to see level, last used date, and proofs.",
-    "level": "Level",
-    "lastUsed": "Last used",
-    "proofs": "Proofs"
+    "kicker": "ACT II · SKILLS",
+    "title": "The Stroke",
+    "subtitle": "The gesture, the tool, the mark it leaves.",
+    "yearsLabel": "Years",
+    "proofLabel": "Proof"
   },
   "now": {
-    "title": "Now",
-    "subtitle": "Drop shot"
+    "kicker": "ACT III · NOW",
+    "title": "Journal",
+    "subtitle": "The current notebook — thoughts, reading, work in progress.",
+    "stamped": "Stamped",
+    "moonOf": "Moon of"
   },
-  "projects_page": {
-    "title": "Projects",
-    "subtitle": "Smashes"
+  "gate": {
+    "kicker": "THE THRESHOLD · 入",
+    "label": "Cross the threshold",
+    "subtitle": "Into the last hall."
   },
-  "arcade": {
-    "title": "Welcome, summoner.",
-    "subtitle": "Arcade Mode",
-    "achievements": "Achievements",
-    "minigame": "Badminton mini-game (V1.2 — coming soon)",
-    "championSelect": "Adaptive CV Champion Select (V1.1)",
-    "achievementsTitle": "Achievements",
-    "unlocked": "✓ unlocked",
-    "locked": "·····"
+  "final": {
+    "kicker": "FINAL ACT · 終",
+    "title": "Correspondence",
+    "subtitle": "Leave a word. I read everything, I rarely reply fast, never late.",
+    "fields": {
+      "name": "Your name",
+      "namePlaceholder": "Tao Yuanming",
+      "email": "Your email",
+      "emailPlaceholder": "tao@example.com",
+      "message": "Your message",
+      "messagePlaceholder": "A few lines is enough."
+    },
+    "send": "Seal and send",
+    "sending": "Sealing…",
+    "success": "Message sealed. I reply within 48h.",
+    "error": "Send failed. Try again or write to linwilliam14@gmail.com",
+    "validation": {
+      "name": "Your name (2 characters min)",
+      "email": "Invalid email",
+      "message": "A little longer, please — I read carefully (20 characters min)"
+    }
   },
   "footer": {
-    "rights": "All rights reserved",
-    "built": "Built with Next.js · Deployed on Vercel",
-    "toggleArcadeOff": "switch to arcade mode",
-    "toggleArcadeOn": "mode"
+    "signature": "BUILT WITH NEXT.JS · DEPLOYED ON VERCEL",
+    "cv": "Curriculum vitae · PDF"
   },
   "notFound": {
-    "label": "Out",
+    "kicker": "OFF THE SCROLL",
     "title": "404.",
-    "lead": "The shuttle landed out. No point — back to serve.",
-    "back": "← Back to court"
+    "lede": "This page slipped off the handscroll. Let's return to the prologue.",
+    "back": "← Back"
   },
-  "skipLink": "Skip to content",
-  "caseStudy": {
-    "label": "Replay analysis"
+  "masterScroll": {
+    "kicker": "HIDDEN SCROLL · 隱卷",
+    "title": "Master Scroll",
+    "lede": "You found a folded parchment at the bottom of a chest.",
+    "back": "← Back to the site"
   }
 }

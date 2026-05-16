@@ -1,161 +1,492 @@
 @import 'tailwindcss';
 
+/* ============================================================
+ * IMPERIAL CINEMATIC · Tang palette + typography tokens
+ * ============================================================ */
 @theme {
-  /* Paper, ink, and four accents — sport magazine palette */
-  --color-paper: #ECE5D3;
-  --color-paper-deep: #DDD2B5;
-  --color-ink: #1A1410;
-  --color-ink-soft: #3A2E22;
-  --color-shuttle: #F4D04A;
-  --color-court: #B7472A;
-  --color-net: #4A5E4F;
-  --color-chalk: #FAF7EE;
-  --color-muted: #8B7E68;
-  --color-lol-blue: #1C8CE8;
-  --color-penta-magenta: #9B30A8;
+  /* Vermillion (background base) */
+  --color-vermillion-deep: #2c0306;
+  --color-vermillion: #4a0a0e;
+  --color-vermillion-bright: #6a0c12;
+  --color-vermillion-glow: #8b1a1f;
+  --color-ink-dark: #1d0205;
+
+  /* Gold (ornament) */
+  --color-gold: #d4af37;
+  --color-gold-bright: #e9c46a;
+  --color-gold-deep: #8b6914;
+
+  /* Ivory (text on vermillion) */
+  --color-ivory: #fef3c7;
+
+  /* Cinnabar (seals only — keep precious) */
+  --color-cinnabar: #a4252b;
+
+  /* Font families wired by next/font in layout */
+  --font-display: var(--font-cormorant), 'Times New Roman', serif;
+  --font-display-hanzi: var(--font-ma-shan), 'STKaiti', 'Kaiti SC', cursive;
+  --font-serif-hanzi: var(--font-noto-serif-sc), 'Songti SC', serif;
+  --font-ui: var(--font-inter-tight), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
+/* ============================================================
+ * RESET & BASE
+ * ============================================================ */
 @layer base {
-  html { color-scheme: light; }
+  html {
+    color-scheme: dark;
+    /* Hide native scrollbar on Webkit while keeping scroll — subtle gold scrollbar below */
+    scrollbar-color: var(--color-gold-deep) var(--color-vermillion-deep);
+  }
+
   body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
+    background:
+      radial-gradient(70% 50% at 50% 0%, var(--color-vermillion-bright) 0%, transparent 60%),
+      radial-gradient(80% 60% at 50% 100%, var(--color-ink-dark) 0%, transparent 60%),
+      var(--color-vermillion);
+    color: var(--color-ivory);
+    font-family: var(--font-display);
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
   ::selection {
-    background: var(--color-ink);
-    color: var(--color-shuttle);
+    background: var(--color-gold);
+    color: var(--color-vermillion);
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-court);
+    outline: 2px solid var(--color-gold);
     outline-offset: 4px;
+    border-radius: 1px;
   }
 
-  .tabular { font-feature-settings: 'tnum' 1, 'ss01' 1; font-variant-numeric: tabular-nums; }
+  /* Custom subtle gold scrollbar on WebKit */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--color-vermillion-deep); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-gold-deep), var(--color-gold));
+    border-radius: 1px;
+  }
 }
 
-/* ============ DISPLAY UTILITIES (Bricolage Grotesque variable axes) ============ */
-.display-black-condensed {
-  font-family: var(--font-display);
-  font-variation-settings: 'opsz' 96, 'wdth' 75;
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 0.82;
+/* ============================================================
+ * TYPOGRAPHY UTILITIES
+ * ============================================================ */
+.font-display { font-family: var(--font-display); }
+.font-display-hanzi { font-family: var(--font-display-hanzi); }
+.font-serif-hanzi { font-family: var(--font-serif-hanzi); }
+.font-ui { font-family: var(--font-ui); }
+.font-mono { font-family: var(--font-mono); }
+
+.kicker {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-gold);
 }
 
-.display-bold-wide {
-  font-family: var(--font-display);
-  font-variation-settings: 'opsz' 48, 'wdth' 100;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.editorial-italic {
-  font-family: var(--font-editorial);
-  font-style: italic;
-  font-variation-settings: 'opsz' 144, 'SOFT' 80;
-}
-
-.editorial-body {
-  font-family: var(--font-editorial);
-  font-variation-settings: 'opsz' 14, 'SOFT' 30;
-  font-weight: 400;
-}
-
-.label-mono {
+.kicker-mono {
   font-family: var(--font-mono);
+  font-weight: 400;
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--color-gold);
 }
 
-/* ============ GRAIN TEXTURE OVERLAY ============ */
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.22;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.8 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-/* ============ EDITORIAL RULES ============ */
-.rule-double {
-  border-top: 1px solid var(--color-ink);
-  border-bottom: 1px solid var(--color-ink);
-  height: 5px;
-}
-.rule-thick { border-top: 3px solid var(--color-ink); }
-
-/* ============ MAGNETIC HOVER ============ */
-.magnetic {
-  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
-  display: inline-block;
-}
-.magnetic:hover { transform: translateY(-2px); }
-
-/* ============ DUOTONE PORTRAIT ============ */
-.duotone-court {
-  filter: grayscale(100%) contrast(1.15) brightness(1.02) sepia(0.4) hue-rotate(60deg) saturate(1.4);
-  mix-blend-mode: multiply;
-}
-
-/* ============ MARQUEE ============ */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.marquee-track {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: marquee 40s linear infinite;
-}
-
-/* ============ HERO LETTER REVEAL ============ */
-@keyframes letter-up {
-  from { transform: translate3d(0, 110%, 0); opacity: 0; }
-  to   { transform: translate3d(0, 0, 0);   opacity: 1; }
-}
-.letter-reveal > span {
-  display: inline-block;
-  animation: letter-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* ============ ARCADE MODE OVERRIDES ============ */
-body[data-mode="arcade"] .display-black-condensed,
-body[data-mode="arcade"] h1,
-body[data-mode="arcade"] h2 {
-  text-shadow: 2px 0 0 var(--color-lol-blue), -2px 0 0 var(--color-penta-magenta);
-}
-
-/* ============ PROSE STYLES ============ */
-.prose-like h2 {
+.display {
   font-family: var(--font-display);
-  font-variation-settings: 'opsz' 96, 'wdth' 75;
-  font-weight: 800;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  letter-spacing: -0.025em;
-  margin-top: 3rem;
+  font-weight: 400;
   line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-.prose-like h2::before {
-  content: "→ ";
-  color: var(--color-court);
-  margin-right: 0.25em;
+.display em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-gold-bright);
 }
-.prose-like h2 + p { margin-top: 0.75rem; }
-.prose-like p { font-family: var(--font-editorial); font-size: 1.1rem; line-height: 1.65; }
-.prose-like ul, .prose-like ol { padding-left: 1.5rem; }
-.prose-like li { margin-top: 0.4rem; font-family: var(--font-editorial); }
-.prose-like em { color: var(--color-court); font-style: italic; }
-.prose-like strong { color: var(--color-ink); font-weight: 700; }
-.prose-like code {
+
+.hero-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.022em;
+}
+.hero-display em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-gold-bright);
+}
+
+.act-marker {
+  font-family: var(--font-display-hanzi);
+  color: var(--color-gold-bright);
+  font-size: clamp(4rem, 12vw, 9rem);
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 28px rgba(233, 196, 106, 0.45);
+}
+
+.lede {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--color-ivory);
+  opacity: 0.85;
+}
+
+/* ============================================================
+ * MOTIFS — gold dust drift
+ * ============================================================ */
+@keyframes drift-up {
+  0%   { transform: translate3d(0, 100vh, 0) scale(0.5); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translate3d(20px, -10vh, 0) scale(1); opacity: 0; }
+}
+
+.gold-dust {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--color-gold-bright);
+  box-shadow:
+    0 0 6px var(--color-gold-bright),
+    0 0 12px rgba(212, 175, 55, 0.4);
+  animation: drift-up linear infinite;
+  pointer-events: none;
+}
+
+/* ============================================================
+ * MOTIFS — silk veil
+ * ============================================================ */
+.silk-veil {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; transform: translateX(-50%);
+  width: clamp(160px, 18vw, 280px);
+  background:
+    repeating-linear-gradient(180deg, rgba(212, 175, 55, 0.18) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg,
+      rgba(212, 175, 55, 0) 0%,
+      rgba(212, 175, 55, 0.18) 30%,
+      rgba(212, 175, 55, 0.32) 50%,
+      rgba(212, 175, 55, 0.18) 70%,
+      rgba(212, 175, 55, 0) 100%);
+  box-shadow: 0 0 60px rgba(212, 175, 55, 0.25);
+  filter: blur(0.4px);
+  pointer-events: none;
+}
+
+/* ============================================================
+ * MOTIFS — seal (cinnabar block)
+ * ============================================================ */
+.seal {
+  display: inline-grid;
+  place-items: center;
+  background: var(--color-cinnabar);
+  color: var(--color-ivory);
+  font-family: var(--font-serif-hanzi);
+  font-weight: 700;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 2px var(--color-ivory),
+    0 0 0 1px var(--color-cinnabar),
+    0 2px 6px rgba(0, 0, 0, 0.25);
+  transform: rotate(-4deg);
+  user-select: none;
+}
+
+/* ============================================================
+ * MOTIFS — multi-layered Tang frame
+ * ============================================================ */
+.tang-frame {
+  position: relative;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border: 2px solid var(--color-gold);
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(212, 175, 55, 0.05), transparent 60%),
+    var(--color-vermillion);
+}
+.tang-frame::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--color-gold);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ============================================================
+ * INK CURSOR TRAIL
+ * ============================================================ */
+@keyframes ink-fade {
+  0%   { transform: translate(-50%, -50%) scale(1.2); opacity: 1; filter: blur(0); }
+  100% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; filter: blur(2px); }
+}
+.ink-dot {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-gold-bright) 0%, rgba(212, 175, 55, 0.4) 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 9999;
+  animation: ink-fade 900ms forwards;
+  will-change: transform, opacity;
+}
+
+/* ============================================================
+ * CALLIGRAPHY STROKE REVEAL
+ * ============================================================ */
+@keyframes draw-stroke {
+  to { stroke-dashoffset: 0; }
+}
+.stroke-path {
+  fill: none;
+  stroke: var(--color-gold-bright);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: var(--len, 1000);
+  stroke-dashoffset: var(--len, 1000);
+  filter: drop-shadow(0 0 6px rgba(233, 196, 106, 0.5));
+}
+.stroke-path[data-revealed='true'] {
+  animation: draw-stroke 2s cubic-bezier(0.65, 0.05, 0.36, 1) forwards;
+}
+
+/* ============================================================
+ * SEAL BUTTON (hover stamp)
+ * ============================================================ */
+.seal-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.6rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-ivory);
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: visible;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.seal-button:hover,
+.seal-button:focus-visible {
+  color: var(--color-gold-bright);
+  border-color: var(--color-gold-bright);
+  background: rgba(212, 175, 55, 0.05);
+}
+.seal-button .stamp {
+  position: absolute;
+  right: -22px; top: -22px;
+  width: 44px; height: 44px;
+  background: var(--color-cinnabar);
+  color: var(--color-ivory);
+  font-family: var(--font-serif-hanzi);
+  font-weight: 700;
+  display: grid; place-items: center;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 2px var(--color-ivory),
+    0 0 0 1px var(--color-cinnabar),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+  transform: rotate(-8deg) scale(0);
+  opacity: 0;
+  font-size: 1.2rem;
+  pointer-events: none;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease;
+}
+.seal-button:hover .stamp,
+.seal-button:focus-visible .stamp { transform: rotate(-8deg) scale(1); opacity: 1; }
+
+/* ============================================================
+ * PARCHMENT (for the Correspondance form)
+ * ============================================================ */
+.parchment {
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(120, 60, 20, 0.18), transparent 60%),
+    radial-gradient(50% 80% at 100% 50%, rgba(120, 60, 20, 0.12), transparent 60%),
+    linear-gradient(180deg, #f5e6c8 0%, #e9d3a8 100%);
+  color: var(--color-vermillion);
+  font-family: var(--font-display);
+  position: relative;
+  box-shadow:
+    inset 0 0 60px rgba(120, 60, 20, 0.22),
+    0 12px 40px rgba(0, 0, 0, 0.35);
+}
+.parchment::before,
+.parchment::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 14px;
+  background: linear-gradient(180deg, var(--color-vermillion) 0%, var(--color-vermillion-glow) 50%, var(--color-vermillion) 100%);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+.parchment::before { top: -7px; }
+.parchment::after { bottom: -7px; }
+
+.parchment input,
+.parchment textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(74, 10, 14, 0.35);
+  color: var(--color-vermillion);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  padding: 0.6rem 0;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.parchment input::placeholder,
+.parchment textarea::placeholder {
+  color: rgba(74, 10, 14, 0.45);
+  font-style: italic;
+}
+.parchment input:focus,
+.parchment textarea:focus {
+  border-color: var(--color-cinnabar);
+}
+.parchment label {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(74, 10, 14, 0.7);
+}
+
+/* ============================================================
+ * GOLD ROLLER (handscroll cap)
+ * ============================================================ */
+.gold-roller {
+  width: 22px;
+  background: linear-gradient(90deg,
+    var(--color-vermillion) 0%,
+    var(--color-vermillion-glow) 50%,
+    var(--color-vermillion) 100%);
+  border-left: 1px solid var(--color-gold);
+  border-right: 1px solid var(--color-gold);
+  box-shadow:
+    inset 0 8px 12px rgba(0, 0, 0, 0.3),
+    inset 0 -8px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  flex-shrink: 0;
+}
+.gold-roller::before,
+.gold-roller::after {
+  content: '';
+  position: absolute;
+  left: -4px; right: -4px;
+  height: 10px;
+  background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 100%);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.gold-roller::before { top: -5px; }
+.gold-roller::after { bottom: -5px; }
+
+/* ============================================================
+ * PROSE (used in Now journal MDX content)
+ * ============================================================ */
+.prose-tang {
+  font-family: var(--font-display);
+  color: var(--color-ivory);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+.prose-tang h1,
+.prose-tang h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-gold-bright);
+  font-style: italic;
+  font-size: 1.7rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.prose-tang h2::before {
+  content: '— ';
+  color: var(--color-gold);
+  font-style: normal;
+}
+.prose-tang p { margin-top: 0.9rem; }
+.prose-tang p:first-child { margin-top: 0; }
+.prose-tang em { color: var(--color-gold-bright); font-style: italic; }
+.prose-tang strong { color: var(--color-gold-bright); font-weight: 500; }
+.prose-tang a {
+  color: var(--color-gold-bright);
+  text-decoration: underline;
+  text-decoration-color: rgba(233, 196, 106, 0.4);
+  text-underline-offset: 4px;
+}
+.prose-tang a:hover { text-decoration-color: var(--color-gold-bright); }
+.prose-tang ul, .prose-tang ol {
+  padding-left: 1.5rem;
+  margin-top: 0.9rem;
+}
+.prose-tang li { margin-top: 0.4rem; }
+.prose-tang code {
   font-family: var(--font-mono);
-  font-size: 0.85em;
-  background: var(--color-paper-deep);
-  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--color-gold-bright);
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+}
+.prose-tang hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  margin: 2.5rem 0;
+}
+
+/* ============================================================
+ * MISC
+ * ============================================================ */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-ivory);
+  color: var(--color-vermillion);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  z-index: 10000;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ============================================================
+ * REDUCED MOTION
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .gold-dust { display: none; }
+  .ink-dot { display: none; }
+  .stroke-path { stroke-dashoffset: 0 !important; }
 }
