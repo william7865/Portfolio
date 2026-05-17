@@ -15,16 +15,14 @@ type Props = {
 };
 
 /**
- * Cinema title-card transition (cut au noir).
+ * Cinema title-card transition (fade au noir).
  *
  * Timeline (in seconds, parallel with the scroll snap-lock):
- *   0.00   snap-scroll begins, black overlay cuts in (~0.15s)
- *   0.65   title group lifts in (kicker, name, divider, tag) as one block
- *   0.85   divider scaleX starts drawing
- *   1.50   HOLD (1s of breathing room)
- *   2.10   title group fades out + lifts
- *   2.40   black overlay fades out
- *   2.90   section revealed, Lenis released
+ *   0.00 - 0.64   screen fades to black gradually (snap-scroll runs underneath)
+ *   0.64 - 1.04   title group lifts in (hanzi, kicker, name, divider, tag)
+ *   1.04 - 2.09   HOLD (~1s of breathing room — the moment)
+ *   2.09 - 2.49   title group fades out + lifts up 8px
+ *   2.41 - 2.90   black overlay dissolves back to reveal the section
  *
  * `once: true` — re-entering the section never replays the cut.
  */
@@ -116,14 +114,14 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
           'radial-gradient(70% 90% at 50% 50%, #1a0204 0%, #0a0102 100%)'
       }}
     >
-      {/* === BLACK OVERLAY — fast cut in, hold, fade out === */}
+      {/* === BLACK OVERLAY — smooth fade in (~0.65s), hold, smooth fade out === */}
       <motion.div
         aria-hidden="true"
         initial={{ opacity: 0 }}
-        animate={play ? { opacity: [1, 1, 0] } : false}
+        animate={play ? { opacity: [0, 1, 1, 0] } : false}
         transition={{
           duration: 2.9,
-          times: [0.05, 0.83, 1],
+          times: [0, 0.22, 0.83, 1],
           ease: 'easeInOut'
         }}
         className="absolute inset-0 bg-black z-30 pointer-events-none"
