@@ -399,11 +399,8 @@ function CurtainPanel({ side, play }: { side: 'left' | 'right'; play: boolean })
   const isLeft = side === 'left';
   const targetX = isLeft ? '-12%' : '12%';
   const innerShadow = isLeft
-    ? 'inset -50px 0 90px rgba(0,0,0,0.6), inset 0 -50px 60px rgba(0,0,0,0.45)'
-    : 'inset 50px 0 90px rgba(0,0,0,0.6), inset 0 -50px 60px rgba(0,0,0,0.45)';
-  const fabricGradient = isLeft
-    ? 'linear-gradient(90deg, var(--color-vermillion-bright) 0%, var(--color-vermillion) 70%, var(--color-vermillion-deep) 100%)'
-    : 'linear-gradient(270deg, var(--color-vermillion-bright) 0%, var(--color-vermillion) 70%, var(--color-vermillion-deep) 100%)';
+    ? 'inset -60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 60px 80px rgba(0,0,0,0.55)'
+    : 'inset 60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 60px 80px rgba(0,0,0,0.55)';
 
   return (
     <motion.div
@@ -413,41 +410,52 @@ function CurtainPanel({ side, play }: { side: 'left' | 'right'; play: boolean })
       transition={{ delay: 0.5, duration: 1.05, ease: [0.65, 0.05, 0.36, 1] }}
       className={`absolute top-0 bottom-0 ${isLeft ? 'left-0' : 'right-0'} w-1/2 pointer-events-none will-change-transform z-30`}
     >
-      <div className="relative w-full h-full">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              repeating-linear-gradient(180deg, rgba(212,175,55,0.18) 0 1px, transparent 1px 9px),
-              ${fabricGradient}
-            `,
-            boxShadow: innerShadow
-          }}
-        />
-        <div className="absolute inset-0 curtain-damask opacity-[0.18] mix-blend-overlay" />
+      <div
+        className="relative w-full h-full"
+        style={{ boxShadow: innerShadow }}
+      >
+        {/* === Velvet body: folds + footlight + base vermilion === */}
+        <div className={isLeft ? 'curtain-fabric-l' : 'curtain-fabric-r'} />
+
+        {/* === Damask brocade: Tang cloud-scroll medallion === */}
+        <div className="absolute inset-0 curtain-damask opacity-[0.20] mix-blend-overlay pointer-events-none" />
+
+        {/* === Outer gold trim === */}
         <div
           className={`absolute top-0 bottom-0 w-1.5 ${isLeft ? 'left-0' : 'right-0'}`}
           style={{
             background:
-              'linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 50%, var(--color-gold) 100%)'
+              'linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 50%, var(--color-gold) 100%)',
+            boxShadow: '0 0 4px rgba(0,0,0,0.5)'
           }}
         />
+
+        {/* === Inner gold trim (catches stage light) + halo === */}
         <div
-          className={`absolute top-0 bottom-0 w-1 ${isLeft ? 'right-0' : 'left-0'}`}
+          className={`absolute top-0 bottom-0 w-[3px] ${isLeft ? 'right-0' : 'left-0'} z-[1]`}
           style={{
             background:
-              'linear-gradient(180deg, var(--color-gold-bright) 0%, var(--color-gold) 50%, var(--color-gold-bright) 100%)',
-            boxShadow: '0 0 8px rgba(233,196,106,0.55)'
+              'linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-bright) 45%, #fff3c5 55%, var(--color-gold-bright) 70%, var(--color-gold-deep) 100%)',
+            boxShadow: '0 0 12px rgba(255,235,180,0.6), 0 0 24px rgba(233,196,106,0.35)'
           }}
         />
+        {/* Soft halo bleed inward */}
         <div
-          className="absolute left-0 right-0 bottom-3 h-2"
+          className={`curtain-inner-glow absolute top-[20%] bottom-[15%] w-[40px] pointer-events-none ${isLeft ? 'right-0' : 'left-0'}`}
+          aria-hidden="true"
+        />
+
+        {/* === Bottom hem === */}
+        <div
+          className="absolute left-0 right-0 bottom-3 h-2 pointer-events-none"
           style={{
             background:
               'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)'
           }}
         />
-        <div className="absolute left-0 right-0 bottom-0 flex justify-around px-3">
+
+        {/* === Premium tassels along bottom === */}
+        <div className="absolute left-0 right-0 bottom-0 flex justify-around px-4 z-[2]">
           {Array.from({ length: 7 }).map((_, i) => (
             <Tassel key={i} alt={(i + (isLeft ? 0 : 1)) % 2 === 0} />
           ))}
@@ -462,15 +470,22 @@ function Tassel({ alt = false }: { alt?: boolean }) {
     <div
       className="relative"
       style={{
-        width: '6px',
-        height: '54px',
+        width: '14px',
+        height: '78px',
         transformOrigin: 'top center',
-        animation: `${alt ? 'tassel-sway-alt' : 'tassel-sway'} ${3 + (alt ? 0.6 : 0)}s ease-in-out infinite`
+        animation: `${alt ? 'tassel-sway-alt' : 'tassel-sway'} ${3.4 + (alt ? 0.7 : 0)}s ease-in-out infinite`
       }}
     >
-      <div className="tassel-cord absolute left-1/2 -translate-x-1/2 top-0 w-px h-7" />
-      <div className="tassel-bob absolute left-1/2 -translate-x-1/2 top-6 w-2.5 h-3 rounded-[40%]" />
-      <div className="tassel-fringe absolute left-1/2 -translate-x-1/2 top-[34px] w-2 h-5" />
+      {/* Cord hanging from the curtain hem */}
+      <div className="tassel-cord absolute left-1/2 -translate-x-1/2 top-0 w-px h-[18px]" />
+      {/* Brass cap (dome where cord enters the head) */}
+      <div className="tassel-cap absolute left-1/2 -translate-x-1/2 top-[16px] w-[10px] h-[5px]" />
+      {/* Turk's-head knot (gold band binding the head) */}
+      <div className="tassel-knot absolute left-1/2 -translate-x-1/2 top-[20px] w-[12px] h-[3px]" />
+      {/* Silk-wrapped bombed head */}
+      <div className="tassel-head absolute left-1/2 -translate-x-1/2 top-[22px] w-[12px] h-[16px]" />
+      {/* Bullion fringe (long gold-thread skirt) */}
+      <div className="tassel-fringe absolute left-1/2 -translate-x-1/2 top-[37px] w-[14px] h-[34px]" />
     </div>
   );
 }
