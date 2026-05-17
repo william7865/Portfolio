@@ -10,28 +10,25 @@ const SNAP_DURATION_S = 0.7;
 type Props = {
   hanzi: string;
   label: string;
-  /** Kept for API compatibility, currently unused by the blackout cut. */
+  /** Short epigraph rendered as `— subtitle —` below the divider. Optional. */
   subtitle?: string;
 };
 
 /**
- * Cinema title-card transition between acts.
+ * Cinema title-card transition (cut au noir).
  *
- * Timeline (seconds from the in-view trigger; runs in parallel with the snap):
+ * Timeline (in seconds, parallel with the scroll snap-lock):
  *   0.00   snap-scroll begins, black overlay cuts in (~0.15s)
- *   0.40   hanzi appears
- *   0.55   kicker (mono) appears
- *   0.75   big italic title appears
- *   1.00   gold divider draws across
- *   1.30   corner BLACKOUT tag fades in
- *   1.50   HOLD (everything visible, breathing)
- *   2.20   title group fades out
+ *   0.65   title group lifts in (kicker, name, divider, tag) as one block
+ *   0.85   divider scaleX starts drawing
+ *   1.50   HOLD (1s of breathing room)
+ *   2.10   title group fades out + lifts
  *   2.40   black overlay fades out
- *   2.90   section revealed, Lenis released, user free to scroll
+ *   2.90   section revealed, Lenis released
  *
  * `once: true` — re-entering the section never replays the cut.
  */
-export function ActCurtain({ hanzi, label }: Props) {
+export function ActCurtain({ hanzi: _hanzi, label, subtitle }: Props) {
   const ref = useRef<HTMLElement | null>(null);
   const playedRef = useRef(false);
   const reduce = useReducedMotion();
@@ -98,8 +95,7 @@ export function ActCurtain({ hanzi, label }: Props) {
         className="relative min-h-screen overflow-hidden flex items-center justify-center bg-black"
         aria-label={label}
       >
-        <TitleStack hanzi={hanzi} kicker={kicker} name={name} animated={false} />
-        <CornerTag animated={false} />
+        <TitleCard kicker={kicker} name={name} subtitle={subtitle} static />
       </section>
     );
   }
@@ -114,7 +110,7 @@ export function ActCurtain({ hanzi, label }: Props) {
           'radial-gradient(70% 90% at 50% 50%, #1a0204 0%, #0a0102 100%)'
       }}
     >
-      {/* === BLACK OVERLAY — cut in fast, hold, fade out === */}
+      {/* === BLACK OVERLAY — fast cut in, hold, fade out === */}
       <motion.div
         aria-hidden="true"
         initial={{ opacity: 0 }}
@@ -127,29 +123,22 @@ export function ActCurtain({ hanzi, label }: Props) {
         className="absolute inset-0 bg-black z-30 pointer-events-none"
       />
 
-      {/* === TITLE STACK — z-40, fades out before the black opens === */}
+      {/* === TITLE CARD === */}
       <motion.div
-        initial={{ opacity: 1 }}
-        animate={play ? { opacity: 0 } : false}
-        transition={{ delay: 2.2, duration: 0.45, ease: 'easeOut' }}
-        className="relative z-40"
-      >
-        <TitleStack hanzi={hanzi} kicker={kicker} name={name} animated />
-      </motion.div>
-
-      {/* === CORNER TAG (Tang signature) === */}
-      <motion.div
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={play ? { opacity: [0, 0, 0.4, 0.4, 0] } : false}
+        initial={{ opacity: 0, y: 12 }}
+        animate={
+          play
+            ? { opacity: [0, 0, 1, 1, 0], y: [12, 12, 0, 0, -8] }
+            : false
+        }
         transition={{
           duration: 2.9,
-          times: [0, 0.42, 0.55, 0.74, 0.83],
+          times: [0, 0.22, 0.36, 0.72, 0.86],
           ease: 'easeInOut'
         }}
-        className="absolute bottom-6 right-7 z-40 pointer-events-none"
+        className="relative z-40"
       >
-        <CornerTag animated />
+        <TitleCard kicker={kicker} name={name} subtitle={subtitle} play={play} />
       </motion.div>
     </section>
   );
@@ -157,62 +146,36 @@ export function ActCurtain({ hanzi, label }: Props) {
 
 /* ============================================================ */
 
-function TitleStack({
-  hanzi,
+function TitleCard({
   kicker,
   name,
-  animated
+  subtitle,
+  play = false,
+  static: isStatic = false
 }: {
-  hanzi: string;
   kicker: string;
   name: string;
-  animated: boolean;
+  subtitle?: string;
+  play?: boolean;
+  static?: boolean;
 }) {
-  const inner = (delay: number) =>
-    animated
-      ? {
-          initial: { opacity: 0, y: 12 },
-          animate: { opacity: 1, y: 0 },
-          transition: {
-            delay,
-            duration: 0.65,
-            ease: [0.16, 1, 0.3, 1] as [number, number, number, number]
-          }
-        }
-      : { initial: false, animate: false, transition: undefined };
-
   return (
     <div className="text-center px-6">
-      {/* Hanzi */}
-      <motion.div
-        {...inner(0.4)}
-        className="font-display-hanzi text-[var(--color-gold-bright)] mb-5"
-        style={{
-          fontSize: 'clamp(1.4rem, 2.2vw, 2rem)',
-          lineHeight: 1,
-          opacity: animated ? undefined : 0.85,
-          textShadow: '0 0 16px rgba(233,196,106,0.35)'
-        }}
-      >
-        {hanzi}
-      </motion.div>
-
-      {/* Kicker (small mono) */}
-      <motion.div
-        {...inner(0.55)}
-        className="font-mono uppercase text-[var(--color-gold)] mb-7"
+      {/* Kicker (small mono, wide-spaced) */}
+      <div
+        className="font-mono uppercase text-[var(--color-gold)]"
         style={{
           fontSize: '0.72rem',
           letterSpacing: '0.42em',
-          opacity: animated ? undefined : 0.65
+          opacity: 0.7,
+          marginBottom: '1.3rem'
         }}
       >
         {kicker}
-      </motion.div>
+      </div>
 
       {/* Big italic name */}
-      <motion.h2
-        {...inner(0.75)}
+      <h2
         className="font-display italic font-light text-[var(--color-ivory)] leading-none"
         style={{
           fontSize: 'clamp(3rem, 7vw, 5.5rem)',
@@ -220,43 +183,40 @@ function TitleStack({
         }}
       >
         <em style={{ color: 'var(--color-gold-bright)' }}>{name}</em>
-      </motion.h2>
+      </h2>
 
-      {/* Divider */}
+      {/* Divider — grows from the center as part of the title group */}
       <motion.div
         aria-hidden="true"
-        initial={animated ? { scaleX: 0 } : false}
-        animate={animated ? { scaleX: 1 } : false}
-        transition={{ delay: 1.0, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        initial={isStatic ? false : { scaleX: 0 }}
+        animate={!isStatic && play ? { scaleX: [0, 0, 1, 1, 0] } : false}
+        transition={{
+          duration: 2.9,
+          times: [0, 0.30, 0.45, 0.70, 0.85],
+          ease: [0.16, 1, 0.3, 1]
+        }}
         className="mx-auto mt-7 w-24 h-px origin-center"
         style={{
           background:
             'linear-gradient(90deg, transparent 0%, var(--color-gold-bright) 50%, transparent 100%)',
-          boxShadow: '0 0 6px rgba(233,196,106,0.45)'
+          boxShadow: '0 0 6px rgba(233,196,106,0.5)',
+          transform: isStatic ? 'scaleX(1)' : undefined
         }}
       />
-    </div>
-  );
-}
 
-function CornerTag({ animated }: { animated: boolean }) {
-  return (
-    <div
-      className="flex items-baseline gap-2 font-mono text-[var(--color-gold)]"
-      style={{
-        fontSize: '0.55rem',
-        letterSpacing: '0.42em',
-        textTransform: 'uppercase',
-        opacity: animated ? undefined : 0.35
-      }}
-    >
-      <span
-        className="font-display-hanzi"
-        style={{ fontSize: '0.78rem', letterSpacing: 0 }}
-      >
-        暗轉
-      </span>
-      <span>Blackout</span>
+      {/* Subtitle tag — flanked by em-dashes, italic */}
+      {subtitle && (
+        <div
+          className="font-display italic text-[var(--color-gold-bright)] mt-5"
+          style={{
+            fontSize: '0.95rem',
+            opacity: 0.65,
+            letterSpacing: '0.01em'
+          }}
+        >
+          — {subtitle} —
+        </div>
+      )}
     </div>
   );
 }
