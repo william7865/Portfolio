@@ -26,11 +26,35 @@
     "proofLabel": "Proof"
   },
   "now": {
-    "kicker": "ACT III · NOW",
-    "title": "Journal",
-    "subtitle": "The current notebook — thoughts, reading, work in progress.",
-    "stamped": "Stamped",
-    "moonOf": "Moon of"
+    "kicker": "ACT III · TENETS",
+    "titleEm": "Five",
+    "titleRest": "principles",
+    "subtitle": "What I believe in when I build.",
+    "cartoucheHan": "五訓",
+    "cartoucheLat": "TENETS",
+    "sealStamp": "engraved · 2026",
+    "nowParis": "Now · Paris",
+    "hour": {
+      "rat": "Rat",
+      "ox": "Ox",
+      "tiger": "Tiger",
+      "rabbit": "Rabbit",
+      "dragon": "Dragon",
+      "snake": "Snake",
+      "horse": "Horse",
+      "goat": "Goat",
+      "monkey": "Monkey",
+      "rooster": "Rooster",
+      "dog": "Dog",
+      "pig": "Pig"
+    },
+    "precepts": {
+      "i":   { "label": "The Way",   "text": "Learning to learn, for life. Every project is a lesson, never an end." },
+      "ii":  { "label": "The Heart", "text": "Build what I'd want to use. If I wouldn't open it tomorrow, it doesn't deserve to exist." },
+      "iii": { "label": "The Craft", "text": "Quality shows, so does sloppiness. The invisible detail is the signature." },
+      "iv":  { "label": "The Word",  "text": "Promise rarely, deliver always. A kept deadline is worth a thousand speeches." },
+      "v":   { "label": "The Human", "text": "User first, algorithm second. Team before solo prowess." }
+    }
   },
   "gate": {
     "kicker": "THE THRESHOLD · 入",

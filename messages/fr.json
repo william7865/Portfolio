@@ -26,11 +26,35 @@
     "proofLabel": "Preuve"
   },
   "now": {
-    "kicker": "ACTE III · NOW",
-    "title": "Journal",
-    "subtitle": "Le carnet du moment — pensées, lectures, chantiers en cours.",
-    "stamped": "Cacheté",
-    "moonOf": "Lune de"
+    "kicker": "ACTE III · PRÉCEPTES",
+    "titleEm": "Cinq",
+    "titleRest": "préceptes",
+    "subtitle": "Ce en quoi je crois quand je bâtis.",
+    "cartoucheHan": "五訓",
+    "cartoucheLat": "TENETS",
+    "sealStamp": "gravé · 2026",
+    "nowParis": "Maintenant · Paris",
+    "hour": {
+      "rat": "Rat",
+      "ox": "Buffle",
+      "tiger": "Tigre",
+      "rabbit": "Lapin",
+      "dragon": "Dragon",
+      "snake": "Serpent",
+      "horse": "Cheval",
+      "goat": "Chèvre",
+      "monkey": "Singe",
+      "rooster": "Coq",
+      "dog": "Chien",
+      "pig": "Cochon"
+    },
+    "precepts": {
+      "i":   { "label": "La voie",   "text": "Apprendre à apprendre, toute la vie. Chaque projet est une leçon, jamais un point d'arrivée." },
+      "ii":  { "label": "Le cœur",   "text": "Construire ce que j'aimerais utiliser. Si je ne le rouvrirais pas demain, il ne mérite pas d'exister." },
+      "iii": { "label": "L'ouvrage", "text": "La qualité se voit, le bâclage aussi. Le détail invisible est la signature." },
+      "iv":  { "label": "La parole", "text": "Promettre rarement, livrer toujours. Une deadline tenue vaut mille discours." },
+      "v":   { "label": "L'humain",  "text": "L'utilisateur d'abord, l'algorithme ensuite. L'équipe avant la prouesse solo." }
+    }
   },
   "gate": {
     "kicker": "L'ENTRÉE · 入",
