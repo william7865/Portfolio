@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { getLenis } from '@/lib/lenisInstance';
 
-const PLAY_DURATION_MS = 3800;
+const PLAY_DURATION_MS = 4800;
 const SNAP_DURATION_S = 0.7;
 
 type Props = {
@@ -18,18 +18,18 @@ type Props = {
  * Two-phase cinema title card (Wes Anderson / Bertolucci pacing).
  *
  * Phase 1 — Latin introduction (kicker + name + divider + subtitle).
- * Phase 2 — Hanzi ceremonial finale (大 first frame, then transitions to scene).
+ * Phase 2 — Hanzi ceremonial finale (large, alone), then transitions to scene.
  *
  * Timeline (in seconds, parallel with the scroll snap-lock):
- *   0.00 - 0.70   screen fades to black slowly
- *   0.70 - 1.00   Latin card lifts in
- *   1.00 - 1.60   HOLD Latin (~0.6s — read the chapter and name)
- *   1.60 - 1.80   Latin card fades out + lifts up
- *   1.80 - 2.00   beat of pure black (the breath between phases)
- *   2.00 - 2.30   hanzi rises in (large, ceremonial)
- *   2.30 - 3.20   HOLD hanzi (0.9s — the Tang moment)
- *   3.20 - 3.40   hanzi fades out + lifts up
- *   3.40 - 3.80   black dissolves back to reveal the section
+ *   0.00 - 0.85   screen fades to black slowly
+ *   0.85 - 1.30   Latin card lifts in
+ *   1.30 - 2.30   HOLD Latin (1.0s — proper read time)
+ *   2.30 - 2.55   Latin card fades out + lifts up
+ *   2.55 - 2.75   beat of pure black (the breath between phases)
+ *   2.75 - 3.20   hanzi rises in (large, ceremonial)
+ *   3.20 - 4.20   HOLD hanzi (1.0s — the Tang moment, savouring)
+ *   4.20 - 4.45   hanzi fades out + lifts up
+ *   4.45 - 4.80   black dissolves back to reveal the section
  *
  * `once: true` — re-entering the section never replays the cut.
  */
@@ -124,8 +124,8 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
         initial={{ opacity: 0 }}
         animate={play ? { opacity: [0, 1, 1, 0] } : false}
         transition={{
-          duration: 3.8,
-          times: [0, 0.18, 0.89, 1],
+          duration: 4.8,
+          times: [0, 0.18, 0.93, 1],
           ease: 'easeInOut'
         }}
         className="absolute inset-0 bg-black z-30 pointer-events-none"
@@ -140,8 +140,8 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
             : false
         }
         transition={{
-          duration: 3.8,
-          times: [0, 0.18, 0.26, 0.42, 0.47],
+          duration: 4.8,
+          times: [0, 0.18, 0.27, 0.48, 0.53],
           ease: 'easeInOut'
         }}
         className="absolute inset-0 grid place-items-center z-40 pointer-events-none"
@@ -163,8 +163,8 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
             : false
         }
         transition={{
-          duration: 3.8,
-          times: [0, 0.53, 0.61, 0.84, 0.89],
+          duration: 4.8,
+          times: [0, 0.57, 0.67, 0.88, 0.93],
           ease: 'easeInOut'
         }}
         className="absolute inset-0 grid place-items-center z-40 pointer-events-none"
@@ -219,8 +219,8 @@ function LatinCard({
         initial={{ scaleX: 0 }}
         animate={play ? { scaleX: [0, 0, 1, 1, 0] } : false}
         transition={{
-          duration: 3.8,
-          times: [0, 0.22, 0.30, 0.42, 0.47],
+          duration: 4.8,
+          times: [0, 0.22, 0.30, 0.48, 0.53],
           ease: [0.16, 1, 0.3, 1]
         }}
         className="mx-auto mt-7 w-24 h-px origin-center"
