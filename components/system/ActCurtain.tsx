@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { getLenis } from '@/lib/lenisInstance';
 
-const PLAY_DURATION_MS = 2900;
+const PLAY_DURATION_MS = 3800;
 const SNAP_DURATION_S = 0.7;
 
 type Props = {
@@ -15,14 +15,14 @@ type Props = {
 };
 
 /**
- * Cinema title-card transition (fade au noir).
+ * Cinema title-card transition (fade au noir — Wes Anderson pacing).
  *
  * Timeline (in seconds, parallel with the scroll snap-lock):
- *   0.00 - 0.64   screen fades to black gradually (snap-scroll runs underneath)
- *   0.64 - 1.04   title group lifts in (hanzi, kicker, name, divider, tag)
- *   1.04 - 2.09   HOLD (~1s of breathing room — the moment)
- *   2.09 - 2.49   title group fades out + lifts up 8px
- *   2.41 - 2.90   black overlay dissolves back to reveal the section
+ *   0.00 - 0.80   screen fades to black slowly (snap-scroll runs underneath)
+ *   0.80 - 1.30   title group lifts in (hanzi, kicker, name, divider, tag)
+ *   1.30 - 2.80   HOLD (1.5s — the moment, time to read and breathe)
+ *   2.80 - 3.20   title group fades out + lifts up 8px
+ *   3.20 - 3.80   black overlay dissolves back to reveal the section
  *
  * `once: true` — re-entering the section never replays the cut.
  */
@@ -114,14 +114,14 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
           'radial-gradient(70% 90% at 50% 50%, #1a0204 0%, #0a0102 100%)'
       }}
     >
-      {/* === BLACK OVERLAY — smooth fade in (~0.65s), hold, smooth fade out === */}
+      {/* === BLACK OVERLAY — slow fade in (~0.8s), long hold, slow fade out (~0.6s) === */}
       <motion.div
         aria-hidden="true"
         initial={{ opacity: 0 }}
         animate={play ? { opacity: [0, 1, 1, 0] } : false}
         transition={{
-          duration: 2.9,
-          times: [0, 0.22, 0.83, 1],
+          duration: 3.8,
+          times: [0, 0.21, 0.84, 1],
           ease: 'easeInOut'
         }}
         className="absolute inset-0 bg-black z-30 pointer-events-none"
@@ -136,8 +136,8 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
             : false
         }
         transition={{
-          duration: 2.9,
-          times: [0, 0.22, 0.36, 0.72, 0.86],
+          duration: 3.8,
+          times: [0, 0.21, 0.34, 0.74, 0.84],
           ease: 'easeInOut'
         }}
         className="relative z-40"
@@ -216,8 +216,8 @@ function TitleCard({
         initial={isStatic ? false : { scaleX: 0 }}
         animate={!isStatic && play ? { scaleX: [0, 0, 1, 1, 0] } : false}
         transition={{
-          duration: 2.9,
-          times: [0, 0.30, 0.45, 0.70, 0.85],
+          duration: 3.8,
+          times: [0, 0.28, 0.40, 0.74, 0.84],
           ease: [0.16, 1, 0.3, 1]
         }}
         className="mx-auto mt-7 w-24 h-px origin-center"
