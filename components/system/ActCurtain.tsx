@@ -15,14 +15,21 @@ type Props = {
 };
 
 /**
- * Cinema title-card transition (fade au noir — Wes Anderson pacing).
+ * Two-phase cinema title card (Wes Anderson / Bertolucci pacing).
+ *
+ * Phase 1 — Latin introduction (kicker + name + divider + subtitle).
+ * Phase 2 — Hanzi ceremonial finale (大 first frame, then transitions to scene).
  *
  * Timeline (in seconds, parallel with the scroll snap-lock):
- *   0.00 - 0.80   screen fades to black slowly (snap-scroll runs underneath)
- *   0.80 - 1.30   title group lifts in (hanzi, kicker, name, divider, tag)
- *   1.30 - 2.80   HOLD (1.5s — the moment, time to read and breathe)
- *   2.80 - 3.20   title group fades out + lifts up 8px
- *   3.20 - 3.80   black overlay dissolves back to reveal the section
+ *   0.00 - 0.70   screen fades to black slowly
+ *   0.70 - 1.00   Latin card lifts in
+ *   1.00 - 1.60   HOLD Latin (~0.6s — read the chapter and name)
+ *   1.60 - 1.80   Latin card fades out + lifts up
+ *   1.80 - 2.00   beat of pure black (the breath between phases)
+ *   2.00 - 2.30   hanzi rises in (large, ceremonial)
+ *   2.30 - 3.20   HOLD hanzi (0.9s — the Tang moment)
+ *   3.20 - 3.40   hanzi fades out + lifts up
+ *   3.40 - 3.80   black dissolves back to reveal the section
  *
  * `once: true` — re-entering the section never replays the cut.
  */
@@ -93,13 +100,10 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
         className="relative min-h-screen overflow-hidden flex items-center justify-center bg-black"
         aria-label={label}
       >
-        <TitleCard
-          hanzi={hanzi}
-          kicker={kicker}
-          name={name}
-          subtitle={subtitle}
-          static
-        />
+        <div className="text-center px-6 space-y-8">
+          <HanziCard hanzi={hanzi} />
+          <LatinCard kicker={kicker} name={name} subtitle={subtitle} />
+        </div>
       </section>
     );
   }
@@ -114,20 +118,20 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
           'radial-gradient(70% 90% at 50% 50%, #1a0204 0%, #0a0102 100%)'
       }}
     >
-      {/* === BLACK OVERLAY — slow fade in (~0.8s), long hold, slow fade out (~0.6s) === */}
+      {/* === BLACK OVERLAY — slow fade in, long hold across both phases, slow fade out === */}
       <motion.div
         aria-hidden="true"
         initial={{ opacity: 0 }}
         animate={play ? { opacity: [0, 1, 1, 0] } : false}
         transition={{
           duration: 3.8,
-          times: [0, 0.21, 0.84, 1],
+          times: [0, 0.18, 0.89, 1],
           ease: 'easeInOut'
         }}
         className="absolute inset-0 bg-black z-30 pointer-events-none"
       />
 
-      {/* === TITLE CARD === */}
+      {/* === PHASE 1 — Latin card: kicker · name · divider · subtitle === */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={
@@ -137,56 +141,57 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
         }
         transition={{
           duration: 3.8,
-          times: [0, 0.21, 0.34, 0.74, 0.84],
+          times: [0, 0.18, 0.26, 0.42, 0.47],
           ease: 'easeInOut'
         }}
-        className="relative z-40"
+        className="absolute inset-0 grid place-items-center z-40 pointer-events-none"
       >
-        <TitleCard
-          hanzi={hanzi}
+        <LatinCard
           kicker={kicker}
           name={name}
           subtitle={subtitle}
           play={play}
         />
       </motion.div>
+
+      {/* === PHASE 2 — Hanzi finale: large, alone, ceremonial === */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={
+          play
+            ? { opacity: [0, 0, 1, 1, 0], y: [16, 16, 0, 0, -10] }
+            : false
+        }
+        transition={{
+          duration: 3.8,
+          times: [0, 0.53, 0.61, 0.84, 0.89],
+          ease: 'easeInOut'
+        }}
+        className="absolute inset-0 grid place-items-center z-40 pointer-events-none"
+      >
+        <HanziCard hanzi={hanzi} />
+      </motion.div>
     </section>
   );
 }
 
 /* ============================================================ */
+/* Sub-components                                               */
+/* ============================================================ */
 
-function TitleCard({
-  hanzi,
+function LatinCard({
   kicker,
   name,
   subtitle,
-  play = false,
-  static: isStatic = false
+  play
 }: {
-  hanzi: string;
   kicker: string;
   name: string;
   subtitle?: string;
   play?: boolean;
-  static?: boolean;
 }) {
   return (
     <div className="text-center px-6">
-      {/* Hanzi — Tang anchor, sits above the Latin chapter number */}
-      <div
-        className="font-display-hanzi text-[var(--color-gold-bright)]"
-        style={{
-          fontSize: 'clamp(1.6rem, 2.4vw, 2.2rem)',
-          lineHeight: 1,
-          marginBottom: '0.85rem',
-          textShadow: '0 0 18px rgba(233,196,106,0.4)'
-        }}
-      >
-        {hanzi}
-      </div>
-
-      {/* Kicker (small mono, wide-spaced) — Latin chapter number */}
       <div
         className="font-mono uppercase text-[var(--color-gold)]"
         style={{
@@ -199,7 +204,6 @@ function TitleCard({
         {kicker}
       </div>
 
-      {/* Big italic name */}
       <h2
         className="font-display italic font-light text-[var(--color-ivory)] leading-none"
         style={{
@@ -210,26 +214,23 @@ function TitleCard({
         <em style={{ color: 'var(--color-gold-bright)' }}>{name}</em>
       </h2>
 
-      {/* Divider — grows from the center as part of the title group */}
       <motion.div
         aria-hidden="true"
-        initial={isStatic ? false : { scaleX: 0 }}
-        animate={!isStatic && play ? { scaleX: [0, 0, 1, 1, 0] } : false}
+        initial={{ scaleX: 0 }}
+        animate={play ? { scaleX: [0, 0, 1, 1, 0] } : false}
         transition={{
           duration: 3.8,
-          times: [0, 0.28, 0.40, 0.74, 0.84],
+          times: [0, 0.22, 0.30, 0.42, 0.47],
           ease: [0.16, 1, 0.3, 1]
         }}
         className="mx-auto mt-7 w-24 h-px origin-center"
         style={{
           background:
             'linear-gradient(90deg, transparent 0%, var(--color-gold-bright) 50%, transparent 100%)',
-          boxShadow: '0 0 6px rgba(233,196,106,0.5)',
-          transform: isStatic ? 'scaleX(1)' : undefined
+          boxShadow: '0 0 6px rgba(233,196,106,0.5)'
         }}
       />
 
-      {/* Subtitle tag — flanked by em-dashes, italic */}
       {subtitle && (
         <div
           className="font-display italic text-[var(--color-gold-bright)] mt-5"
@@ -242,6 +243,24 @@ function TitleCard({
           — {subtitle} —
         </div>
       )}
+    </div>
+  );
+}
+
+function HanziCard({ hanzi }: { hanzi: string }) {
+  return (
+    <div
+      className="font-display-hanzi text-center text-[var(--color-gold-bright)]"
+      style={{
+        fontSize: 'clamp(6rem, 14vw, 12rem)',
+        lineHeight: 1,
+        letterSpacing: '0.08em',
+        textShadow:
+          '0 0 40px rgba(233,196,106,0.5), 0 0 80px rgba(233,196,106,0.25)',
+        filter: 'drop-shadow(0 0 30px rgba(233,196,106,0.3))'
+      }}
+    >
+      {hanzi}
     </div>
   );
 }
