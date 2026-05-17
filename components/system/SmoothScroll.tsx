@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { setLenis } from '@/lib/lenisInstance';
 
 /**
  * Wheel/trackpad inertia via Lenis. Mounts once at the root.
@@ -26,6 +27,7 @@ export function SmoothScroll() {
       wheelMultiplier: 1,
       touchMultiplier: 1.6
     });
+    setLenis(lenis);
 
     let rafId = 0;
     const raf = (time: number) => {
@@ -37,6 +39,7 @@ export function SmoothScroll() {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      setLenis(null);
     };
   }, []);
 
