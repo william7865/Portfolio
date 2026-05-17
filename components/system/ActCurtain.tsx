@@ -6,9 +6,11 @@ import { getLenis } from '@/lib/lenisInstance';
 
 /** Total length of the curtain choreography, in milliseconds.
  *  Matches the latest motion delay+duration (subtitle lands at 2.2 + 0.5 = 2.7s). */
-const PLAY_DURATION_MS = 2700;
+const PLAY_DURATION_MS = 2900;
 /** Duration of the snap-to-top scroll, in seconds. */
 const SNAP_DURATION_S = 0.7;
+/** Weighted ease — slow lift, steady mid, gentle settle. Mimics counterweight rigging. */
+const RISE_EASE: [number, number, number, number] = [0.7, 0, 0.2, 1];
 
 type Props = {
   hanzi: string;
@@ -260,7 +262,7 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
               }
             : false
         }
-        transition={{ delay: 1.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ delay: 1.35, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-20 text-center px-6 will-change-transform"
       >
         {/* Hanzi with golden halo + stage-floor reflection */}
@@ -312,7 +314,7 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
           className="mx-auto mt-4 h-px w-32 origin-center"
           initial={{ scaleX: 0 }}
           animate={play ? { scaleX: 1 } : false}
-          transition={{ delay: 1.95, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ delay: 2.15, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           style={{
             background:
               'linear-gradient(90deg, transparent 0%, var(--color-gold) 30%, var(--color-gold-bright) 50%, var(--color-gold) 70%, transparent 100%)',
@@ -324,7 +326,7 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={play ? { opacity: 0.8, y: 0 } : false}
-            transition={{ delay: 2.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 2.4, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="lede italic mt-5 text-[var(--color-gold-bright)] max-w-md mx-auto"
           >
             {subtitle}
@@ -338,38 +340,36 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
       <CurtainPanel side="left" play={play} />
       <CurtainPanel side="right" play={play} />
 
-      {/* === TOP VALANCE (gold rod + dougong-inspired pelmet) === */}
+      {/* === TOP VALANCE — fixed scenery (does not rise) === */}
       <div
         aria-hidden="true"
         className="absolute top-0 left-0 right-0 z-40 pointer-events-none"
       >
         {/* Brass rod */}
         <div
-          className="h-3.5"
+          className="relative h-3.5"
           style={{
             background:
               'linear-gradient(180deg, var(--color-gold-deep) 0%, var(--color-gold) 40%, var(--color-gold-bright) 55%, var(--color-gold) 70%, var(--color-gold-deep) 100%)',
             boxShadow:
               '0 6px 20px rgba(0,0,0,0.55), inset 0 -1px 2px rgba(0,0,0,0.4)'
           }}
-        />
-        <span
-          className="absolute -left-1 top-0 h-5 w-5 rounded-full"
-          style={{
-            background:
-              'radial-gradient(circle at 30% 30%, var(--color-gold-bright), var(--color-gold-deep))',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.6), 0 0 10px rgba(233,196,106,0.45)'
-          }}
-        />
-        <span
-          className="absolute -right-1 top-0 h-5 w-5 rounded-full"
-          style={{
-            background:
-              'radial-gradient(circle at 30% 30%, var(--color-gold-bright), var(--color-gold-deep))',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.6), 0 0 10px rgba(233,196,106,0.45)'
-          }}
-        />
-        <div className="curtain-pelmet h-3.5 -mt-px" />
+        >
+          {/* Acorn finials at the ends of the rod */}
+          <span className="finial-acorn -left-2.5 -top-2" />
+          <span className="finial-acorn -right-2.5 -top-2" />
+        </div>
+
+        {/* Brocade pelmet — taller, with central medallion + dougong teeth */}
+        <div className="pelmet-body">
+          <span className="pelmet-trim-top" />
+          {/* Damask brocade overlay */}
+          <div className="absolute inset-0 curtain-damask opacity-[0.22] mix-blend-overlay" />
+          {/* Central gold medallion with 幕 (curtain) hanzi */}
+          <span className="pelmet-medallion">幕</span>
+          {/* Dougong teeth at the bottom */}
+          <div className="curtain-pelmet absolute bottom-0 left-0 right-0 h-3.5" />
+        </div>
       </div>
 
       {/* === LETTERBOX BARS (cinematic — close and stay) === */}
@@ -397,28 +397,49 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
 
 function CurtainPanel({ side, play }: { side: 'left' | 'right'; play: boolean }) {
   const isLeft = side === 'left';
-  const targetX = isLeft ? '-12%' : '12%';
+  /* Italian-rise: mostly vertical lift, only a 5% horizontal drift for theatricality. */
+  const targetX = isLeft ? '-5%' : '5%';
+  /* Asymmetric stagger — left panel begins 60 ms before right, so the rise reads as
+     two rigged ropes catching one after the other rather than a single mechanical lift. */
+  const startDelay = isLeft ? 0.45 : 0.51;
   const innerShadow = isLeft
-    ? 'inset -60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 60px 80px rgba(0,0,0,0.55)'
-    : 'inset 60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 60px 80px rgba(0,0,0,0.55)';
+    ? 'inset -60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 80px 90px rgba(0,0,0,0.6)'
+    : 'inset 60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 80px 90px rgba(0,0,0,0.6)';
 
   return (
     <motion.div
       aria-hidden="true"
       initial={{ y: '0%', x: '0%', scale: 1 }}
-      animate={play ? { y: '-118%', x: targetX, scale: 1.04 } : false}
-      transition={{ delay: 0.5, duration: 1.05, ease: [0.65, 0.05, 0.36, 1] }}
+      animate={
+        play
+          ? {
+              /* Keyframes: tiny initial tug, main rise, gentle settle bounce */
+              y: ['0%', '-1.5%', '-120%', '-117%', '-119%'],
+              x: ['0%', '0%', targetX, targetX, targetX],
+              scale: [1, 1, 1.04, 1.045, 1.04]
+            }
+          : false
+      }
+      transition={{
+        delay: startDelay,
+        duration: 1.35,
+        times: [0, 0.08, 0.86, 0.93, 1],
+        ease: RISE_EASE
+      }}
       className={`absolute top-0 bottom-0 ${isLeft ? 'left-0' : 'right-0'} w-1/2 pointer-events-none will-change-transform z-30`}
     >
       <div
         className="relative w-full h-full"
         style={{ boxShadow: innerShadow }}
       >
-        {/* === Velvet body: folds + footlight + base vermilion === */}
+        {/* === Velvet body: layered folds + footlight + base vermilion === */}
         <div className={isLeft ? 'curtain-fabric-l' : 'curtain-fabric-r'} />
 
-        {/* === Damask brocade: Tang cloud-scroll medallion === */}
-        <div className="absolute inset-0 curtain-damask opacity-[0.20] mix-blend-overlay pointer-events-none" />
+        {/* === Tang cloud-scroll damask === */}
+        <div className="absolute inset-0 curtain-damask opacity-[0.22] mix-blend-overlay pointer-events-none" />
+
+        {/* === Fractal noise grain (true velvet texture) === */}
+        <div className="curtain-grain" aria-hidden="true" />
 
         {/* === Outer gold trim === */}
         <div
@@ -504,7 +525,7 @@ function StaggerChar({
   // Cascade from the middle outward: distance-from-center drives delay.
   const middle = (total - 1) / 2;
   const dist = Math.abs(index - middle) / Math.max(middle, 1);
-  const delay = 1.95 + dist * 0.045;
+  const delay = 2.15 + dist * 0.045;
   return (
     <motion.span
       initial={{ opacity: 0, y: 14 }}
