@@ -38,43 +38,45 @@ export function ActCurtain({ hanzi, label, subtitle }: Props) {
 
   // ===== CURTAIN MOTION =====
   // Primary: rise upward off-stage. Secondary: subtle outward sway (the ropes pull).
-  const curtainY     = useTransform(scrollYProgress, [0.18, 0.55], ['0%', '-118%']);
-  const leftX        = useTransform(scrollYProgress, [0.18, 0.55], ['0%', '-12%']);
-  const rightX       = useTransform(scrollYProgress, [0.18, 0.55], ['0%', '12%']);
-  const curtainScale = useTransform(scrollYProgress, [0.18, 0.55], [1, 1.04]);
+  // Timing: curtain is fully off-stage by 0.38 so the reveal lands when the
+  // section reaches the centre of the viewport (~0.5), not after it leaves.
+  const curtainY     = useTransform(scrollYProgress, [0.08, 0.38], ['0%', '-118%']);
+  const leftX        = useTransform(scrollYProgress, [0.08, 0.38], ['0%', '-12%']);
+  const rightX       = useTransform(scrollYProgress, [0.08, 0.38], ['0%', '12%']);
+  const curtainScale = useTransform(scrollYProgress, [0.08, 0.38], [1, 1.04]);
 
   // ===== STAGE LIGHT BLOOM =====
-  const bloomScale   = useTransform(scrollYProgress, [0.05, 0.55],            [0.22, 1.6]);
-  const bloomOpacity = useTransform(scrollYProgress, [0.0,  0.30, 0.85, 1.0], [0, 0.95, 1, 0.5]);
+  const bloomScale   = useTransform(scrollYProgress, [0.02, 0.45],            [0.22, 1.6]);
+  const bloomOpacity = useTransform(scrollYProgress, [0.0,  0.22, 0.88, 1.0], [0, 0.95, 1, 0.5]);
 
   // ===== SPOTLIGHT CONE (from above onto the text) =====
-  const spotOpacity = useTransform(scrollYProgress, [0.30, 0.52, 0.85, 1.0], [0, 0.85, 0.75, 0.25]);
-  const spotScale   = useTransform(scrollYProgress, [0.30, 0.60],            [0.85, 1]);
+  const spotOpacity = useTransform(scrollYProgress, [0.20, 0.40, 0.88, 1.0], [0, 0.85, 0.75, 0.25]);
+  const spotScale   = useTransform(scrollYProgress, [0.20, 0.50],            [0.85, 1]);
 
   // ===== LETTERBOX BARS =====
   const barHeight = useTransform(
     scrollYProgress,
-    [0.32, 0.50, 0.78, 0.94],
+    [0.22, 0.38, 0.82, 0.94],
     ['0px', '48px', '48px', '0px']
   );
 
-  // ===== TEXT REVEAL (synced to curtain reaching apex) =====
-  const textOpacity = useTransform(scrollYProgress, [0.42, 0.58, 0.82, 0.97], [0, 1, 1, 0]);
-  const textY       = useTransform(scrollYProgress, [0.42, 0.62],             [42, 0]);
-  const textScale   = useTransform(scrollYProgress, [0.42, 0.78],             [0.92, 1.05]);
+  // ===== TEXT REVEAL (peak right at section centre, long hold) =====
+  const textOpacity = useTransform(scrollYProgress, [0.32, 0.48, 0.86, 0.97], [0, 1, 1, 0]);
+  const textY       = useTransform(scrollYProgress, [0.32, 0.50],             [42, 0]);
+  const textScale   = useTransform(scrollYProgress, [0.32, 0.78],             [0.92, 1.05]);
   // clip-path expands from center outward
-  const clipPct  = useTransform(scrollYProgress, [0.42, 0.64], [50, 0]);
+  const clipPct  = useTransform(scrollYProgress, [0.32, 0.50], [50, 0]);
   const textClip = useTransform(clipPct, (v) => `inset(0% ${v}% 0% ${v}%)`);
 
   // Underline bar grows after the hanzi resolves
-  const underlineScale = useTransform(scrollYProgress, [0.58, 0.74], [0, 1]);
+  const underlineScale = useTransform(scrollYProgress, [0.48, 0.62], [0, 1]);
 
   // Subtitle (slightly delayed vs hanzi)
-  const subOpacity = useTransform(scrollYProgress, [0.55, 0.70, 0.82, 0.97], [0, 1, 1, 0]);
-  const subY       = useTransform(scrollYProgress, [0.55, 0.70],             [18, 0]);
+  const subOpacity = useTransform(scrollYProgress, [0.42, 0.58, 0.86, 0.97], [0, 1, 1, 0]);
+  const subY       = useTransform(scrollYProgress, [0.42, 0.58],             [18, 0]);
 
   // Center-seam ember (visible while curtain is mostly closed, then fades)
-  const emberOpacity = useTransform(scrollYProgress, [0.0, 0.10, 0.30, 0.45], [0.6, 1, 0.7, 0]);
+  const emberOpacity = useTransform(scrollYProgress, [0.0, 0.06, 0.22, 0.34], [0.6, 1, 0.7, 0]);
 
   if (reduce) {
     return (
@@ -461,8 +463,8 @@ function StaggerChar({
   // Cascade from the middle outward: distance-from-center drives delay
   const middle = (total - 1) / 2;
   const dist = Math.abs(index - middle) / Math.max(middle, 1);
-  const start = 0.50 + dist * 0.14;
-  const end = start + 0.10;
+  const start = 0.40 + dist * 0.12;
+  const end = start + 0.08;
   const opacity = useTransform(progress, [start, end], [0, 1]);
   const y = useTransform(progress, [start, end], [14, 0]);
   return (
