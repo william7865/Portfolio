@@ -1,7 +1,14 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { getLenis } from '@/lib/lenisInstance';
+
+/** Total length of the curtain choreography, in milliseconds.
+ *  Matches the latest motion delay+duration (subtitle lands at 2.2 + 0.5 = 2.7s). */
+const PLAY_DURATION_MS = 2700;
+/** Duration of the snap-to-top scroll, in seconds. */
+const SNAP_DURATION_S = 0.7;
 
 type Props = {
   hanzi: string;
@@ -11,25 +18,89 @@ type Props = {
 };
 
 /**
- * Theatrical act transition — auto-plays once the section is ~35% in view.
+ * Theatrical act transition with scroll lock — when the section reaches 50%
+ * visible the page snap-scrolls to its top, the scroll wheel is paused for the
+ * length of the choreography, then released.
  *
- * Timeline (seconds from the in-view trigger):
- *   0.0   ember pulses, curtain shut
+ * Timeline (seconds from the trigger; runs in parallel with the snap-scroll):
+ *   0.0   snap-scroll starts, ember pulses, curtain shut
  *   0.3   stage bloom grows, spotlight fades in
- *   0.5   curtain rises (1.0s), letterbox bars close (0.5s), ember fades
- *   1.1   text revealed via clip-path opening from the center (0.9s)
- *   1.9   underline bar draws, label characters cascade from the middle
+ *   0.5   curtain rises (1.0s), letterbox bars close, ember fades
+ *   0.7   snap-scroll lands
+ *   1.1   text revealed via clip-path opening from the center
+ *   1.95  underline draws, label characters cascade from the middle
  *   2.2   subtitle fades in
- *   2.5   scene settled — user may scroll freely
+ *   2.7   scene settled — Lenis resumes, user may scroll freely
  *
- * After the play-out, every element holds its final state. `once: true` keeps
- * it that way: scrolling back up to a previous act does not retrigger.
+ * The trigger fires once per section per page load. Reduced-motion and touch
+ * devices skip the snap+lock and fall back to a plain auto-play (or static
+ * scene under prefers-reduced-motion).
  */
 export function ActCurtain({ hanzi, label, subtitle }: Props) {
   const ref = useRef<HTMLElement | null>(null);
+  const playedRef = useRef(false);
   const reduce = useReducedMotion();
-  const inView = useInView(ref, { amount: 0.35, once: true });
-  const play = inView && !reduce;
+  const [play, setPlay] = useState(false);
+
+  useEffect(() => {
+    const section = ref.current;
+    if (!section || playedRef.current) return;
+
+    if (reduce) {
+      // Reduced motion: never animate, never lock.
+      return;
+    }
+
+    const isTouch =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+    const fire = () => {
+      if (playedRef.current) return;
+      playedRef.current = true;
+
+      const rect = section.getBoundingClientRect();
+      const lenis = getLenis();
+      const tooLateToSnap = rect.top < 50;
+
+      if (isTouch || !lenis || tooLateToSnap) {
+        // No hijacking: just play the animation in place.
+        setPlay(true);
+        return;
+      }
+
+      // Snap to the section top, lock the wheel, run the animation in parallel,
+      // then release after the full choreography has played out.
+      lenis.stop();
+      setPlay(true);
+      lenis.scrollTo(section, {
+        duration: SNAP_DURATION_S,
+        force: true,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+        onComplete: () => {
+          window.setTimeout(
+            () => lenis.start(),
+            PLAY_DURATION_MS - SNAP_DURATION_S * 1000
+          );
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+            fire();
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: [0.5] }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [reduce]);
 
   if (reduce) {
     return (
@@ -328,11 +399,8 @@ function CurtainPanel({ side, play }: { side: 'left' | 'right'; play: boolean })
   const isLeft = side === 'left';
   const targetX = isLeft ? '-12%' : '12%';
   const innerShadow = isLeft
-    ? 'inset -50px 0 90px rgba(0,0,0,0.6), inset 0 -50px 60px rgba(0,0,0,0.45)'
-    : 'inset 50px 0 90px rgba(0,0,0,0.6), inset 0 -50px 60px rgba(0,0,0,0.45)';
-  const fabricGradient = isLeft
-    ? 'linear-gradient(90deg, var(--color-vermillion-bright) 0%, var(--color-vermillion) 70%, var(--color-vermillion-deep) 100%)'
-    : 'linear-gradient(270deg, var(--color-vermillion-bright) 0%, var(--color-vermillion) 70%, var(--color-vermillion-deep) 100%)';
+    ? 'inset -60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 60px 80px rgba(0,0,0,0.55)'
+    : 'inset 60px 0 110px rgba(0,0,0,0.65), inset 0 -70px 80px rgba(0,0,0,0.5), inset 0 60px 80px rgba(0,0,0,0.55)';
 
   return (
     <motion.div
@@ -342,41 +410,52 @@ function CurtainPanel({ side, play }: { side: 'left' | 'right'; play: boolean })
       transition={{ delay: 0.5, duration: 1.05, ease: [0.65, 0.05, 0.36, 1] }}
       className={`absolute top-0 bottom-0 ${isLeft ? 'left-0' : 'right-0'} w-1/2 pointer-events-none will-change-transform z-30`}
     >
-      <div className="relative w-full h-full">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              repeating-linear-gradient(180deg, rgba(212,175,55,0.18) 0 1px, transparent 1px 9px),
-              ${fabricGradient}
-            `,
-            boxShadow: innerShadow
-          }}
-        />
-        <div className="absolute inset-0 curtain-damask opacity-[0.18] mix-blend-overlay" />
+      <div
+        className="relative w-full h-full"
+        style={{ boxShadow: innerShadow }}
+      >
+        {/* === Velvet body: folds + footlight + base vermilion === */}
+        <div className={isLeft ? 'curtain-fabric-l' : 'curtain-fabric-r'} />
+
+        {/* === Damask brocade: Tang cloud-scroll medallion === */}
+        <div className="absolute inset-0 curtain-damask opacity-[0.20] mix-blend-overlay pointer-events-none" />
+
+        {/* === Outer gold trim === */}
         <div
           className={`absolute top-0 bottom-0 w-1.5 ${isLeft ? 'left-0' : 'right-0'}`}
           style={{
             background:
-              'linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 50%, var(--color-gold) 100%)'
+              'linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 50%, var(--color-gold) 100%)',
+            boxShadow: '0 0 4px rgba(0,0,0,0.5)'
           }}
         />
+
+        {/* === Inner gold trim (catches stage light) + halo === */}
         <div
-          className={`absolute top-0 bottom-0 w-1 ${isLeft ? 'right-0' : 'left-0'}`}
+          className={`absolute top-0 bottom-0 w-[3px] ${isLeft ? 'right-0' : 'left-0'} z-[1]`}
           style={{
             background:
-              'linear-gradient(180deg, var(--color-gold-bright) 0%, var(--color-gold) 50%, var(--color-gold-bright) 100%)',
-            boxShadow: '0 0 8px rgba(233,196,106,0.55)'
+              'linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-bright) 45%, #fff3c5 55%, var(--color-gold-bright) 70%, var(--color-gold-deep) 100%)',
+            boxShadow: '0 0 12px rgba(255,235,180,0.6), 0 0 24px rgba(233,196,106,0.35)'
           }}
         />
+        {/* Soft halo bleed inward */}
         <div
-          className="absolute left-0 right-0 bottom-3 h-2"
+          className={`curtain-inner-glow absolute top-[20%] bottom-[15%] w-[40px] pointer-events-none ${isLeft ? 'right-0' : 'left-0'}`}
+          aria-hidden="true"
+        />
+
+        {/* === Bottom hem === */}
+        <div
+          className="absolute left-0 right-0 bottom-3 h-2 pointer-events-none"
           style={{
             background:
               'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)'
           }}
         />
-        <div className="absolute left-0 right-0 bottom-0 flex justify-around px-3">
+
+        {/* === Premium tassels along bottom === */}
+        <div className="absolute left-0 right-0 bottom-0 flex justify-around px-4 z-[2]">
           {Array.from({ length: 7 }).map((_, i) => (
             <Tassel key={i} alt={(i + (isLeft ? 0 : 1)) % 2 === 0} />
           ))}
@@ -391,15 +470,22 @@ function Tassel({ alt = false }: { alt?: boolean }) {
     <div
       className="relative"
       style={{
-        width: '6px',
-        height: '54px',
+        width: '14px',
+        height: '78px',
         transformOrigin: 'top center',
-        animation: `${alt ? 'tassel-sway-alt' : 'tassel-sway'} ${3 + (alt ? 0.6 : 0)}s ease-in-out infinite`
+        animation: `${alt ? 'tassel-sway-alt' : 'tassel-sway'} ${3.4 + (alt ? 0.7 : 0)}s ease-in-out infinite`
       }}
     >
-      <div className="tassel-cord absolute left-1/2 -translate-x-1/2 top-0 w-px h-7" />
-      <div className="tassel-bob absolute left-1/2 -translate-x-1/2 top-6 w-2.5 h-3 rounded-[40%]" />
-      <div className="tassel-fringe absolute left-1/2 -translate-x-1/2 top-[34px] w-2 h-5" />
+      {/* Cord hanging from the curtain hem */}
+      <div className="tassel-cord absolute left-1/2 -translate-x-1/2 top-0 w-px h-[18px]" />
+      {/* Brass cap (dome where cord enters the head) */}
+      <div className="tassel-cap absolute left-1/2 -translate-x-1/2 top-[16px] w-[10px] h-[5px]" />
+      {/* Turk's-head knot (gold band binding the head) */}
+      <div className="tassel-knot absolute left-1/2 -translate-x-1/2 top-[20px] w-[12px] h-[3px]" />
+      {/* Silk-wrapped bombed head */}
+      <div className="tassel-head absolute left-1/2 -translate-x-1/2 top-[22px] w-[12px] h-[16px]" />
+      {/* Bullion fringe (long gold-thread skirt) */}
+      <div className="tassel-fringe absolute left-1/2 -translate-x-1/2 top-[37px] w-[14px] h-[34px]" />
     </div>
   );
 }
