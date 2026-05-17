@@ -21,9 +21,7 @@
   "skills": {
     "kicker": "ACT II · SKILLS",
     "title": "The Stroke",
-    "subtitle": "The gesture, the tool, the mark it leaves.",
-    "yearsLabel": "Years",
-    "proofLabel": "Proof"
+    "subtitle": "The gesture, the tool, the mark it leaves."
   },
   "now": {
     "kicker": "ACT III · TENETS",
@@ -84,7 +82,7 @@
     }
   },
   "footer": {
-    "signature": "BUILT WITH NEXT.JS · DEPLOYED ON VERCEL",
+    "signature": "BUILT WITH NEXT.JS",
     "cv": "Curriculum vitae · PDF"
   },
   "notFound": {
