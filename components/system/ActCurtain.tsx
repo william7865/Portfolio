@@ -28,7 +28,7 @@ type Props = {
  *
  * `once: true` — re-entering the section never replays the cut.
  */
-export function ActCurtain({ hanzi: _hanzi, label, subtitle }: Props) {
+export function ActCurtain({ hanzi, label, subtitle }: Props) {
   const ref = useRef<HTMLElement | null>(null);
   const playedRef = useRef(false);
   const reduce = useReducedMotion();
@@ -95,7 +95,13 @@ export function ActCurtain({ hanzi: _hanzi, label, subtitle }: Props) {
         className="relative min-h-screen overflow-hidden flex items-center justify-center bg-black"
         aria-label={label}
       >
-        <TitleCard kicker={kicker} name={name} subtitle={subtitle} static />
+        <TitleCard
+          hanzi={hanzi}
+          kicker={kicker}
+          name={name}
+          subtitle={subtitle}
+          static
+        />
       </section>
     );
   }
@@ -138,7 +144,13 @@ export function ActCurtain({ hanzi: _hanzi, label, subtitle }: Props) {
         }}
         className="relative z-40"
       >
-        <TitleCard kicker={kicker} name={name} subtitle={subtitle} play={play} />
+        <TitleCard
+          hanzi={hanzi}
+          kicker={kicker}
+          name={name}
+          subtitle={subtitle}
+          play={play}
+        />
       </motion.div>
     </section>
   );
@@ -147,12 +159,14 @@ export function ActCurtain({ hanzi: _hanzi, label, subtitle }: Props) {
 /* ============================================================ */
 
 function TitleCard({
+  hanzi,
   kicker,
   name,
   subtitle,
   play = false,
   static: isStatic = false
 }: {
+  hanzi: string;
   kicker: string;
   name: string;
   subtitle?: string;
@@ -161,7 +175,20 @@ function TitleCard({
 }) {
   return (
     <div className="text-center px-6">
-      {/* Kicker (small mono, wide-spaced) */}
+      {/* Hanzi — Tang anchor, sits above the Latin chapter number */}
+      <div
+        className="font-display-hanzi text-[var(--color-gold-bright)]"
+        style={{
+          fontSize: 'clamp(1.6rem, 2.4vw, 2.2rem)',
+          lineHeight: 1,
+          marginBottom: '0.85rem',
+          textShadow: '0 0 18px rgba(233,196,106,0.4)'
+        }}
+      >
+        {hanzi}
+      </div>
+
+      {/* Kicker (small mono, wide-spaced) — Latin chapter number */}
       <div
         className="font-mono uppercase text-[var(--color-gold)]"
         style={{
