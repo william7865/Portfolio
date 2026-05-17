@@ -21,9 +21,7 @@
   "skills": {
     "kicker": "ACTE II · SKILLS",
     "title": "Le tracé",
-    "subtitle": "Le geste, l'outil, et la trace qu'il laisse.",
-    "yearsLabel": "Années",
-    "proofLabel": "Preuve"
+    "subtitle": "Le geste, l'outil, et la trace qu'il laisse."
   },
   "now": {
     "kicker": "ACTE III · PRÉCEPTES",
@@ -84,7 +82,7 @@
     }
   },
   "footer": {
-    "signature": "BUILT WITH NEXT.JS · DEPLOYED ON VERCEL",
+    "signature": "BUILT WITH NEXT.JS",
     "cv": "Curriculum vitae · PDF"
   },
   "notFound": {
