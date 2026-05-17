@@ -1,7 +1,14 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { getLenis } from '@/lib/lenisInstance';
+
+/** Total length of the curtain choreography, in milliseconds.
+ *  Matches the latest motion delay+duration (subtitle lands at 2.2 + 0.5 = 2.7s). */
+const PLAY_DURATION_MS = 2700;
+/** Duration of the snap-to-top scroll, in seconds. */
+const SNAP_DURATION_S = 0.7;
 
 type Props = {
   hanzi: string;
@@ -11,25 +18,89 @@ type Props = {
 };
 
 /**
- * Theatrical act transition — auto-plays once the section is ~35% in view.
+ * Theatrical act transition with scroll lock — when the section reaches 50%
+ * visible the page snap-scrolls to its top, the scroll wheel is paused for the
+ * length of the choreography, then released.
  *
- * Timeline (seconds from the in-view trigger):
- *   0.0   ember pulses, curtain shut
+ * Timeline (seconds from the trigger; runs in parallel with the snap-scroll):
+ *   0.0   snap-scroll starts, ember pulses, curtain shut
  *   0.3   stage bloom grows, spotlight fades in
- *   0.5   curtain rises (1.0s), letterbox bars close (0.5s), ember fades
- *   1.1   text revealed via clip-path opening from the center (0.9s)
- *   1.9   underline bar draws, label characters cascade from the middle
+ *   0.5   curtain rises (1.0s), letterbox bars close, ember fades
+ *   0.7   snap-scroll lands
+ *   1.1   text revealed via clip-path opening from the center
+ *   1.95  underline draws, label characters cascade from the middle
  *   2.2   subtitle fades in
- *   2.5   scene settled — user may scroll freely
+ *   2.7   scene settled — Lenis resumes, user may scroll freely
  *
- * After the play-out, every element holds its final state. `once: true` keeps
- * it that way: scrolling back up to a previous act does not retrigger.
+ * The trigger fires once per section per page load. Reduced-motion and touch
+ * devices skip the snap+lock and fall back to a plain auto-play (or static
+ * scene under prefers-reduced-motion).
  */
 export function ActCurtain({ hanzi, label, subtitle }: Props) {
   const ref = useRef<HTMLElement | null>(null);
+  const playedRef = useRef(false);
   const reduce = useReducedMotion();
-  const inView = useInView(ref, { amount: 0.35, once: true });
-  const play = inView && !reduce;
+  const [play, setPlay] = useState(false);
+
+  useEffect(() => {
+    const section = ref.current;
+    if (!section || playedRef.current) return;
+
+    if (reduce) {
+      // Reduced motion: never animate, never lock.
+      return;
+    }
+
+    const isTouch =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+    const fire = () => {
+      if (playedRef.current) return;
+      playedRef.current = true;
+
+      const rect = section.getBoundingClientRect();
+      const lenis = getLenis();
+      const tooLateToSnap = rect.top < 50;
+
+      if (isTouch || !lenis || tooLateToSnap) {
+        // No hijacking: just play the animation in place.
+        setPlay(true);
+        return;
+      }
+
+      // Snap to the section top, lock the wheel, run the animation in parallel,
+      // then release after the full choreography has played out.
+      lenis.stop();
+      setPlay(true);
+      lenis.scrollTo(section, {
+        duration: SNAP_DURATION_S,
+        force: true,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+        onComplete: () => {
+          window.setTimeout(
+            () => lenis.start(),
+            PLAY_DURATION_MS - SNAP_DURATION_S * 1000
+          );
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+            fire();
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: [0.5] }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [reduce]);
 
   if (reduce) {
     return (
