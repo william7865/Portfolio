@@ -8,10 +8,10 @@ export default createMiddleware({
 });
 
 export const config = {
-  // Skip API, Next.js internals, static assets (anything with a dot in path),
-  // and the file-convention metadata routes (icon, apple-icon, opengraph-image,
-  // robots, sitemap) that Next.js owns at the root.
+  // Skip API, Next.js internals, the private /dashboard area, static assets
+  // (anything with a dot in path), and the file-convention metadata routes
+  // (icon, apple-icon, opengraph-image, robots, sitemap) that Next.js owns at the root.
   matcher: [
-    '/((?!api|_next|_vercel|icon|apple-icon|opengraph-image|robots|sitemap|.*\\..*).*)'
+    '/((?!api|_next|_vercel|dashboard|icon|apple-icon|opengraph-image|robots|sitemap|.*\\..*).*)'
   ]
 };
