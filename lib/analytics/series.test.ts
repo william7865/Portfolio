@@ -7,8 +7,8 @@ describe('fillDays', () => {
   it('returns exactly rangeDays points in ascending order', () => {
     const out = fillDays([], 7, TODAY);
     expect(out).toHaveLength(7);
-    expect(out[0].day).toBe('2026-06-02');
-    expect(out[6].day).toBe('2026-06-08');
+    expect(out.at(0)?.day).toBe('2026-06-02');
+    expect(out.at(-1)?.day).toBe('2026-06-08');
   });
 
   it('fills missing days with zeros and keeps existing rows', () => {
