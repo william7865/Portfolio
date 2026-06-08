@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "db:init": "node scripts/init-db.mjs"
+    "db:init": "node --env-file-if-exists=.env.local scripts/init-db.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
