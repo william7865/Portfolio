@@ -1192,7 +1192,9 @@ git commit -m "feat(dashboard): point-unit deltas and four-period selector"
 
 ### Task 7: Graphique de fréquence lisible
 
-Réécriture de `components/dashboard/FrequencyChart.tsx`. Le composant actuel dessine les uniques à `uniques / views * 100` de la hauteur de la barre — un **ratio**. Une journée à 2 vues / 2 uniques et une journée à 100 vues / 100 uniques s'affichent identiques, toutes deux pleines. Les deux séries passent sur la même échelle Y.
+Réécriture de `components/dashboard/FrequencyChart.tsx`. Le composant actuel dessine la barre des uniques en pleine largeur, masquant le dégradé des vues : les deux séries ne se lisent pas ensemble. Elle est encartée, et le maximum de l'axe Y passe par `niceMax`.
+
+**Note (2026-07-09, après relecture) :** ce plan affirmait au départ que la hauteur des uniques était un ratio, donc fausse. Elle ne l'était pas. `.dash-bar-uniques` est un enfant absolument positionné de `.dash-bar`, donc son pourcentage de hauteur se résout contre un parent haut de `views / max` — le rendu valait déjà `uniques / max`. C'est pourquoi le nouveau composant conserve `(uniquesPct / viewsPct) * 100` : cette division compense exactement la résolution du pourcentage contre le parent.
 
 **Avant d'écrire ce composant, lire le skill `dataviz`** — il fixe les règles de couleur, de graduation et de tooltip du projet.
 
