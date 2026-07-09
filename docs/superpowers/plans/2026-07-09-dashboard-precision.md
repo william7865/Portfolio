@@ -973,9 +973,18 @@ par :
   border-radius: 1px 1px 0 0;
 }
 
-/* The current bucket is still filling up. Hatch it so nobody reads it as final. */
+/* The current bucket is still filling up. Hatch it so nobody reads it as final.
+   The hatch goes on a pseudo-element: setting background-image directly on
+   .dash-bar-partial would REPLACE .dash-bar's gold gradient (equal specificity,
+   declared later) rather than layer over it. */
 .dash-bar-partial {
   opacity: 0.72;
+}
+.dash-bar-partial::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent 0 3px,
@@ -1032,6 +1041,18 @@ par :
   white-space: nowrap;
   pointer-events: none;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Edge bars: anchor the tooltip inside the chart instead of centring it on the bar,
+   which would push half of it past the panel (and past body's overflow-x: hidden). */
+.dash-tooltip-start {
+  left: 0;
+  transform: none;
+}
+.dash-tooltip-end {
+  left: auto;
+  right: 0;
+  transform: none;
 }
 ```
 
@@ -1210,6 +1231,16 @@ function pointLabel(key: string, bucket: Bucket): string {
   return date;
 }
 
+/**
+ * A tooltip centred on the first or last bar hangs half its width outside the panel,
+ * where `body { overflow-x: hidden }` truncates it on narrow screens. Anchor those inward.
+ */
+function edgeClass(index: number, total: number): string {
+  if (index <= 1) return ' dash-tooltip-start';
+  if (index >= total - 2) return ' dash-tooltip-end';
+  return '';
+}
+
 export function FrequencyChart({ data, bucket }: { data: Point[]; bucket: Bucket }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
@@ -1275,7 +1306,7 @@ export function FrequencyChart({ data, bucket }: { data: Point[]; bucket: Bucket
                     onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
                   >
                     {hovered === i && (
-                      <div className="dash-tooltip">
+                      <div className={`dash-tooltip${edgeClass(i, data.length)}`}>
                         <div style={{ color: 'var(--color-gold-bright)' }}>
                           {pointLabel(p.key, bucket)}
                           {p.partial ? ' · en cours' : ''}
@@ -1402,9 +1433,14 @@ export function HourlyChart({ data }: { data: HourPoint[] }) {
       </div>
 
       <div className="relative h-32 flex items-end gap-[3px]">
-        {data.map((p) => (
+        {data.map((p, i) => (
           <div key={p.hour} className="flex-1 h-full flex items-end relative group">
-            <div className="dash-tooltip hidden group-hover:block">
+            {/* Edge tooltips anchor inward: centred, they hang outside the panel. */}
+            <div
+              className={`dash-tooltip hidden group-hover:block${
+                i <= 1 ? ' dash-tooltip-start' : i >= data.length - 2 ? ' dash-tooltip-end' : ''
+              }`}
+            >
               {String(p.hour).padStart(2, '0')}h · {p.views} vues
             </div>
             <motion.div
