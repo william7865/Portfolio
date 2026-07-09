@@ -558,9 +558,17 @@
   border-radius: 1px 1px 0 0;
 }
 
-/* The current bucket is still filling up. Hatch it so nobody reads it as final. */
+/* The current bucket is still filling up. Hatch it so nobody reads it as final.
+   The hatch goes on a pseudo-element: setting background-image on .dash-bar-partial
+   would REPLACE .dash-bar's gold gradient rather than layer over it. */
 .dash-bar-partial {
   opacity: 0.72;
+}
+.dash-bar-partial::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent 0 3px,
@@ -617,6 +625,18 @@
   white-space: nowrap;
   pointer-events: none;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Edge bars: anchor the tooltip inside the chart instead of centring it on the bar,
+   which would push half of it past the panel (and past body's overflow-x: hidden). */
+.dash-tooltip-start {
+  left: 0;
+  transform: none;
+}
+.dash-tooltip-end {
+  left: auto;
+  right: 0;
+  transform: none;
 }
 
 /* horizontal proportion bars (rankings) */
