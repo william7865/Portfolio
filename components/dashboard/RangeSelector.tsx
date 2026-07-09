@@ -1,31 +1,37 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { RANGE_KEYS, normalizeRange, type RangeKey } from '@/lib/analytics/range';
 
-const RANGES = [7, 30, 90] as const;
+const TAB_LABEL: Record<RangeKey, string> = {
+  '24h': '24H',
+  '7d': '7J',
+  '30d': '30J',
+  '90d': '90J'
+};
 
 export function RangeSelector() {
   const router = useRouter();
   const params = useSearchParams();
-  const current = Number(params.get('range')) || 30;
+  const current = normalizeRange(params.get('range') ?? undefined);
 
-  function select(days: number) {
+  function select(key: RangeKey) {
     const next = new URLSearchParams(params.toString());
-    next.set('range', String(days));
+    next.set('range', key);
     router.replace(`/dashboard?${next.toString()}`, { scroll: false });
   }
 
   return (
     <div className="flex gap-2">
-      {RANGES.map((d) => (
+      {RANGE_KEYS.map((key) => (
         <button
-          key={d}
+          key={key}
           type="button"
           className="dash-range-tab"
-          data-active={current === d}
-          onClick={() => select(d)}
+          data-active={current === key}
+          onClick={() => select(key)}
         >
-          {d}J
+          {TAB_LABEL[key]}
         </button>
       ))}
     </div>
