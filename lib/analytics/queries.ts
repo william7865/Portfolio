@@ -140,7 +140,13 @@ export async function getSeries(range: RangeKey): Promise<Point[]> {
            count(*)::int AS views,
            count(distinct visitor_hash)::int AS uniques
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    -- Convert the constant (w.start), not the column: events_ts_idx is on the
+    -- bare ts, and 'ts AT TIME ZONE UTC >= w.start' applies an expression to
+    -- every row's ts, which the planner can't match to that index and so
+    -- falls back to a seq scan. 'w.start AT TIME ZONE UTC' turns the naive
+    -- timestamp into a timestamptz once, so 'ts >= timestamptz' stays
+    -- indexable. Do not simplify this back to converting ts.
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
     GROUP BY 1
     ORDER BY 1
   `) as Point[];
@@ -172,7 +178,7 @@ export async function getTopPages(range: RangeKey, limit = 8): Promise<RankRow[]
            count(*)::int AS views,
            count(distinct visitor_hash)::int AS uniques
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
     GROUP BY path
     ORDER BY uniques DESC, views DESC
     LIMIT ${limit}
@@ -190,7 +196,7 @@ export async function getReferrers(range: RangeKey, limit = 8): Promise<RankRow[
     )
     SELECT referrer_host AS label, count(*)::int AS views
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
       AND referrer_host IS NOT NULL
     GROUP BY referrer_host
     ORDER BY views DESC
@@ -209,7 +215,7 @@ export async function getCountries(range: RangeKey, limit = 8): Promise<RankRow[
     )
     SELECT coalesce(country, '??') AS label, count(*)::int AS views
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
     GROUP BY 1
     ORDER BY views DESC
     LIMIT ${limit}
@@ -227,7 +233,7 @@ export async function getDevices(range: RangeKey): Promise<RankRow[]> {
     )
     SELECT device AS label, count(*)::int AS views
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
     GROUP BY device
     ORDER BY views DESC
   `) as RankRow[];
@@ -245,7 +251,7 @@ export async function getLanguages(range: RangeKey, limit = 8): Promise<RankRow[
     )
     SELECT coalesce(lang, '??') AS label, count(*)::int AS views
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
     GROUP BY 1
     ORDER BY views DESC
     LIMIT ${limit}
@@ -270,7 +276,7 @@ export async function getHourly(range: RangeKey): Promise<HourPoint[]> {
     SELECT extract(hour FROM ts AT TIME ZONE 'UTC')::int AS hour,
            count(*)::int AS views
     FROM events, w
-    WHERE (ts AT TIME ZONE 'UTC') >= w.start
+    WHERE ts >= (w.start AT TIME ZONE 'UTC')
     GROUP BY 1
     ORDER BY 1
   `) as HourPoint[];
