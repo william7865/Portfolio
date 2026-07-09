@@ -558,10 +558,12 @@ Ce que ça répare, point par point :
 
 **Files:**
 - Modify: `lib/analytics/queries.ts` (réécriture complète)
+- Test: `lib/analytics/queries.test.ts` (nouveau — couvre `offsets` uniquement)
 
 **Interfaces:**
 - Consumes: `getSql` de `./db`; `RangeKey`, `RangeSpec`, `RANGES` de `./range`; `Point`, `fillBuckets`, `pctDelta`, `pointDelta` de `./series`.
 - Produces:
+  - `function offsets(spec: RangeSpec): { hours: number; days: number; weeks: number }`
   - `interface Kpis { views: number; uniquesPerDay: number; countries: number; mobilePct: number; deltas: { views: number | null; uniquesPerDay: number | null; countries: number | null; mobilePct: number } }`
   - `interface RankRow { label: string; views: number; uniques?: number }`
   - `interface HourPoint { hour: number; views: number }`
@@ -577,9 +579,46 @@ Ce que ça répare, point par point :
 
 Note SQL : `make_interval(hours => $1, days => $2, weeks => $3)` prend trois paramètres liés dont deux valent zéro — c'est ce qui permet de garder l'intervalle entièrement paramétré au lieu d'interpoler une unité dans le texte de la requête. `date_trunc($1, ...)` accepte son unité en paramètre texte.
 
-- [ ] **Step 1: Write the implementation**
+Les huit requêtes sont des appels réseau vers Neon : elles ne se testent pas unitairement, et la tâche 10 les vérifie à l'exécution. Une seule chose ici est pure et mérite un test — `offsets`, qui traduit un `RangeSpec` en décalage `make_interval`. C'est là que se joue le `count - 1`, et un off-by-one y décale toute la fenêtre sans rien casser visiblement.
 
-Il n'y a pas de test unitaire ici : chaque fonction est un appel réseau vers Neon. La logique testable (bornes, remplissage, deltas) vit dans `series.ts` et est déjà couverte par Task 2. La vérification se fait au typecheck, au build, puis à l'exécution en Task 10.
+- [ ] **Step 1: Write the failing test**
+
+Create `lib/analytics/queries.test.ts`:
+
+```ts
+import { describe, it, expect } from 'vitest';
+import { offsets } from './queries';
+import { RANGES, RANGE_KEYS } from './range';
+
+describe('offsets', () => {
+  it('shifts back by count - 1 buckets, so the window holds exactly `count` of them', () => {
+    expect(offsets({ bucket: 'hour', count: 24 })).toEqual({ hours: 23, days: 0, weeks: 0 });
+    expect(offsets({ bucket: 'day', count: 30 })).toEqual({ hours: 0, days: 29, weeks: 0 });
+    expect(offsets({ bucket: 'week', count: 13 })).toEqual({ hours: 0, days: 0, weeks: 12 });
+  });
+
+  it('puts the offset on exactly one unit, whatever the range', () => {
+    for (const key of RANGE_KEYS) {
+      const o = offsets(RANGES[key]);
+      const nonZero = [o.hours, o.days, o.weeks].filter((n) => n !== 0);
+      expect(nonZero).toHaveLength(1);
+    }
+  });
+
+  it('collapses to a zero offset on a single-bucket window', () => {
+    expect(offsets({ bucket: 'day', count: 1 })).toEqual({ hours: 0, days: 0, weeks: 0 });
+  });
+});
+```
+
+Ce test importe `queries.ts`, qui importe `db.ts`, qui importe `neon`. Aucune connexion n'est ouverte : `getSql()` est paresseux et n'est jamais appelé ici. Pas besoin de `DATABASE_URL`.
+
+- [ ] **Step 2: Run test to verify it fails**
+
+Run: `npx vitest run lib/analytics/queries.test.ts`
+Expected: FAIL — `offsets` n'est pas exporté (l'ancien `queries.ts` ne le définit pas)
+
+- [ ] **Step 3: Write the implementation**
 
 Replace the entire contents of `lib/analytics/queries.ts`:
 
@@ -593,8 +632,10 @@ export { normalizeRange, type RangeKey } from './range';
 /**
  * Offsets for `make_interval`. Exactly one is non-zero.
  * Keeping all three bound as parameters avoids splicing a unit into the SQL text.
+ *
+ * Exported for tests: `count - 1` is where an off-by-one silently shifts the whole window.
  */
-function offsets(spec: RangeSpec) {
+export function offsets(spec: RangeSpec) {
   const n = spec.count - 1;
   return {
     hours: spec.bucket === 'hour' ? n : 0,
@@ -859,20 +900,20 @@ export async function getHourly(range: RangeKey): Promise<HourPoint[]> {
 }
 ```
 
-- [ ] **Step 2: Verify the full suite is green again**
+- [ ] **Step 4: Verify the full suite is green again**
 
 Run: `npm test`
-Expected: PASS — `range`, `series`, `ticks`, `hash`, `device`, `referrer`, `session`. `queries.ts` ne casse plus l'import de `fillDays`.
+Expected: PASS — `range`, `series`, `ticks`, `queries`, `hash`, `device`, `referrer`, `session`. `queries.ts` ne casse plus l'import de `fillDays`.
 
-- [ ] **Step 3: Verify types**
+- [ ] **Step 5: Verify types**
 
 Run: `npm run typecheck`
 Expected: des erreurs **uniquement** dans `app/dashboard/page.tsx` (`getDailySeries` n'existe plus, `kpis.deltas.uniques` renommé). Aucune erreur dans `lib/`. Ces erreurs sont réparées en Task 9.
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add lib/analytics/queries.ts
+git add lib/analytics/queries.ts lib/analytics/queries.test.ts
 git commit -m "fix(analytics): bucket-aligned windows, span-matched deltas, honest uniques"
 ```
 
@@ -1661,7 +1702,7 @@ Si aucun correctif : rien à committer, la branche est prête.
 
 ## Récapitulatif des fichiers
 
-**Créés :** `lib/analytics/range.ts`, `lib/analytics/range.test.ts`, `lib/analytics/ticks.ts`, `lib/analytics/ticks.test.ts`, `components/dashboard/HourlyChart.tsx`
+**Créés :** `lib/analytics/range.ts`, `lib/analytics/range.test.ts`, `lib/analytics/ticks.ts`, `lib/analytics/ticks.test.ts`, `lib/analytics/queries.test.ts`, `components/dashboard/HourlyChart.tsx`
 
 **Modifiés :** `lib/analytics/series.ts`, `lib/analytics/series.test.ts`, `lib/analytics/queries.ts`, `app/globals.css`, `components/dashboard/StatCard.tsx`, `components/dashboard/RangeSelector.tsx`, `components/dashboard/FrequencyChart.tsx`, `components/dashboard/RankBars.tsx`, `app/dashboard/page.tsx`
 
