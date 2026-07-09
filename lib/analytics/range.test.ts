@@ -36,4 +36,12 @@ describe('normalizeRange', () => {
     expect(normalizeRange('nope')).toBe('30d');
     expect(normalizeRange('365')).toBe('30d');
   });
+
+  it('rejects prototype-chain keys and falls back to 30d', () => {
+    expect(normalizeRange('constructor')).toBe('30d');
+    expect(normalizeRange('toString')).toBe('30d');
+    expect(normalizeRange('valueOf')).toBe('30d');
+    expect(normalizeRange('hasOwnProperty')).toBe('30d');
+    expect(normalizeRange('__proto__')).toBe('30d');
+  });
 });

@@ -23,6 +23,6 @@ const LEGACY: Record<string, RangeKey> = { '7': '7d', '30': '30d', '90': '90d' }
 
 export function normalizeRange(value: string | undefined): RangeKey {
   if (!value) return '30d';
-  if (value in RANGES) return value as RangeKey;
-  return LEGACY[value] ?? '30d';
+  if (Object.hasOwn(RANGES, value)) return value as RangeKey;
+  return Object.hasOwn(LEGACY, value) ? (LEGACY[value] as RangeKey) : '30d';
 }
