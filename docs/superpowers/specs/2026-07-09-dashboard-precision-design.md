@@ -11,9 +11,16 @@ fenêtres inexactes, et un graphique sans repères.
 1. **Le graphique n'a aucun axe.** Ni labels de jours, ni échelle verticale, ni légende. Le seul
    repère est l'attribut `title` HTML au survol.
 
-2. **L'encodage des uniques est un ratio déguisé en quantité.** `FrequencyChart` dessine la barre
-   des uniques à `uniques / views * 100` de la hauteur de la barre des vues. Une journée à
-   2 vues / 2 uniques et une journée à 100 vues / 100 uniques se dessinent identiques.
+2. **La barre des uniques masque celle des vues.** `FrequencyChart` la dessine en pleine largeur
+   (`left: 0; right: 0`), recouvrant le dégradé des vues. Les deux séries ne se lisent pas
+   simultanément.
+
+   *Correction du 2026-07-09, après relecture :* la version initiale de cette spec affirmait ici
+   que la hauteur des uniques était « un ratio déguisé en quantité ». C'est faux. La barre est un
+   enfant absolument positionné de celle des vues, donc sa hauteur `uniques / views * 100` se
+   résout contre un parent haut de `views / max` : le rendu valait déjà `uniques / max`, sur
+   l'échelle partagée. Seule la largeur pleine posait problème. La formule est conservée telle
+   quelle dans le nouveau composant, pour exactement cette raison.
 
 3. **Les fenêtres sont glissantes, donc les buckets des bords sont partiels.** `ts >= now() -
    make_interval(days => 30)` démarre à l'heure courante il y a 30 jours. Le bucket le plus ancien
@@ -135,9 +142,10 @@ export function pointDelta(cur: number, prev: number): number;
   - `day` (30d) → tous les 7 jours, datés : `1 jui  8 jui  15 jui  22 jui`
   - `week` (90d) → les débuts de mois : `avr  mai  juin  juil`
 - **Légende** vues / uniques.
-- **Encodage des uniques corrigé** : les uniques passent sur la **même échelle Y** que les vues
-  (barre plus étroite, au premier plan). Comme `uniques ≤ views` toujours, la lecture reste
-  immédiate et les hauteurs redeviennent comparables d'un bucket à l'autre.
+- **Les deux séries deviennent lisibles ensemble** : la barre des uniques est encartée de 22 % de
+  chaque côté au lieu d'occuper toute la largeur, et les deux partagent le même maximum arrondi
+  (`niceMax`). Comme `uniques ≤ views` toujours, l'encart se lit comme un rapport partie-tout.
+  La hauteur, elle, était déjà correcte (voir la correction au §2 des problèmes).
 - **Tooltip** au survol (date + vues + uniques + « en cours » le cas échéant), doublé d'un
   `<table>` en `sr-only`. Un `role="img"` sur 30 barres ne dit rien à un lecteur d'écran.
 
