@@ -82,6 +82,14 @@ describe('normalizeRange', () => {
     expect(normalizeRange('nope')).toBe('30d');
     expect(normalizeRange('365')).toBe('30d');
   });
+
+  it('rejects prototype-chain keys, which `in` would have accepted', () => {
+    expect(normalizeRange('constructor')).toBe('30d');
+    expect(normalizeRange('toString')).toBe('30d');
+    expect(normalizeRange('valueOf')).toBe('30d');
+    expect(normalizeRange('hasOwnProperty')).toBe('30d');
+    expect(normalizeRange('__proto__')).toBe('30d');
+  });
 });
 ```
 
@@ -120,8 +128,12 @@ const LEGACY: Record<string, RangeKey> = { '7': '7d', '30': '30d', '90': '90d' }
 
 export function normalizeRange(value: string | undefined): RangeKey {
   if (!value) return '30d';
-  if (value in RANGES) return value as RangeKey;
-  return LEGACY[value] ?? '30d';
+  // hasOwn on both lookups. `in` walks the prototype chain, and a bare
+  // `LEGACY[value] ?? '30d'` has the same hole: LEGACY['toString'] is a
+  // function, not undefined, so the ?? never fires. `?range=constructor`
+  // must fall back to '30d', not leak an Object.prototype member.
+  if (Object.hasOwn(RANGES, value)) return value as RangeKey;
+  return Object.hasOwn(LEGACY, value) ? (LEGACY[value] as RangeKey) : '30d';
 }
 ```
 
