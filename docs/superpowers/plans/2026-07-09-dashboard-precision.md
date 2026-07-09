@@ -729,8 +729,9 @@ export async function getKpis(range: RangeKey): Promise<Kpis> {
         coalesce(avg((device = 'mobile')::int) FILTER (WHERE t >= s.start - s.span AND t < s.start), 0)::float AS prev_mobile_ratio,
 
         (extract(epoch FROM max(s.span)) / 86400.0)::float AS window_days
-      -- LEFT JOIN, not a cross join: on an empty `events` table a cross join yields zero rows,
+      -- LEFT JOIN, not a cross join: on an empty events table a cross join yields zero rows,
       -- so max(s.span) would come back NULL and window_days would divide by nothing.
+      -- (No backticks in SQL comments here: this is inside a tagged template literal.)
       FROM s LEFT JOIN ev ON true
     `) as KpiRow[])[0] ?? ZERO_KPI;
 
