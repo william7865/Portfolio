@@ -3,6 +3,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/lib/i18n';
 import { SkipLink } from '@/components/system/SkipLink';
+import { AnalyticsBeacon } from '@/components/system/AnalyticsBeacon';
 import { Header } from '@/components/system/Header';
 import { Footer } from '@/components/system/Footer';
 import { InkCursor } from '@/components/system/InkCursor';
@@ -33,6 +34,7 @@ export default async function LangLayout({
       <SfxProvider>
         <EasterEggProvider>
           <SkipLink />
+          <AnalyticsBeacon lang={lang} />
           <StructuredData lang={lang} />
           <SmoothScroll />
           <InkCursor />
