@@ -15,6 +15,7 @@
 - **Aucune nouvelle dépendance npm.**
 - **Tout raisonnement temporel est en UTC**, parce que `dailySalt()` (`lib/analytics/hash.ts:5`) sale sur la date UTC. Jamais de `date_trunc` sans `AT TIME ZONE 'UTC'`, jamais de `getFullYear()`/`getMonth()`/`getDate()` — toujours les variantes `getUTC*`.
 - **Vitest ne collecte que `lib/**/*.test.ts`** en environnement `node` (`vitest.config.ts`). Pas de test de composant React. Toute logique à tester doit vivre dans `lib/`.
+- **`tsconfig.json` active `noUncheckedIndexedAccess`.** Indexer un tableau donne `T | undefined`, y compris quand l'index est mathématiquement borné. Les blocs de code de ce plan ne le reflètent pas systématiquement : là où un accès `TABLEAU[i]` alimente un champ typé `string`, il faut une assertion `!` (l'index est borné par construction) ou une garde. Vérifier avec `npm run typecheck`, pas à l'œil.
 - **Labels français en tableaux constants**, jamais `Intl.DateTimeFormat` — les assertions ne doivent pas dépendre de la version d'ICU.
 - **Commandes :** `npm test` (vitest run), `npm run typecheck` (tsc --noEmit), `npm run lint` (eslint .), `npm run build`.
 - Les uniques d'un bucket hebdomadaire sont la somme des uniques journaliers, et un visiteur à cheval sur minuit UTC compte double sur 24h. **Ces deux limites se documentent en commentaire, elles ne se corrigent pas** (voir §7 de la spec).
