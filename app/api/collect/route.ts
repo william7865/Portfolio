@@ -13,11 +13,16 @@ const schema = z.object({
   referrer: z.string().max(2048).nullish()
 });
 
+const MAX_BODY_BYTES = 8 * 1024;
+
 const noContent = () => new NextResponse(null, { status: 204 });
 
 export async function POST(req: Request) {
   const secret = process.env.SESSION_SECRET;
   if (!secret || !process.env.DATABASE_URL) return noContent();
+  if (Number(req.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) {
+    return new NextResponse(null, { status: 413 });
+  }
 
   let body: unknown;
   try {
@@ -30,7 +35,13 @@ export async function POST(req: Request) {
 
   try {
     const h = req.headers;
-    const ip = (h.get('x-forwarded-for') ?? '').split(',')[0]?.trim() || 'unknown';
+    // x-real-ip is set by the Vercel edge from the real connection and cannot be
+    // spoofed by the client; x-forwarded-for's leftmost token can. Fall back to it
+    // only for local/non-Vercel runs where x-real-ip is absent.
+    const ip =
+      h.get('x-real-ip')?.trim() ||
+      (h.get('x-forwarded-for') ?? '').split(',')[0]?.trim() ||
+      'unknown';
     const ua = h.get('user-agent') ?? '';
     const country = h.get('x-vercel-ip-country') || null;
     const ownHost = h.get('host') ?? '';
