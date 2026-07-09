@@ -547,13 +547,76 @@
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
   position: relative;
 }
+/* Uniques share the views Y scale: a narrow bar in front, never a ratio fill. */
 .dash-bar-uniques {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 22%;
+  right: 22%;
   bottom: 0;
   background: var(--color-gold-bright);
   box-shadow: 0 0 10px rgba(233, 196, 106, 0.6);
+  border-radius: 1px 1px 0 0;
+}
+
+/* The current bucket is still filling up. Hatch it so nobody reads it as final. */
+.dash-bar-partial {
+  opacity: 0.72;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 3px,
+    rgba(29, 2, 5, 0.55) 3px 6px
+  );
+}
+
+.dash-chart-grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed rgba(212, 175, 55, 0.18);
+}
+
+.dash-axis-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(254, 243, 199, 0.45);
+  white-space: nowrap;
+}
+
+.dash-legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.6);
+}
+.dash-legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.4rem;
+  vertical-align: -1px;
+}
+
+.dash-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 6px 10px;
+  border: 1px solid var(--color-gold);
+  background: #1d0205;
+  color: var(--color-ivory);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* horizontal proportion bars (rankings) */
