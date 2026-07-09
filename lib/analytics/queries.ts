@@ -76,8 +76,13 @@ export async function getKpis(range: RangeKey): Promise<Kpis> {
       s AS (
         SELECT start, (now() AT TIME ZONE 'UTC') - start AS span FROM w
       ),
+      -- Bounded to the oldest instant the FILTER clauses below can ever need
+      -- (the start of the previous comparison window), so this doesn't scan
+      -- every row ever collected on every render.
       ev AS (
-        SELECT (ts AT TIME ZONE 'UTC') AS t, visitor_hash, country, device FROM events
+        SELECT (ts AT TIME ZONE 'UTC') AS t, visitor_hash, country, device
+        FROM events, s
+        WHERE ts >= ((s.start - s.span) AT TIME ZONE 'UTC')
       )
       SELECT
         count(*) FILTER (WHERE t >= s.start)::int AS cur_views,
