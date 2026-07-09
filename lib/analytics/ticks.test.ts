@@ -5,19 +5,30 @@ import { fillBuckets } from './series';
 const NOW = new Date('2026-06-11T12:34:56Z'); // Thursday
 
 describe('niceMax', () => {
-  it('rounds up to the next 1/2/5 x 10^n', () => {
+  it('rounds up to the next 1/2/5 x 10^n, bumping odd results to even', () => {
     expect(niceMax(7)).toBe(10);
     expect(niceMax(12)).toBe(20);
     expect(niceMax(47)).toBe(50);
     expect(niceMax(120)).toBe(200);
-    expect(niceMax(1)).toBe(1);
+    expect(niceMax(1)).toBe(2); // odd (1) bumped to 2
     expect(niceMax(2)).toBe(2);
-    expect(niceMax(5)).toBe(5);
+    expect(niceMax(5)).toBe(6); // odd (5) bumped to 6
   });
 
-  it('never returns zero, so it is always a safe divisor', () => {
-    expect(niceMax(0)).toBe(1);
-    expect(niceMax(-3)).toBe(1);
+  it('never returns less than 2, so it is always a safe divisor with an integer half', () => {
+    expect(niceMax(0)).toBe(2);
+    expect(niceMax(-3)).toBe(2);
+  });
+
+  it('always returns an even integer at or above the input, so max/2 is a whole number', () => {
+    const inputs = [0, -3, 0.4, 1, 2, 3, 5, 7, 12, 47, 99, 100, 120, 1000];
+    for (const value of inputs) {
+      const r = niceMax(value);
+      expect(r).toBeGreaterThanOrEqual(1);
+      expect(r).toBeGreaterThanOrEqual(value);
+      expect(r % 2).toBe(0);
+      expect(Number.isInteger(r / 2)).toBe(true);
+    }
   });
 });
 

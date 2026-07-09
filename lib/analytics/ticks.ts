@@ -14,13 +14,23 @@ export interface Tick {
   label: string;
 }
 
-/** Round a series maximum up to the next 1, 2 or 5 x 10^n. Always >= 1. */
+/**
+ * Round a series maximum up to an even integer >= 2, at or above `value`.
+ *
+ * Starts from the next 1, 2 or 5 x 10^n, but 1 and 5 are bumped up to 2 and 6:
+ * the chart labels its 50% gridline with `max / 2`, so `max` must always be
+ * evenly divisible by two or that label would either duplicate the top one
+ * (max = 1) or land on a line that isn't actually at the midpoint (max = 5).
+ */
 export function niceMax(value: number): number {
-  if (value <= 0) return 1;
+  if (value <= 0) return 2;
   const pow = 10 ** Math.floor(Math.log10(value));
   const frac = value / pow;
-  const nice = frac <= 1 ? 1 : frac <= 2 ? 2 : frac <= 5 ? 5 : 10;
-  return nice * pow;
+  const nice = (frac <= 1 ? 1 : frac <= 2 ? 2 : frac <= 5 ? 5 : 10) * pow;
+  // For value < 1, pow is fractional (e.g. 0.1), so `nice` can land under 2
+  // without being an odd integer (e.g. 0.5) -- floor those at the minimum too.
+  if (nice < 2) return 2;
+  return nice % 2 === 0 ? nice : nice + 1;
 }
 
 /**
