@@ -486,6 +486,191 @@
 .skip-link:focus { left: 1rem; top: 1rem; }
 
 /* ============================================================
+ * DASHBOARD — chiseled cards, gold bars (Tang)
+ * ============================================================ */
+.dash-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.dash-card {
+  position: relative;
+  padding: 20px 22px 18px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(212, 175, 55, 0.08), transparent 60%),
+    linear-gradient(180deg, #2c0306 0%, #1d0205 100%);
+  border-top: 2px solid var(--color-gold);
+  border-bottom: 2px solid var(--color-gold);
+  border-left: 1px solid rgba(212, 175, 55, 0.45);
+  border-right: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.6), 0 8px 28px rgba(0, 0, 0, 0.4);
+}
+
+.dash-cartouche {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.dash-cartouche .han {
+  font-family: var(--font-display-hanzi);
+  color: var(--color-gold-bright);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.dash-stat-value {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1;
+  color: var(--color-ivory);
+}
+
+.dash-delta-up { color: var(--color-gold-bright); }
+.dash-delta-down { color: rgba(254, 243, 199, 0.55); }
+.dash-delta-flat { color: rgba(254, 243, 199, 0.4); }
+
+.dash-panel {
+  position: relative;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(212, 175, 55, 0.05), transparent 60%),
+    var(--color-vermillion);
+}
+
+/* vertical bars (frequency) */
+.dash-bar {
+  background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 100%);
+  border-radius: 1px 1px 0 0;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
+  position: relative;
+}
+/* Uniques share the views Y scale: a narrow bar in front, never a ratio fill. */
+.dash-bar-uniques {
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  bottom: 0;
+  background: var(--color-gold-bright);
+  box-shadow: 0 0 10px rgba(233, 196, 106, 0.6);
+  border-radius: 1px 1px 0 0;
+}
+
+/* The current bucket is still filling up. Hatch it so nobody reads it as final.
+   The hatch goes on a pseudo-element: setting background-image on .dash-bar-partial
+   would REPLACE .dash-bar's gold gradient rather than layer over it. */
+.dash-bar-partial {
+  opacity: 0.72;
+}
+.dash-bar-partial::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 3px,
+    rgba(29, 2, 5, 0.55) 3px 6px
+  );
+}
+
+.dash-chart-grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed rgba(212, 175, 55, 0.18);
+}
+
+.dash-axis-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(254, 243, 199, 0.45);
+  white-space: nowrap;
+}
+
+.dash-legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.6);
+}
+.dash-legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.4rem;
+  vertical-align: -1px;
+}
+
+.dash-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 6px 10px;
+  border: 1px solid var(--color-gold);
+  background: #1d0205;
+  color: var(--color-ivory);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Edge bars: anchor the tooltip inside the chart instead of centring it on the bar,
+   which would push half of it past the panel (and past body's overflow-x: hidden). */
+.dash-tooltip-start {
+  left: 0;
+  transform: none;
+}
+.dash-tooltip-end {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+/* horizontal proportion bars (rankings) */
+.dash-rank-track {
+  height: 8px;
+  background: rgba(212, 175, 55, 0.12);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.dash-rank-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-gold-deep), var(--color-gold));
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* range tabs */
+.dash-range-tab {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  background: transparent;
+  cursor: pointer;
+}
+.dash-range-tab[data-active='true'] {
+  background: var(--color-cinnabar);
+  color: var(--color-ivory);
+  border-color: var(--color-cinnabar);
+}
+
+/* ============================================================
  * REDUCED MOTION
  * ============================================================ */
 @media (prefers-reduced-motion: reduce) {
