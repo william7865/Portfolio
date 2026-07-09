@@ -374,7 +374,7 @@ export function pointDelta(cur: number, prev: number): number {
 - [ ] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run lib/analytics/series.test.ts`
-Expected: PASS — 15 tests
+Expected: PASS — 17 tests
 
 `npm test` échouera encore : `queries.ts` importe toujours `fillDays`. C'est attendu, Task 4 le corrige. Ne pas toucher `queries.ts` ici.
 
