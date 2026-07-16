@@ -4,6 +4,8 @@ import { getSql } from '@/lib/analytics/db';
 import { dailySalt, visitorHash } from '@/lib/analytics/hash';
 import { parseDevice } from '@/lib/analytics/device';
 import { referrerHost } from '@/lib/analytics/referrer';
+import { readJsonCapped } from '@/lib/security/body';
+import { clientIp, memoryLimit } from '@/lib/security/ratelimit';
 
 export const runtime = 'nodejs';
 
@@ -15,33 +17,35 @@ const schema = z.object({
 
 const MAX_BODY_BYTES = 8 * 1024;
 
+/**
+ * Memory-based on purpose: one beacon per page view is high-volume, and a DB round
+ * trip per hit to police DB writes would cost more than it saves. Per-instance
+ * counting lets a determined flooder through, which for page-view stats means skewed
+ * numbers on a private dashboard — not a breach. It still sheds the casual loop.
+ */
+const PER_IP = { limit: 60, windowMs: 60 * 1000 };
+
 const noContent = () => new NextResponse(null, { status: 204 });
 
 export async function POST(req: Request) {
   const secret = process.env.SESSION_SECRET;
   if (!secret || !process.env.DATABASE_URL) return noContent();
-  if (Number(req.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) {
-    return new NextResponse(null, { status: 413 });
+
+  const ip = clientIp(req.headers);
+  // 204, not 429: the beacon is fire-and-forget and never reads the status, and a
+  // silent drop tells a flooder less about where the ceiling sits.
+  if (!memoryLimit(`collect:ip:${ip}`, PER_IP.limit, PER_IP.windowMs).ok) return noContent();
+
+  const body = await readJsonCapped(req, MAX_BODY_BYTES);
+  if (!body.ok) {
+    return body.reason === 'too-large' ? new NextResponse(null, { status: 413 }) : noContent();
   }
 
-  let body: unknown;
-  try {
-    body = await req.json();
-  } catch {
-    return noContent();
-  }
-  const parsed = schema.safeParse(body);
+  const parsed = schema.safeParse(body.value);
   if (!parsed.success) return noContent();
 
   try {
     const h = req.headers;
-    // x-real-ip is set by the Vercel edge from the real connection and cannot be
-    // spoofed by the client; x-forwarded-for's leftmost token can. Fall back to it
-    // only for local/non-Vercel runs where x-real-ip is absent.
-    const ip =
-      h.get('x-real-ip')?.trim() ||
-      (h.get('x-forwarded-for') ?? '').split(',')[0]?.trim() ||
-      'unknown';
     const ua = h.get('user-agent') ?? '';
     const country = h.get('x-vercel-ip-country') || null;
     const ownHost = h.get('host') ?? '';
