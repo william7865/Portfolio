@@ -11,11 +11,23 @@ const securityHeaders = [
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains; preload'
   },
-  // Scoped to clickjacking / base-tag / plugin defenses only. A full script-src
-  // would break Next.js hydration and the app's inline styles, so it's omitted.
+  // Scoped to clickjacking / base-tag / plugin / exfiltration defenses. script-src is
+  // still omitted: locking it down needs a per-request nonce, which needs middleware on
+  // every route, and middleware currently skips /dashboard and /api by design. Until
+  // then this is defense in depth around an app with no known injection sink, not an
+  // XSS mitigation — treat input validation as the actual control.
+  //
+  // form-action/frame-src add no risk here: the login posts via fetch (not a form
+  // action) and the app embeds no frames — verified before narrowing.
   {
     key: 'Content-Security-Policy',
-    value: "frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    value: [
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "form-action 'self'",
+      "frame-src 'none'"
+    ].join('; ')
   }
 ];
 
