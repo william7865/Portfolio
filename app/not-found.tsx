@@ -25,7 +25,7 @@ export default function NotFound() {
             textTransform: 'uppercase'
           }}
         >
-          HORS DU ROULEAU
+          PAGE INTROUVABLE
         </p>
         <h1
           style={{
@@ -38,7 +38,7 @@ export default function NotFound() {
           404.
         </h1>
         <p style={{ fontSize: '1.05rem', opacity: 0.85, lineHeight: 1.6 }}>
-          La page est sortie du rouleau. Revenons au prologue.
+          Cette page n'existe pas, ou n'existe plus.
         </p>
         <Link
           href="/"
@@ -53,7 +53,7 @@ export default function NotFound() {
             textDecoration: 'none'
           }}
         >
-          ← Retour au prologue
+          ← Retour à l'accueil
         </Link>
       </div>
     </main>

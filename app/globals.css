@@ -276,6 +276,8 @@
   position: absolute;
   width: 3px; height: 3px;
   border-radius: 50%;
+  /* invisible until its delayed drift starts, otherwise every particle sits in a row at the section top */
+  opacity: 0;
   background: var(--color-gold-bright);
   box-shadow:
     0 0 6px var(--color-gold-bright),
@@ -342,6 +344,174 @@
   border: 1px solid var(--color-gold);
   pointer-events: none;
   opacity: 0.5;
+}
+
+/* ============================================================
+ * GATE — palace door, two leaves swing open on scroll
+ * ============================================================ */
+.gate {
+  --gate-w: min(76vw, 400px);
+  width: var(--gate-w);
+  height: calc(var(--gate-w) * 1.22);
+  will-change: transform, opacity;
+}
+.gate-roof {
+  position: absolute;
+  top: -13%;
+  left: -10%;
+  right: -10%;
+  height: 11%;
+  background: linear-gradient(180deg, var(--color-gold-bright) 0%, var(--color-gold) 40%, var(--color-gold-deep) 100%);
+  clip-path: polygon(0 100%, 9% 0, 91% 0, 100% 100%);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
+}
+.gate-lintel {
+  position: absolute;
+  top: -2%;
+  left: -3%;
+  right: -3%;
+  height: 9%;
+  background: linear-gradient(180deg, #5c0b10 0%, var(--color-vermillion-deep) 100%);
+  border-top: 2px solid var(--color-gold);
+  border-bottom: 2px solid var(--color-gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
+.gate-plaque {
+  position: absolute;
+  top: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26%;
+  height: 15%;
+  display: grid;
+  place-items: center;
+  background: var(--color-ink-dark);
+  border: 1px solid var(--color-gold);
+  box-shadow:
+    inset 0 0 0 3px var(--color-vermillion-deep),
+    inset 0 0 0 4px rgba(212, 175, 55, 0.5),
+    0 4px 10px rgba(0, 0, 0, 0.5);
+  color: var(--color-gold-bright);
+  font-size: calc(var(--gate-w) * 0.09);
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(233, 196, 106, 0.5);
+  z-index: 3;
+}
+.gate-post {
+  position: absolute;
+  top: 6%;
+  bottom: 0;
+  width: 7%;
+  background: linear-gradient(90deg, #5c0b10 0%, var(--color-vermillion-deep) 55%, #3a0508 100%);
+  border-left: 1px solid rgba(212, 175, 55, 0.7);
+  border-right: 1px solid rgba(212, 175, 55, 0.7);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+.gate-post-left { left: 0; }
+.gate-post-right { right: 0; transform: scaleX(-1); }
+.gate-sill {
+  position: absolute;
+  bottom: -2.5%;
+  left: -3%;
+  right: -3%;
+  height: 3%;
+  background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-deep) 100%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+.gate-doorway {
+  position: absolute;
+  top: 7%;
+  bottom: 0;
+  left: 7%;
+  right: 7%;
+  z-index: 1;
+}
+.gate-light {
+  background: radial-gradient(75% 65% at 50% 100%,
+    rgba(233, 196, 106, 0.95) 0%,
+    rgba(212, 175, 55, 0.55) 30%,
+    rgba(139, 26, 31, 0.9) 65%,
+    var(--color-vermillion-bright) 100%);
+}
+.gate-leaves {
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+}
+.gate-leaf {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.14) 0 1px, transparent 1px 12%),
+    linear-gradient(90deg, #4a0a0e 0%, #560b10 50%, #3c0609 100%);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.45);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.gate-leaf-left {
+  transform-origin: left center;
+  border-right: 1px solid rgba(212, 175, 55, 0.55);
+}
+.gate-leaf-right {
+  transform-origin: right center;
+  border-left: 1px solid rgba(212, 175, 55, 0.55);
+}
+.gate-studs {
+  position: absolute;
+  inset: 8% 16%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  place-items: center;
+}
+.gate-stud {
+  width: calc(var(--gate-w) * 0.026);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, #fff2c2 0%, var(--color-gold) 40%, var(--color-gold-deep) 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.gate-ring {
+  position: absolute;
+  top: 50%;
+  width: calc(var(--gate-w) * 0.085);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: calc(var(--gate-w) * 0.011) solid var(--color-gold);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+.gate-ring::before {
+  /* the boss the ring hangs from */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 55%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -60%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff2c2, var(--color-gold) 45%, var(--color-gold-deep));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.gate-leaf-left .gate-ring { right: 10%; }
+.gate-leaf-right .gate-ring { left: 10%; }
+.gate-floor {
+  background: radial-gradient(60% 60% at 50% 100%,
+    rgba(233, 196, 106, 0.45) 0%,
+    rgba(212, 175, 55, 0.15) 30%,
+    transparent 60%);
+}
+.gate-wash {
+  background: radial-gradient(120% 90% at 50% 100%,
+    var(--color-vermillion-bright) 0%,
+    var(--color-vermillion) 55%,
+    var(--color-ink-dark) 100%);
 }
 
 /* ============================================================
