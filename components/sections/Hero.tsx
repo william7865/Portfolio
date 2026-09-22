@@ -2,12 +2,13 @@
 
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import { GoldDust } from '@/components/motifs/GoldDust';
 import { SilkVeil } from '@/components/motifs/SilkVeil';
 import { Seal } from '@/components/motifs/Seal';
 import { useEasterEgg } from '@/components/providers/EasterEggProvider';
 import { useIdlePulse } from '@/lib/useIdlePulse';
+import { useScrollRange } from '@/lib/useScrollRange';
 
 export function Hero() {
   const t = useTranslations('hero');
@@ -24,17 +25,17 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
 
   // Background hanzi drifts up + scales slightly, fades into vermillon
-  const bgHanziY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
-  const bgHanziOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.15]);
-  const bgHanziScale = useTransform(scrollYProgress, [0, 1], [1, 1.18]);
+  const bgHanziY = useScrollRange(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const bgHanziOpacity = useScrollRange(scrollYProgress, [0, 0.7], [1, 0.15]);
+  const bgHanziScale = useScrollRange(scrollYProgress, [0, 1], [1, 1.18]);
   // Foreground content lifts and fades
-  const fgY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const fgOpacity = useTransform(scrollYProgress, [0, 0.6, 0.9], [1, 0.6, 0]);
+  const fgY = useScrollRange(scrollYProgress, [0, 1], [0, -80]);
+  const fgOpacity = useScrollRange(scrollYProgress, [0, 0.6, 0.9], [1, 0.6, 0]);
   // Silk veil narrows as you scroll away (roll-up effect)
-  const veilScale = useTransform(scrollYProgress, [0, 1], [1, 0.6]);
-  const veilOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const veilScale = useScrollRange(scrollYProgress, [0, 1], [1, 0.6]);
+  const veilOpacity = useScrollRange(scrollYProgress, [0, 0.85], [1, 0]);
   // Scroll cue fades immediately on first scroll
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  const cueOpacity = useScrollRange(scrollYProgress, [0, 0.08], [1, 0]);
 
   return (
     <section

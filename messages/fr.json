@@ -4,33 +4,37 @@
     "on": "Activer le son",
     "off": "Couper le son"
   },
+  "nav": {
+    "home": "Retour à l'accueil",
+    "top": "Remonter en haut de page"
+  },
   "hero": {
     "kicker": "PROLOGUE · 序幕",
-    "lede": "Le code comme calligraphie. Précis, intentionnel, lisible.",
+    "lede": "Je développe des applications web, du front au back. React, Next.js, .NET et Python au quotidien.",
     "role": "Développeur Full Stack · Paris",
     "scrollCue": "Acte I"
   },
   "works": {
-    "kicker": "ACTE I · WORKS",
+    "kicker": "ACTE I · PROJETS",
     "title": "Le rouleau",
-    "subtitle": "Trois ouvrages tirés du carnet d'atelier.",
+    "subtitle": "Trois projets récents.",
     "scrollHint": "Faites défiler pour dérouler",
     "endNote": "Fin du rouleau",
     "byline": "William Lin · 林"
   },
   "skills": {
-    "kicker": "ACTE II · SKILLS",
+    "kicker": "ACTE II · COMPÉTENCES",
     "title": "Le tracé",
-    "subtitle": "Le geste, l'outil, et la trace qu'il laisse."
+    "subtitle": "Les technos que je pratique, et où je les ai utilisées."
   },
   "now": {
-    "kicker": "ACTE III · PRÉCEPTES",
-    "titleEm": "Cinq",
-    "titleRest": "préceptes",
-    "subtitle": "Ce en quoi je crois quand je bâtis.",
+    "kicker": "ACTE III · RÈGLES",
+    "titleEm": "Cinq règles",
+    "titleRest": "de travail",
+    "subtitle": "Ce que je m'impose sur chaque projet.",
     "cartoucheHan": "五訓",
-    "cartoucheLat": "TENETS",
-    "sealStamp": "gravé · 2026",
+    "cartoucheLat": "RÈGLES",
+    "sealStamp": "mis à jour · 2026",
     "nowParis": "Maintenant · Paris",
     "hour": {
       "rat": "Rat",
@@ -47,54 +51,56 @@
       "pig": "Cochon"
     },
     "precepts": {
-      "i":   { "label": "La voie",   "text": "Apprendre à apprendre, toute la vie. Chaque projet est une leçon, jamais un point d'arrivée." },
-      "ii":  { "label": "Le cœur",   "text": "Construire ce que j'aimerais utiliser. Si je ne le rouvrirais pas demain, il ne mérite pas d'exister." },
-      "iii": { "label": "L'ouvrage", "text": "La qualité se voit, le bâclage aussi. Le détail invisible est la signature." },
-      "iv":  { "label": "La parole", "text": "Promettre rarement, livrer toujours. Une deadline tenue vaut mille discours." },
-      "v":   { "label": "L'humain",  "text": "L'utilisateur d'abord, l'algorithme ensuite. L'équipe avant la prouesse solo." }
+      "i":   { "label": "La voie",   "text": "Je continue d'apprendre, un projet après l'autre." },
+      "ii":  { "label": "Le cœur",   "text": "Je construis des choses que j'aurais envie d'utiliser moi-même." },
+      "iii": { "label": "L'ouvrage", "text": "Je soigne les détails, y compris ceux que personne ne verra." },
+      "iv":  { "label": "La parole", "text": "Quand je m'engage sur une date, je la tiens." },
+      "v":   { "label": "L'humain",  "text": "Je pense d'abord à la personne qui va utiliser le produit, et je préfère travailler en équipe." }
     }
   },
   "gate": {
-    "kicker": "L'ENTRÉE · 入",
-    "label": "Franchir le seuil",
-    "subtitle": "On entre dans la dernière salle."
+    "kicker": "LA PORTE · 門",
+    "label": "Faites défiler pour entrer"
   },
   "final": {
     "kicker": "ACTE FINAL · 終",
     "title": "Correspondance",
-    "subtitle": "Laissez un mot. Je lis tout, je réponds rarement vite, jamais en retard.",
+    "subtitle": "Un projet, un poste, une question : écrivez-moi.",
     "fields": {
       "name": "Votre nom",
-      "namePlaceholder": "Tao Yuanming",
+      "namePlaceholder": "Prénom et nom",
       "email": "Votre email",
-      "emailPlaceholder": "tao@example.fr",
+      "emailPlaceholder": "vous@exemple.fr",
       "message": "Votre message",
       "messagePlaceholder": "Quelques lignes suffisent."
     },
-    "send": "Sceller et envoyer",
+    "send": "Envoyer",
     "sending": "Envoi en cours…",
-    "success": "Message scellé. Je réponds sous 48h.",
-    "error": "L'envoi a échoué. Réessayez dans un instant, ou passez par LinkedIn.",
+    "success": "Message envoyé. Je vous réponds sous 48 h.",
+    "error": "L'envoi a échoué. Réessayez dans un instant, ou écrivez-moi sur LinkedIn.",
     "validation": {
-      "name": "Indiquez votre nom (2 caractères min)",
-      "email": "Email invalide",
-      "message": "Un peu plus long, je vous lis attentivement (20 caractères min)"
+      "name": "Indiquez votre nom (2 caractères minimum)",
+      "email": "Adresse email invalide",
+      "message": "Message trop court (20 caractères minimum)"
     }
   },
   "footer": {
     "signature": "BUILT WITH NEXT.JS",
-    "cv": "Curriculum vitae · PDF"
+    "cv": "CV · PDF"
   },
   "notFound": {
-    "kicker": "HORS DU ROULEAU",
+    "kicker": "PAGE INTROUVABLE",
     "title": "404.",
-    "lede": "La page est sortie du rouleau. Revenons au prologue.",
-    "back": "← Retour"
+    "lede": "Cette page n'existe pas, ou n'existe plus.",
+    "back": "← Retour à l'accueil"
   },
   "masterScroll": {
     "kicker": "ROULEAU CACHÉ · 隱卷",
     "title": "Master Scroll",
-    "lede": "Vous avez trouvé un parchemin replié au fond d'un coffre.",
+    "lede": "Vous avez trouvé la page cachée.",
+    "body1": "Rien de secret ici, juste un clin d'œil à ceux qui ont pris le temps de chercher.",
+    "body2": "Merci d'être passé.",
+    "signature": "— William",
     "back": "← Retour au site"
   }
 }

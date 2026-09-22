@@ -54,16 +54,10 @@ export default async function MasterScrollPage({
               className="font-display italic text-lg md:text-xl leading-relaxed max-w-xl mx-auto space-y-5"
               style={{ color: 'var(--color-vermillion)' }}
             >
-              <p>
-                — Sur la rive, le pin oublié rappelle qu&apos;on n&apos;a pas besoin d&apos;être
-                vu pour tenir bon.
-              </p>
-              <p>
-                Ce rouleau n&apos;est ni un index, ni un manifeste. Juste un repli — pour celles
-                et ceux qui regardent assez longtemps. Merci d&apos;être passé par là.
-              </p>
+              <p>{t('body1')}</p>
+              <p>{t('body2')}</p>
               <p className="text-right" style={{ color: 'rgba(74,10,14,0.7)' }}>
-                — 王林
+                {t('signature')}
               </p>
             </div>
 

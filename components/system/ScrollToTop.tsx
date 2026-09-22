@@ -2,16 +2,18 @@
 
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useSfxContext } from '@/components/providers/SfxProvider';
 
 /**
- * Cinnabar seal returning the user to the prologue.
+ * Cinnabar seal returning the user to the top of the page.
  * Fades in after the first viewport-height of scroll.
  */
 export function ScrollToTop() {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(false);
   const { play } = useSfxContext();
+  const t = useTranslations('nav');
 
   useMotionValueEvent(scrollY, 'change', (v) => {
     const trigger = typeof window !== 'undefined' ? window.innerHeight * 0.65 : 600;
@@ -31,8 +33,8 @@ export function ScrollToTop() {
         <motion.button
           type="button"
           onClick={backToTop}
-          aria-label="Retour au prologue"
-          title="Retour au prologue"
+          aria-label={t('top')}
+          title={t('top')}
           initial={{ opacity: 0, y: 20, scale: 0.7 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.7 }}
