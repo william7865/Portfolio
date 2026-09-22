@@ -4,16 +4,20 @@
     "on": "Sound on",
     "off": "Sound off"
   },
+  "nav": {
+    "home": "Back to home",
+    "top": "Back to top"
+  },
   "hero": {
     "kicker": "PROLOGUE · 序幕",
-    "lede": "Code as calligraphy. Precise, intentional, readable.",
+    "lede": "I build web applications, front to back. React, Next.js, .NET and Python, day to day.",
     "role": "Full Stack Developer · Paris",
     "scrollCue": "Act I"
   },
   "works": {
-    "kicker": "ACT I · WORKS",
+    "kicker": "ACT I · PROJECTS",
     "title": "The Handscroll",
-    "subtitle": "Three pieces pulled from the studio notebook.",
+    "subtitle": "Three recent projects.",
     "scrollHint": "Scroll to unroll",
     "endNote": "End of scroll",
     "byline": "William Lin · 林"
@@ -21,16 +25,16 @@
   "skills": {
     "kicker": "ACT II · SKILLS",
     "title": "The Stroke",
-    "subtitle": "The gesture, the tool, the mark it leaves."
+    "subtitle": "The tech I work with, and where I've used it."
   },
   "now": {
-    "kicker": "ACT III · TENETS",
-    "titleEm": "Five",
-    "titleRest": "principles",
-    "subtitle": "What I believe in when I build.",
+    "kicker": "ACT III · RULES",
+    "titleEm": "Five rules",
+    "titleRest": "I work by",
+    "subtitle": "What I hold myself to on every project.",
     "cartoucheHan": "五訓",
-    "cartoucheLat": "TENETS",
-    "sealStamp": "engraved · 2026",
+    "cartoucheLat": "RULES",
+    "sealStamp": "updated · 2026",
     "nowParis": "Now · Paris",
     "hour": {
       "rat": "Rat",
@@ -47,54 +51,56 @@
       "pig": "Pig"
     },
     "precepts": {
-      "i":   { "label": "The Way",   "text": "Learning to learn, for life. Every project is a lesson, never an end." },
-      "ii":  { "label": "The Heart", "text": "Build what I'd want to use. If I wouldn't open it tomorrow, it doesn't deserve to exist." },
-      "iii": { "label": "The Craft", "text": "Quality shows, so does sloppiness. The invisible detail is the signature." },
-      "iv":  { "label": "The Word",  "text": "Promise rarely, deliver always. A kept deadline is worth a thousand speeches." },
-      "v":   { "label": "The Human", "text": "User first, algorithm second. Team before solo prowess." }
+      "i":   { "label": "The Way",   "text": "I keep learning, one project at a time." },
+      "ii":  { "label": "The Heart", "text": "I build things I'd want to use myself." },
+      "iii": { "label": "The Craft", "text": "I take care of the details, including the ones nobody will see." },
+      "iv":  { "label": "The Word",  "text": "When I commit to a date, I keep it." },
+      "v":   { "label": "The Human", "text": "I think of the person using the product first, and I'd rather work in a team." }
     }
   },
   "gate": {
-    "kicker": "THE THRESHOLD · 入",
-    "label": "Cross the threshold",
-    "subtitle": "Into the last hall."
+    "kicker": "THE GATE · 門",
+    "label": "Scroll to enter"
   },
   "final": {
     "kicker": "FINAL ACT · 終",
     "title": "Correspondence",
-    "subtitle": "Leave a word. I read everything, I rarely reply fast, never late.",
+    "subtitle": "A project, a job, a question: write to me.",
     "fields": {
       "name": "Your name",
-      "namePlaceholder": "Tao Yuanming",
+      "namePlaceholder": "First and last name",
       "email": "Your email",
-      "emailPlaceholder": "tao@example.com",
+      "emailPlaceholder": "you@example.com",
       "message": "Your message",
       "messagePlaceholder": "A few lines is enough."
     },
-    "send": "Seal and send",
-    "sending": "Sealing…",
-    "success": "Message sealed. I reply within 48h.",
-    "error": "Send failed. Try again shortly, or reach out via LinkedIn.",
+    "send": "Send",
+    "sending": "Sending…",
+    "success": "Message sent. I'll reply within 48 hours.",
+    "error": "Couldn't send. Try again in a moment, or message me on LinkedIn.",
     "validation": {
-      "name": "Your name (2 characters min)",
-      "email": "Invalid email",
-      "message": "A little longer, please — I read carefully (20 characters min)"
+      "name": "Please enter your name (at least 2 characters)",
+      "email": "Invalid email address",
+      "message": "Message too short (at least 20 characters)"
     }
   },
   "footer": {
     "signature": "BUILT WITH NEXT.JS",
-    "cv": "Curriculum vitae · PDF"
+    "cv": "CV · PDF"
   },
   "notFound": {
-    "kicker": "OFF THE SCROLL",
+    "kicker": "PAGE NOT FOUND",
     "title": "404.",
-    "lede": "This page slipped off the handscroll. Let's return to the prologue.",
-    "back": "← Back"
+    "lede": "This page doesn't exist, or doesn't anymore.",
+    "back": "← Back to home"
   },
   "masterScroll": {
     "kicker": "HIDDEN SCROLL · 隱卷",
     "title": "Master Scroll",
-    "lede": "You found a folded parchment at the bottom of a chest.",
+    "lede": "You found the hidden page.",
+    "body1": "Nothing secret here, just a nod to those who took the time to look.",
+    "body2": "Thanks for stopping by.",
+    "signature": "— William",
     "back": "← Back to the site"
   }
 }
