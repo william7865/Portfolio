@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { MuteToggle } from './MuteToggle';
 
 export function Header() {
+  const t = useTranslations('nav');
   const params = useParams();
   const lang = (params?.lang as string) || 'fr';
 
@@ -14,7 +16,7 @@ export function Header() {
       <div className="flex items-center justify-between px-6 lg:px-10 py-5">
         <Link
           href={`/${lang}`}
-          aria-label="Return to prologue"
+          aria-label={t('home')}
           className="pointer-events-auto kicker-mono opacity-80 hover:opacity-100 hover:text-[var(--color-gold-bright)] transition-colors"
         >
           林 · LIN

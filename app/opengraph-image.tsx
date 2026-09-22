@@ -58,7 +58,7 @@ export default async function OG() {
             opacity: 0.85
           }}
         >
-          Le code comme calligraphie. Précis, intentionnel, lisible.
+          Je développe des applications web, du front au back. React, Next.js, .NET et Python au quotidien.
         </div>
 
         <div
