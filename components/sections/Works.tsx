@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
 import projectsData from '@/content/data/projects.json';
-import { GoldRoller } from '@/components/motifs/GoldRoller';
 import { Seal } from '@/components/motifs/Seal';
-import { useIsMobile } from '@/lib/useIsMobile';
+import { SceneVideo } from '@/components/motifs/SceneVideo';
+import { useScrollRange } from '@/lib/useScrollRange';
 
 function TechChip({ label }: { label: string }) {
   return (
@@ -36,6 +36,7 @@ type Project = {
   demo: string | null;
 };
 
+/** No paper of its own: the text sits on the filmed handscroll. */
 function ProjectPanel({
   p,
   index,
@@ -47,14 +48,8 @@ function ProjectPanel({
 }) {
   return (
     <article
-      className="relative shrink-0 w-[80vw] md:w-[60vw] max-w-3xl flex flex-col p-8 md:p-14"
-      style={{
-        background:
-          'radial-gradient(70% 50% at 30% 0%, rgba(120,60,20,0.18), transparent 60%), linear-gradient(180deg, #f5e6c8 0%, #e9d3a8 100%)',
-        boxShadow:
-          'inset 0 0 80px rgba(120,60,20,0.18), 0 12px 40px rgba(0,0,0,0.35)',
-        color: 'var(--color-vermillion)'
-      }}
+      className="relative w-[80vw] md:w-[min(58vw,42rem)] flex flex-col px-2 md:px-4 md:scale-125"
+      style={{ color: 'var(--color-vermillion)' }}
     >
       <div
         aria-hidden="true"
@@ -62,7 +57,7 @@ function ProjectPanel({
         style={{
           right: '-1rem',
           top: '-1rem',
-          fontSize: 'clamp(8rem, 18vw, 16rem)',
+          fontSize: 'clamp(8rem, 34vh, 16rem)',
           lineHeight: 1,
           color: 'rgba(74,10,14,0.10)'
         }}
@@ -120,7 +115,7 @@ function ProjectPanel({
       </div>
 
       {(p.repo || p.demo) && (
-        <div className="relative z-10 mt-auto pt-6 flex gap-5 font-mono text-xs tracking-[0.18em] uppercase">
+        <div className={`relative z-10 mt-2 pt-6 flex gap-5 font-mono text-xs tracking-[0.18em] uppercase`}>
           {p.repo && (
             <a
               href={p.repo}
@@ -152,14 +147,8 @@ function ProjectPanel({
 function EndPanel({ t }: { t: ReturnType<typeof useTranslations> }) {
   return (
     <article
-      className="relative shrink-0 w-[60vw] md:w-[32vw] max-w-md flex flex-col items-center justify-center p-8 md:p-10"
-      style={{
-        background:
-          'radial-gradient(70% 50% at 30% 0%, rgba(120,60,20,0.18), transparent 60%), linear-gradient(180deg, #f5e6c8 0%, #e9d3a8 100%)',
-        boxShadow:
-          'inset 0 0 80px rgba(120,60,20,0.22), 0 12px 40px rgba(0,0,0,0.35)',
-        color: 'var(--color-vermillion)'
-      }}
+      className="relative flex flex-col items-center justify-center md:scale-125"
+      style={{ color: 'var(--color-vermillion)' }}
     >
       <div
         className="kicker-mono mb-4"
@@ -182,51 +171,6 @@ export function Works() {
   const t = useTranslations('works');
   const locale = useLocale() as 'fr' | 'en';
   const projects = projectsData as Project[];
-  const isMobile = useIsMobile();
-
-  if (isMobile) {
-    return (
-      <section
-        aria-labelledby="works-title-mobile"
-        className="relative py-24 px-6"
-      >
-        <div className="kicker mb-3">{t('kicker')}</div>
-        <h2 id="works-title-mobile" className="display text-4xl text-[var(--color-ivory)] mb-2">
-          <em>{t('title')}</em>
-        </h2>
-        <p className="lede italic opacity-70 mb-10 max-w-md">{t('subtitle')}</p>
-
-        <div className="relative">
-          {/* Horizontal roller as top cap on mobile */}
-          <div
-            aria-hidden="true"
-            className="h-3 w-full mb-2 rounded-sm relative"
-            style={{
-              background:
-                'linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-deep) 100%)',
-              boxShadow: '0 0 12px rgba(212,175,55,0.4)'
-            }}
-          />
-          <div className="flex flex-col gap-6">
-            {projects.map((p, i) => (
-              <ProjectPanel key={p.slug} p={p} index={i} locale={locale} />
-            ))}
-            <EndPanel t={t} />
-          </div>
-          <div
-            aria-hidden="true"
-            className="h-3 w-full mt-2 rounded-sm relative"
-            style={{
-              background:
-                'linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-deep) 100%)',
-              boxShadow: '0 0 12px rgba(212,175,55,0.4)'
-            }}
-          />
-        </div>
-      </section>
-    );
-  }
-
   return <WorksHandscroll projects={projects} t={t} locale={locale} />;
 }
 
@@ -241,7 +185,29 @@ function WorksHandscroll({
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const x = useTransform(scrollYProgress, [0.05, 0.95], ['0vw', `-${projects.length * 78}vw`]);
+  // Beats on scrollYProgress:
+  //   0.02 – 0.20  the filmed scroll unrolls across the screen
+  //   0.20 – 0.27  the first project is inked onto the sheet
+  //   0.30 – 0.95  the sheet slides one project at a time, pausing on each
+  const unroll = useScrollRange(scrollYProgress, [0.02, 0.2], [0, 1]);
+  const headerOpacity = useScrollRange(scrollYProgress, [0.04, 0.14], [1, 0]);
+  const inkOpacity = useScrollRange(scrollYProgress, [0.2, 0.27], [0, 1]);
+
+  const pages = projects.length + 1;
+  const { stops, offsets } = useMemo(() => {
+    const span = (0.95 - 0.3) / (pages - 1);
+    const stops: number[] = [];
+    const offsets: string[] = [];
+    for (let k = 0; k < pages - 1; k++) {
+      // Hold on page k for the first 45% of its span, then slide to k + 1.
+      stops.push(0.3 + (k + 0.45) * span, 0.3 + (k + 1) * span);
+      offsets.push(`${(-k / pages) * 100}%`, `${(-(k + 1) / pages) * 100}%`);
+    }
+    return { stops, offsets };
+  }, [pages]);
+  const x = useTransform(scrollYProgress, stops, offsets);
+  // Padding percentages resolve against the track (pages × sheet), hence the division.
+  const nudge = { paddingLeft: `${8 / pages}%` };
 
   // Keyboard nav: ArrowRight/ArrowLeft = jump one panel (= one viewport-height
   // of vertical scroll, since the handscroll is bound to scrollYProgress)
@@ -266,37 +232,52 @@ function WorksHandscroll({
 
   return (
     <section
+      id="projets"
       aria-labelledby="works-title"
       ref={ref}
       className="relative"
-      style={{ height: `${(projects.length + 1) * 100}vh` }}
+      style={{ height: `${(projects.length + 2) * 100}vh` }}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 z-20 px-6 lg:px-10 pt-24 pointer-events-none">
+        <div className="scene-fade-y absolute inset-0">
+          <div className="scene-stage">
+            <SceneVideo scene="scroll" progress={unroll} />
+
+            {/* Projects, written on the unrolled sheet. The sheet sits left of the
+                frame's centre, so each page is nudged back under the viewport's. */}
+            <motion.div style={{ opacity: inkOpacity }} className="scene-sheet">
+              <motion.div
+                style={{ x, width: `${pages * 100}%` }}
+                className="flex h-full will-change-transform"
+              >
+                {projects.map((p, i) => (
+                  <div key={p.slug} className="flex-1 flex items-center justify-center" style={nudge}>
+                    <ProjectPanel p={p} index={i} locale={locale} />
+                  </div>
+                ))}
+                <div className="flex-1 flex items-center justify-center" style={nudge}>
+                  <EndPanel t={t} />
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Sits on the empty lacquer to the right of the rolled-up scroll */}
+        <motion.div
+          style={{ opacity: headerOpacity }}
+          className="absolute top-0 right-0 z-20 px-6 lg:px-10 pt-20 md:pt-24 text-right pointer-events-none"
+        >
           <div className="kicker mb-3">{t('kicker')}</div>
           <h2 id="works-title" className="display text-4xl md:text-5xl text-[var(--color-ivory)]">
             <em>{t('title')}</em>
           </h2>
-          <p className="lede italic opacity-70 mt-2 max-w-md">{t('subtitle')}</p>
-        </div>
+          <p className="lede italic opacity-70 mt-2 max-w-md ml-auto">{t('subtitle')}</p>
+        </motion.div>
 
-        <div className="absolute bottom-10 left-0 right-0 z-20 text-center kicker-mono opacity-50 pointer-events-none">
+        <div className="absolute bottom-6 left-0 right-0 z-20 px-16 text-center kicker-mono opacity-50 pointer-events-none">
           ↓ {t('scrollHint')} →
           <span className="ml-2 opacity-50 hidden md:inline">· ← → keys</span>
-        </div>
-
-        <div className="absolute inset-0 flex items-center pl-[10vw]">
-          <motion.div
-            style={{ x }}
-            className="flex items-stretch gap-0 will-change-transform h-[68vh]"
-          >
-            <GoldRoller />
-            {projects.map((p, i) => (
-              <ProjectPanel key={p.slug} p={p} index={i} locale={locale} />
-            ))}
-            <EndPanel t={t} />
-            <GoldRoller />
-          </motion.div>
         </div>
       </div>
     </section>

@@ -59,6 +59,7 @@ export function Correspondance() {
 
   return (
     <section
+      id="contact"
       aria-labelledby="final-title"
       className="relative pt-24 pb-32 px-6 lg:px-10 overflow-hidden"
       style={{

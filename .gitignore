@@ -41,3 +41,6 @@ coverage/
 # IDE
 .vscode/
 .idea/
+
+# Raw generated clips (the compressed versions live in public/scenes)
+.scene-src/
