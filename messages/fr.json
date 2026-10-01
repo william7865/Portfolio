@@ -9,10 +9,13 @@
     "top": "Remonter en haut de page"
   },
   "hero": {
-    "kicker": "PROLOGUE · 序幕",
+    "role": "Développeur full stack à Paris.",
     "lede": "Je développe des applications web, du front au back. React, Next.js, .NET et Python au quotidien.",
-    "role": "Développeur Full Stack · Paris",
-    "scrollCue": "Acte I"
+    "links": {
+      "projects": "Projets",
+      "contact": "Contact",
+      "cv": "CV (PDF)"
+    }
   },
   "works": {
     "kicker": "ACTE I · PROJETS",

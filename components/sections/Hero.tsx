@@ -2,16 +2,23 @@
 
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { AnimatePresence, motion, useScroll } from 'framer-motion';
-import { GoldDust } from '@/components/motifs/GoldDust';
-import { SilkVeil } from '@/components/motifs/SilkVeil';
+import { AnimatePresence, motion, useReducedMotion, useScroll } from 'framer-motion';
+import { SceneVideo } from '@/components/motifs/SceneVideo';
 import { Seal } from '@/components/motifs/Seal';
 import { useEasterEgg } from '@/components/providers/EasterEggProvider';
 import { useIdlePulse } from '@/lib/useIdlePulse';
 import { useScrollRange } from '@/lib/useScrollRange';
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+/**
+ * Prologue. The lacquer desk filmed from above: the tools lined up along the
+ * top, the handscroll still tied shut (Act I is that scroll being unrolled),
+ * the window's shadow drifting. The name sits on the bare lacquer below.
+ */
 export function Hero() {
   const t = useTranslations('hero');
+  const reduce = useReducedMotion();
   const { sealClick } = useEasterEgg();
   const [pulseKey, setPulseKey] = useState(0);
   const idlePulse = useIdlePulse(30_000);
@@ -23,147 +30,105 @@ export function Hero() {
 
   const ref = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-
-  // Background hanzi drifts up + scales slightly, fades into vermillon
-  const bgHanziY = useScrollRange(scrollYProgress, [0, 1], ['0%', '-30%']);
-  const bgHanziOpacity = useScrollRange(scrollYProgress, [0, 0.7], [1, 0.15]);
-  const bgHanziScale = useScrollRange(scrollYProgress, [0, 1], [1, 1.18]);
-  // Foreground content lifts and fades
+  const deskY = useScrollRange(scrollYProgress, [0, 1], ['0%', '12%']);
   const fgY = useScrollRange(scrollYProgress, [0, 1], [0, -80]);
   const fgOpacity = useScrollRange(scrollYProgress, [0, 0.6, 0.9], [1, 0.6, 0]);
-  // Silk veil narrows as you scroll away (roll-up effect)
-  const veilScale = useScrollRange(scrollYProgress, [0, 1], [1, 0.6]);
-  const veilOpacity = useScrollRange(scrollYProgress, [0, 0.85], [1, 0]);
-  // Scroll cue fades immediately on first scroll
-  const cueOpacity = useScrollRange(scrollYProgress, [0, 0.08], [1, 0]);
 
   return (
     <section
       ref={ref}
-      aria-label="Prologue"
-      className="relative min-h-screen w-full overflow-hidden flex items-center"
+      aria-label="William Lin"
+      className="relative min-h-[100svh] w-full overflow-hidden flex items-end"
     >
       <motion.div
         aria-hidden="true"
-        className="font-display-hanzi pointer-events-none absolute select-none will-change-transform"
-        style={{
-          right: 'clamp(-2rem, -3vw, 2rem)',
-          top: 'clamp(2rem, 6vw, 5rem)',
-          fontSize: 'clamp(12rem, 32vw, 28rem)',
-          lineHeight: 1,
-          color: 'transparent',
-          WebkitTextStroke: '1px rgba(212,175,55,0.45)',
-          y: bgHanziY,
-          opacity: bgHanziOpacity,
-          scale: bgHanziScale
-        }}
-      >
-        林
-      </motion.div>
-
-      <motion.div
-        style={{ scale: veilScale, opacity: veilOpacity }}
+        style={{ y: deskY }}
         className="absolute inset-0 pointer-events-none"
       >
-        <SilkVeil />
+        {/* Phones show a tall slice: inkstone and seal paste */}
+        <SceneVideo scene="hero" priority className="object-[78%_50%] md:object-center" />
+        <div className="hero-desk-tone absolute inset-0" />
       </motion.div>
-      <GoldDust count={14} />
 
       <motion.div
         style={{ y: fgY, opacity: fgOpacity }}
-        className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-10 pt-32 pb-16"
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20"
       >
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="kicker mb-12"
+          transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
+          className="md:max-w-[70%]"
         >
-          {t('kicker')}
-        </motion.div>
+          <h1 className="hero-name">
+            William Lin
+          </h1>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="hero-display max-w-4xl"
-        >
-          William <em>Lin</em>
-        </motion.h1>
+          <div className="mt-7 md:mt-10 max-w-md">
+            <p className="lede" style={{ opacity: 1 }}>
+              {t('role')}
+            </p>
+            <p className="lede mt-2" style={{ opacity: 0.92 }}>
+              {t('lede')}
+            </p>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.6 }}
-          className="mt-10 max-w-md"
-        >
-          <p className="lede italic mb-4">{t('lede')}</p>
-          <p className="kicker-mono opacity-70">{t('role')}</p>
-        </motion.div>
+          <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <nav aria-label="William Lin" className="flex flex-wrap gap-x-8 gap-y-3">
+              <a className="hero-link" href="#projets">
+                {t('links.projects')}
+              </a>
+              <a className="hero-link" href="#contact">
+                {t('links.contact')}
+              </a>
+              <a className="hero-link" href="/CV.pdf" target="_blank" rel="noopener noreferrer">
+                {t('links.cv')}
+              </a>
+            </nav>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 1.1, ease: [0.34, 1.56, 0.64, 1] }}
-          className="mt-10 inline-block"
-        >
-          <div className="relative inline-block">
-            <AnimatePresence>
-              {pulseKey > 0 && (
-                <motion.span
-                  key={pulseKey}
-                  initial={{ scale: 1, opacity: 0.65 }}
-                  animate={{ scale: 2.4, opacity: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: 'var(--color-cinnabar)',
-                    borderRadius: 2,
-                    transform: 'rotate(-6deg)',
-                    zIndex: 0
-                  }}
+            <div className="relative inline-block">
+              <AnimatePresence>
+                {pulseKey > 0 && (
+                  <motion.span
+                    key={pulseKey}
+                    initial={{ scale: 1, opacity: 0.65 }}
+                    animate={{ scale: 2.4, opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: 'var(--color-cinnabar)',
+                      borderRadius: 2,
+                      transform: 'rotate(-6deg)',
+                      zIndex: 0
+                    }}
+                  />
+                )}
+              </AnimatePresence>
+              <motion.div
+                key={`idle-${idlePulse}`}
+                animate={idlePulse > 0 ? { scale: [1, 1.08, 0.98, 1.04, 1] } : { scale: 1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.88 }}
+                transition={
+                  idlePulse > 0
+                    ? { duration: 1.4, times: [0, 0.3, 0.55, 0.8, 1], ease: 'easeOut' }
+                    : { type: 'spring', stiffness: 500, damping: 18 }
+                }
+                className="relative"
+                style={{ zIndex: 1 }}
+              >
+                <Seal
+                  glyph="林"
+                  size={44}
+                  rotate={-6}
+                  onClick={handleSealClick}
+                  ariaLabel="William Lin signature seal"
                 />
-              )}
-            </AnimatePresence>
-            <motion.div
-              key={`idle-${idlePulse}`}
-              animate={
-                idlePulse > 0
-                  ? { scale: [1, 1.08, 0.98, 1.04, 1] }
-                  : { scale: 1 }
-              }
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.88 }}
-              transition={
-                idlePulse > 0
-                  ? { duration: 1.4, times: [0, 0.3, 0.55, 0.8, 1], ease: 'easeOut' }
-                  : { type: 'spring', stiffness: 500, damping: 18 }
-              }
-              className="relative"
-              style={{ zIndex: 1 }}
-            >
-              <Seal
-                glyph="林"
-                size={64}
-                rotate={-6}
-                onClick={handleSealClick}
-                ariaLabel="William Lin signature seal"
-              />
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: cueOpacity }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.6 }}
-        className="absolute bottom-10 left-6 lg:left-10 flex flex-col items-start gap-3 z-10"
-      >
-        <span className="kicker-mono opacity-60">↓ {t('scrollCue')}</span>
-        <span className="block w-px h-16 bg-gradient-to-b from-[var(--color-gold)] to-transparent" />
       </motion.div>
     </section>
   );
