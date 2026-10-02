@@ -99,9 +99,9 @@ export function Correspondance() {
             </video>
           )}
 
-          <div className="contact-paper flex flex-col lg:flex-row lg:gap-12 px-1 md:px-8 py-2 md:py-8">
-            <div className="lg:w-[38%] shrink-0">
-              <h2 id="final-title" className="font-display text-4xl md:text-5xl leading-none">
+          <div className="contact-paper">
+            <div className="contact-head">
+              <h2 id="final-title">
                 {t('title')}
               </h2>
               <AnimatePresence mode="wait" initial={false}>
@@ -115,7 +115,7 @@ export function Correspondance() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.4 }}
-                    className="font-display text-xl md:text-2xl mt-4 outline-none"
+                    className="outline-none"
                   >
                     {t('success')}
                   </motion.p>
@@ -124,7 +124,7 @@ export function Correspondance() {
                     key="intro"
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="font-display text-lg mt-3 md:mt-4 opacity-80"
+                    className="opacity-80"
                   >
                     {t('subtitle')}
                   </motion.p>
@@ -140,7 +140,7 @@ export function Correspondance() {
                   noValidate
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.35 }}
-                  className="mt-5 lg:mt-1 flex-1 min-w-0 space-y-4 md:space-y-5"
+                  className="contact-form"
                 >
                   <div>
                     <label htmlFor="name">{t('fields.name')}</label>
@@ -180,11 +180,11 @@ export function Correspondance() {
                     {errors.message && <p className="field-error">{t('validation.message')}</p>}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                     <button
                       type="submit"
                       disabled={status === 'sending'}
-                      className="font-display text-xl px-6 py-2.5 border border-[var(--color-vermillion)]/60 rounded-sm hover:bg-[var(--color-vermillion)] hover:text-[var(--color-ivory)] transition-colors disabled:opacity-60"
+                      className="contact-send"
                     >
                       {status === 'sending' ? t('sending') : t('send')}
                     </button>

@@ -48,7 +48,7 @@ function ProjectPanel({
 }) {
   return (
     <article
-      className="relative w-[80vw] md:w-[min(58vw,42rem)] flex flex-col px-2 md:px-4 md:scale-125"
+      className="relative w-[80vw] md:w-[min(58vw,42rem)] flex flex-col px-2 md:px-4 sheet-scale"
       style={{ color: 'var(--color-vermillion)' }}
     >
       <div
@@ -147,7 +147,7 @@ function ProjectPanel({
 function EndPanel({ t }: { t: ReturnType<typeof useTranslations> }) {
   return (
     <article
-      className="relative flex flex-col items-center justify-center md:scale-125"
+      className="relative flex flex-col items-center justify-center sheet-scale"
       style={{ color: 'var(--color-vermillion)' }}
     >
       <div
