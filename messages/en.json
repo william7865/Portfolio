@@ -31,13 +31,8 @@
     "subtitle": "The tech I work with, and where I've used it."
   },
   "now": {
-    "kicker": "ACT III · RULES",
-    "titleEm": "Five rules",
-    "titleRest": "I work by",
-    "subtitle": "What I hold myself to on every project.",
-    "cartoucheHan": "五訓",
-    "cartoucheLat": "RULES",
-    "sealStamp": "updated · 2026",
+    "title": "Experience",
+    "subtitle": "Where I have worked and studied.",
     "nowParis": "Now · Paris",
     "hour": {
       "rat": "Rat",
@@ -53,20 +48,53 @@
       "dog": "Dog",
       "pig": "Pig"
     },
-    "precepts": {
-      "i":   { "label": "The Way",   "text": "I keep learning, one project at a time." },
-      "ii":  { "label": "The Heart", "text": "I build things I'd want to use myself." },
-      "iii": { "label": "The Craft", "text": "I take care of the details, including the ones nobody will see." },
-      "iv":  { "label": "The Word",  "text": "When I commit to a date, I keep it." },
-      "v":   { "label": "The Human", "text": "I think of the person using the product first, and I'd rather work in a team." }
-    }
+    "items": [
+      {
+        "period": "Since May 2026",
+        "org": "Webdentiste (SanteCall)",
+        "place": "Levallois-Perret",
+        "role": "Full stack AI developer",
+        "points": [
+          "REST APIs in Python and FastAPI",
+          "Backend services with PostgreSQL and Redis",
+          "Deployment with Docker"
+        ]
+      },
+      {
+        "period": "2025, 4 months",
+        "org": "HORIBA",
+        "place": "Palaiseau",
+        "role": "Software developer intern",
+        "points": [
+          "Business application in .NET",
+          "Data on MariaDB",
+          "Bug fixing and technical documentation"
+        ]
+      },
+      {
+        "period": "2024, 2 months",
+        "org": "Arcsolu",
+        "place": "Paris",
+        "role": "Front-end developer intern",
+        "points": [
+          "Web interfaces in React",
+          "REST API integration"
+        ]
+      },
+      {
+        "period": "2023 – 2026",
+        "org": "Efrei Paris",
+        "place": "",
+        "role": "Bachelor's in Web & Application Development",
+        "points": []
+      }
+    ]
   },
   "gate": {
     "kicker": "THE GATE · 門",
     "label": "Scroll to enter"
   },
   "final": {
-    "kicker": "FINAL ACT · 終",
     "title": "Correspondence",
     "subtitle": "A project, a job, a question: write to me.",
     "fields": {

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-type Scene = 'hero' | 'scroll' | 'gate';
+type Scene = 'hero' | 'scroll' | 'gate' | 'brush' | 'stamp' | 'stamp-end';
 type Props = {
   scene: Scene;
   /** Passed to next/image so the browser picks the right width. */

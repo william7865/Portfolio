@@ -5,6 +5,8 @@
  * ============================================================ */
 @theme {
   /* Vermillion (background base) */
+  /* The red lacquer of the filmed desk: the site's ground, so the clips sit in it */
+  --color-lacquer: #7a180f;
   --color-vermillion-deep: #2c0306;
   --color-vermillion: #4a0a0e;
   --color-vermillion-bright: #6a0c12;
@@ -78,7 +80,6 @@
  * ============================================================ */
 .font-display { font-family: var(--font-display); }
 .font-display-hanzi { font-family: var(--font-display-hanzi); }
-.font-serif-hanzi { font-family: var(--font-serif-hanzi); }
 .font-ui { font-family: var(--font-ui); }
 .font-mono { font-family: var(--font-mono); }
 
@@ -112,19 +113,6 @@
   color: var(--color-gold-bright);
 }
 
-.hero-display {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(3.5rem, 12vw, 9rem);
-  line-height: 0.9;
-  letter-spacing: -0.022em;
-}
-.hero-display em {
-  font-style: italic;
-  font-weight: 300;
-  color: var(--color-gold-bright);
-}
-
 .lede {
   font-family: var(--font-display);
   font-size: clamp(1rem, 1.3vw, 1.2rem);
@@ -134,94 +122,69 @@
 }
 
 /* ============================================================
- * STELE — chiseled tablet, gold inlay, light pass on active hanzi
+ * PATH — a sheet on the desk; the brush paints the timeline as you scroll
  * ============================================================ */
-@keyframes stele-light-pass {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+.path-desk {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  container-type: size;
+  background: var(--color-lacquer);
 }
-@keyframes stele-ember-pulse {
-  0%, 100% { opacity: 0.6; }
-  50%      { opacity: 1; }
-}
-
-.stele {
-  position: relative;
-  padding: 44px 40px 36px;
-  background:
-    radial-gradient(120% 80% at 50% 0%, rgba(212, 175, 55, 0.08), transparent 60%),
-    linear-gradient(180deg, #2c0306 0%, #1d0205 100%);
-  border-top: 2px solid var(--color-gold);
-  border-bottom: 2px solid var(--color-gold);
-  border-left: 1px solid rgba(212, 175, 55, 0.45);
-  border-right: 1px solid rgba(212, 175, 55, 0.45);
-  box-shadow:
-    inset 0 0 80px rgba(0, 0, 0, 0.65),
-    0 12px 40px rgba(0, 0, 0, 0.45);
-}
-.stele::before {
-  /* faint vertical chisel lines for stone texture */
-  content: '';
+/* 16:9 film frame covering the desk, so the text can be placed in % of it. */
+.path-stage {
   position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(90deg,
-    rgba(212, 175, 55, 0.03) 0 1px,
-    transparent 1px 7px);
-  pointer-events: none;
-}
-.stele-cartouche {
-  position: absolute;
-  top: -14px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.6rem;
-  padding: 5px 18px;
-  background: linear-gradient(180deg, var(--color-vermillion-bright) 0%, var(--color-vermillion) 100%);
-  border: 1px solid var(--color-gold);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
+  width: max(100cqw, 177.78cqh);
+  aspect-ratio: 16 / 9;
+  transform: translate(-50%, -50%);
 }
-.stele-cartouche .han {
-  font-family: var(--font-display-hanzi);
-  color: var(--color-gold-bright);
-  font-size: 1rem;
-  letter-spacing: 0.14em;
-  line-height: 1;
+/* The part of the sheet to the right of the painted line. Type is sized in
+ * cqh so the four entries always fit the sheet, whatever the screen height. */
+.path-text {
+  position: absolute;
+  left: 30.5%;
+  right: 26.5%;
+  top: 12.5%;
+  bottom: 11%;
+  color: var(--color-vermillion);
+  font-family: var(--font-display);
+  font-size: 2.25cqh;
+  line-height: 1.35;
 }
-.stele-cartouche .lat {
-  font-family: var(--font-mono);
-  color: var(--color-gold);
-  font-size: 0.6rem;
-  letter-spacing: 0.32em;
-  line-height: 1;
+.path-text h2 { font-size: 2.7em; line-height: 1; }
+.path-text .path-sub { font-size: 1.05em; opacity: 0.8; margin-top: 0.5em; }
+.path-text ol { margin-top: 1.5em; }
+.path-text li + li { margin-top: 1.25em; }
+.path-text .path-period { font-size: 0.9em; opacity: 0.7; }
+.path-text h3 { font-size: 1.5em; line-height: 1.2; }
+.path-text .path-role { font-size: 1.1em; }
+.path-text .path-points { font-size: 0.95em; opacity: 0.85; }
+/* The header owns the top right corner here; the clock goes bottom left, on the lacquer */
+.path-desk .paris-clock {
+  top: auto;
+  right: auto;
+  bottom: 20px;
+  left: 24px;
+  text-align: left;
 }
-
-.precept-han {
-  font-family: var(--font-display-hanzi);
-  color: var(--color-gold-bright);
-  line-height: 1;
-  text-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.55),
-    0 0 22px rgba(233, 196, 106, 0.4);
-  transition: text-shadow 0.6s ease;
-}
-.precept[data-active='true'] .precept-han {
-  background: linear-gradient(110deg,
-    var(--color-gold-bright) 0%,
-    #fff3c5 35%,
-    var(--color-gold-bright) 50%,
-    var(--color-gold-deep) 65%,
-    var(--color-gold-bright) 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-          background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  text-shadow: none;
-  animation: stele-light-pass 6s linear infinite;
-  filter: drop-shadow(0 0 14px rgba(233, 196, 106, 0.55));
+@media (max-width: 767px) {
+  /* A phone sees a tall slice: put the painted line near the left edge and
+   * let the text take the rest of the screen. */
+  .path-stage {
+    left: calc(9cqw - 0.27 * 177.78cqh);
+    transform: translateY(-50%);
+  }
+  .path-text {
+    left: calc(27% + 7cqw);
+    right: auto;
+    width: 78cqw;
+  }
+  .path-text { font-size: 2cqh; }
+  .path-text .path-points { display: none; }
+  .path-desk .paris-clock { display: none; }
 }
 
 /* ============================================================
@@ -294,8 +257,7 @@
 .hero-desk-tone {
   background:
     linear-gradient(180deg, rgba(44, 3, 6, 0.6) 0%, rgba(44, 3, 6, 0) 16%),
-    linear-gradient(0deg, var(--color-vermillion) 0%, rgba(74, 10, 14, 0.75) 22%, rgba(74, 10, 14, 0) 55%),
-    rgba(74, 10, 14, 0.22);
+    linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0.7) 22%, rgba(122, 24, 15, 0) 55%);
 }
 .hero-name {
   font-family: var(--font-display);
@@ -337,38 +299,67 @@
 }
 
 /* ============================================================
- * MOTIFS — multi-layered Tang frame
- * ============================================================ */
-.tang-frame {
-  position: relative;
-  padding: clamp(2rem, 4vw, 3.5rem);
-  border: 2px solid var(--color-gold);
-  background:
-    radial-gradient(80% 60% at 50% 0%, rgba(212, 175, 55, 0.05), transparent 60%),
-    var(--color-vermillion);
-}
-.tang-frame::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid var(--color-gold);
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-/* ============================================================
  * GATE — filmed hall; the wash hands off to the Correspondance
  * ============================================================ */
+/* The lit doorway at the end of the hall takes over the screen… */
 .gate-wash {
-  background: radial-gradient(120% 90% at 50% 100%,
-    var(--color-vermillion-bright) 0%,
-    var(--color-vermillion) 55%,
-    var(--color-ink-dark) 100%);
+  background: linear-gradient(180deg, #fff3d0 0%, #f0d08a 100%);
+}
+/* …and the Correspondance opens in that same light, which settles into the
+ * lacquer of the writing desk (#80140e is the filmed desk's top edge). */
+.contact-lead {
+  height: 45vh;
+  background: linear-gradient(180deg, #f0d08a 0%, #c9793f 45%, var(--color-lacquer) 100%);
+}
+.contact-desk {
+  position: relative;
+  height: max(100svh, 44rem);
+  overflow: hidden;
+  container-type: size;
+  background: var(--color-lacquer);
+}
+/* 16:9 film frame covering the desk, so the form can be placed in % of it. */
+.contact-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqw, 177.78cqh);
+  aspect-ratio: 16 / 9;
+  transform: translate(-50%, -50%);
+}
+/* The sheet of paper in the frame. */
+.contact-paper {
+  position: absolute;
+  left: 8%;
+  right: 35.5%;
+  top: 12%;
+  bottom: 12%;
+  color: var(--color-vermillion);
+  font-family: var(--font-display);
+}
+@media (max-width: 767px) {
+  /* A phone only sees a tall slice of the frame: centre it on the sheet,
+   * just left of where the seal lands, and size the form to the screen. */
+  .contact-stage { transform: translate(-41%, -50%); }
+  .contact-paper {
+    left: 41%;
+    right: auto;
+    width: 82cqw;
+    transform: translateX(-50%);
+  }
+}
+.contact-foot {
+  background: linear-gradient(0deg, var(--color-vermillion-deep) 0%, rgba(44, 3, 6, 0) 100%);
 }
 
 /* ============================================================
  * SCENE PLATES (video / photographic backdrops)
  * ============================================================ */
+.site-ground { background: var(--color-lacquer); }
+.scene-fade-thin {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+}
 .scene-fade-y {
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
@@ -489,6 +480,45 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: rgba(74, 10, 14, 0.7);
+}
+
+/* Form written straight on the filmed sheet */
+.contact-paper input,
+.contact-paper textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(74, 10, 14, 0.4);
+  border-radius: 0;
+  color: var(--color-vermillion);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  padding: 0.5rem 0;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.contact-paper textarea { resize: vertical; }
+.contact-paper input::placeholder,
+.contact-paper textarea::placeholder {
+  color: rgba(74, 10, 14, 0.5);
+  font-style: italic;
+}
+.contact-paper input:focus-visible,
+.contact-paper textarea:focus-visible {
+  border-bottom: 2px solid var(--color-cinnabar);
+}
+.contact-paper label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: rgba(74, 10, 14, 0.85);
+}
+.contact-paper .field-error {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--color-cinnabar);
+  margin-top: 0.4rem;
 }
 
 /* ============================================================
