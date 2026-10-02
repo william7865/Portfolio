@@ -146,12 +146,13 @@
 .path-text {
   position: absolute;
   left: 30.5%;
-  right: 26.5%;
+  /* Never run past the right edge of the screen when the frame is cropped */
+  right: max(26.5%, calc(50% - 50cqw + 1.5rem));
   top: 12.5%;
   bottom: 11%;
   color: var(--color-vermillion);
   font-family: var(--font-display);
-  font-size: 2.25cqh;
+  font-size: max(2.25cqh, 11.5px);
   line-height: 1.35;
 }
 .path-text h2 { font-size: 2.7em; line-height: 1; }
@@ -170,9 +171,10 @@
   left: 24px;
   text-align: left;
 }
-@media (max-width: 767px) {
-  /* A phone sees a tall slice: put the painted line near the left edge and
-   * let the text take the rest of the screen. */
+/* Taller than wide (phones, tablets held upright): the screen only shows a
+ * tall slice of the frame. Put the painted line near the left edge and let
+ * the text take the rest of the screen. */
+@container (max-aspect-ratio: 1 / 1) {
   .path-stage {
     left: calc(9cqw - 0.27 * 177.78cqh);
     transform: translateY(-50%);
@@ -181,10 +183,18 @@
     left: calc(27% + 7cqw);
     right: auto;
     width: 78cqw;
+    font-size: max(2cqh, 11.5px);
   }
-  .path-text { font-size: 2cqh; }
-  .path-text .path-points { display: none; }
   .path-desk .paris-clock { display: none; }
+}
+/* Not enough room for the detail line: narrow phones, or phones on their side */
+@container (max-width: 600px) {
+  .path-text .path-points { display: none; }
+}
+@container (max-height: 520px) {
+  .path-text .path-points,
+  .path-text .path-sub { display: none; }
+  .path-text li + li { margin-top: 0.8em; }
 }
 
 /* ============================================================
@@ -262,7 +272,8 @@
 .hero-name {
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(3.1rem, 9.5vw, 9rem);
+  /* The vh term keeps the name off the tools on short, wide screens */
+  font-size: clamp(2.4rem, min(9.5vw, 17vh), 9rem);
   line-height: 0.9;
   letter-spacing: -0.025em;
   color: var(--color-ivory);
@@ -313,7 +324,7 @@
 }
 .contact-desk {
   position: relative;
-  height: max(100svh, 44rem);
+  height: max(100svh, 46rem);
   overflow: hidden;
   container-type: size;
   background: var(--color-lacquer);
@@ -330,22 +341,62 @@
 /* The sheet of paper in the frame. */
 .contact-paper {
   position: absolute;
-  left: 8%;
-  right: 35.5%;
+  /* Stay on screen when the frame is cropped on the sides */
+  left: max(8%, calc(50% - 50cqw + 1.5rem));
+  right: max(35.5%, calc(50% - 50cqw + 1.5rem));
   top: 12%;
   bottom: 12%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.6em 0.4em;
   color: var(--color-vermillion);
   font-family: var(--font-display);
+  /* Sized from the desk's height so the form always fits the sheet */
+  font-size: clamp(15px, 1.9cqh, 30px);
+  line-height: 1.4;
 }
-@media (max-width: 767px) {
-  /* A phone only sees a tall slice of the frame: centre it on the sheet,
-   * just left of where the seal lands, and size the form to the screen. */
+.contact-head h2 { font-size: 2.5em; line-height: 1; }
+.contact-head p { font-size: 1.15em; margin-top: 0.55em; }
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9em;
+  flex: 1;
+  min-width: 0;
+  margin-top: 1.2em;
+}
+.contact-send {
+  font-size: 1.2em;
+  padding: 0.45em 1.2em;
+  border: 1px solid rgba(74, 10, 14, 0.6);
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s;
+}
+.contact-send:hover { background: var(--color-vermillion); color: var(--color-ivory); }
+.contact-send:disabled { opacity: 0.6; }
+/* Wide desks: title on the left of the sheet, fields on the right */
+@container (min-aspect-ratio: 3 / 2) and (min-width: 1150px) {
+  .contact-paper {
+    flex-direction: row;
+    gap: 2.6em;
+    padding: 1.7em 1.9em;
+    font-size: clamp(15px, 2.1cqh, 30px);
+  }
+  .contact-head { width: 36%; flex-shrink: 0; }
+  .contact-form { margin-top: 0.2em; }
+}
+/* Taller than wide (phones, tablets held upright): the screen only shows a
+ * tall slice of the frame. Centre it on the sheet, just left of where the
+ * seal lands, and size the form to the screen. */
+@container (max-aspect-ratio: 1 / 1) {
   .contact-stage { transform: translate(-41%, -50%); }
   .contact-paper {
     left: 41%;
     right: auto;
-    width: 82cqw;
+    width: min(82cqw, 34em);
     transform: translateX(-50%);
+    /* Clear the fixed header, which sits over the top of the sheet */
+    padding-top: 2.2em;
   }
 }
 .contact-foot {
@@ -376,6 +427,10 @@
   transform: translate(-50%, -50%);
 }
 /* The sheet of the filmed handscroll once fully unrolled (last frame). */
+/* Project text grows and shrinks with the screen height, like the sheet it sits on */
+@media (min-width: 768px) {
+  .sheet-scale { scale: clamp(0.62, tan(atan2(100vh, 760px)), 2); }
+}
 .scene-sheet {
   position: absolute;
   left: 10.5%;
@@ -491,8 +546,8 @@
   border-radius: 0;
   color: var(--color-vermillion);
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  padding: 0.5rem 0;
+  font-size: 1.1em;
+  padding: 0.4em 0;
   width: 100%;
   outline: none;
   transition: border-color 0.2s ease;
@@ -510,15 +565,15 @@
 .contact-paper label {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1em;
   color: rgba(74, 10, 14, 0.85);
 }
 .contact-paper .field-error {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 0.95rem;
+  font-size: 0.9em;
   color: var(--color-cinnabar);
-  margin-top: 0.4rem;
+  margin-top: 0.3em;
 }
 
 /* ============================================================

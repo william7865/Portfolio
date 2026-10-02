@@ -52,7 +52,7 @@ export function Hero() {
 
       <motion.div
         style={{ y: fgY, opacity: fgOpacity }}
-        className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20"
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20 [@media(max-height:480px)]:pb-6"
       >
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -68,7 +68,7 @@ export function Hero() {
             <p className="lede" style={{ opacity: 1 }}>
               {t('role')}
             </p>
-            <p className="lede mt-2" style={{ opacity: 0.92 }}>
+            <p className="lede mt-2 [@media(max-height:480px)]:hidden" style={{ opacity: 0.92 }}>
               {t('lede')}
             </p>
           </div>
