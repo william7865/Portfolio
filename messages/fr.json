@@ -31,13 +31,8 @@
     "subtitle": "Les technos que je pratique, et où je les ai utilisées."
   },
   "now": {
-    "kicker": "ACTE III · RÈGLES",
-    "titleEm": "Cinq règles",
-    "titleRest": "de travail",
-    "subtitle": "Ce que je m'impose sur chaque projet.",
-    "cartoucheHan": "五訓",
-    "cartoucheLat": "RÈGLES",
-    "sealStamp": "mis à jour · 2026",
+    "title": "Parcours",
+    "subtitle": "Mes expériences et ma formation.",
     "nowParis": "Maintenant · Paris",
     "hour": {
       "rat": "Rat",
@@ -53,20 +48,53 @@
       "dog": "Chien",
       "pig": "Cochon"
     },
-    "precepts": {
-      "i":   { "label": "La voie",   "text": "Je continue d'apprendre, un projet après l'autre." },
-      "ii":  { "label": "Le cœur",   "text": "Je construis des choses que j'aurais envie d'utiliser moi-même." },
-      "iii": { "label": "L'ouvrage", "text": "Je soigne les détails, y compris ceux que personne ne verra." },
-      "iv":  { "label": "La parole", "text": "Quand je m'engage sur une date, je la tiens." },
-      "v":   { "label": "L'humain",  "text": "Je pense d'abord à la personne qui va utiliser le produit, et je préfère travailler en équipe." }
-    }
+    "items": [
+      {
+        "period": "Depuis mai 2026",
+        "org": "Webdentiste (SanteCall)",
+        "place": "Levallois-Perret",
+        "role": "Développeur full stack IA",
+        "points": [
+          "API REST en Python et FastAPI",
+          "Services backend avec PostgreSQL et Redis",
+          "Déploiement avec Docker"
+        ]
+      },
+      {
+        "period": "2025, 4 mois",
+        "org": "HORIBA",
+        "place": "Palaiseau",
+        "role": "Stage développeur logiciel",
+        "points": [
+          "Application métier en .NET",
+          "Données sous MariaDB",
+          "Correction d'anomalies et documentation technique"
+        ]
+      },
+      {
+        "period": "2024, 2 mois",
+        "org": "Arcsolu",
+        "place": "Paris",
+        "role": "Stage développeur front-end",
+        "points": [
+          "Interfaces web en React",
+          "Intégration d'API REST"
+        ]
+      },
+      {
+        "period": "2023 – 2026",
+        "org": "Efrei Paris",
+        "place": "",
+        "role": "Bachelor Développement Web & Application",
+        "points": []
+      }
+    ]
   },
   "gate": {
     "kicker": "LA PORTE · 門",
     "label": "Faites défiler pour entrer"
   },
   "final": {
-    "kicker": "ACTE FINAL · 終",
     "title": "Correspondance",
     "subtitle": "Un projet, un poste, une question : écrivez-moi.",
     "fields": {

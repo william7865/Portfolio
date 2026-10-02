@@ -241,7 +241,8 @@ function WorksHandscroll({
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="scene-fade-y absolute inset-0">
           <div className="scene-stage">
-            <SceneVideo scene="scroll" progress={unroll} />
+            {/* scroll.jpg is the open sheet (reduced motion); the clip starts rolled up */}
+            <SceneVideo scene="scroll" poster="scroll-start" progress={unroll} />
 
             {/* Projects, written on the unrolled sheet. The sheet sits left of the
                 frame's centre, so each page is nudged back under the viewport's. */}

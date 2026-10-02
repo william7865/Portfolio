@@ -40,7 +40,7 @@ export default async function LangLayout({
           <InkCursor />
           <ScrollProgress />
           <Header />
-          <main id="main" className="relative">
+          <main id="main" className="relative site-ground">
             {children}
           </main>
           <ScrollToTop />
