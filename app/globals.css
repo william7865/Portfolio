@@ -269,6 +269,43 @@
     linear-gradient(180deg, rgba(44, 3, 6, 0.6) 0%, rgba(44, 3, 6, 0) 16%),
     linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0.7) 22%, rgba(122, 24, 15, 0) 55%);
 }
+.hero-desk { container-type: size; }
+/* Holds the clip, so the clip can be turned without turning the name */
+.hero-film { position: absolute; inset: 0; }
+@media (min-width: 768px) {
+  .hero-copy { max-width: 70%; }
+}
+/* Taller than wide: the frame is turned a quarter clockwise. The tools then
+ * run down the right side, complete, and the bare lacquer on the left takes
+ * the name. --w is the width of the turned frame. */
+@container (max-aspect-ratio: 1 / 1) {
+  .hero-film {
+    --w: max(100cqw, 56.25cqh);
+    inset: auto;
+    top: 50%;
+    /* Keep the column of tools (63–92% of the frame) against the right edge */
+    left: calc(min(0px, 100cqw - 0.945 * var(--w)) + var(--w) / 2);
+    width: max(177.78cqw, 100cqh);
+    height: var(--w);
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  /* The tools reach the bottom of the frame: only melt its very edge */
+  .hero-desk-tone {
+    background:
+      linear-gradient(180deg, rgba(44, 3, 6, 0.6) 0%, rgba(44, 3, 6, 0) 14%),
+      linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0) 9%);
+  }
+}
+@media (max-aspect-ratio: 1 / 1) {
+  /* The copy stops where the tools begin */
+  .hero-copy {
+    --w: max(100vw, 56.25svh);
+    max-width: calc(min(0px, 100vw - 0.945 * var(--w)) + 0.63 * var(--w) - 3rem);
+  }
+  /* Text sized from the width here: 1.3vw is tiny on an upright tablet */
+  .hero-copy .lede { font-size: clamp(1rem, 2.4vw, 1.4rem); }
+  .hero-copy .hero-link { font-size: clamp(1.05rem, 2.6vw, 1.45rem); }
+}
 .hero-name {
   font-family: var(--font-display);
   font-weight: 300;
@@ -277,6 +314,11 @@
   line-height: 0.9;
   letter-spacing: -0.025em;
   color: var(--color-ivory);
+}
+@media (max-aspect-ratio: 1 / 1) {
+  /* Name on two lines, sized to the column left of the tools */
+  .hero-name { font-size: clamp(2.4rem, 15vw, 6rem); }
+  .hero-name span { display: block; }
 }
 .hero-link {
   font-family: var(--font-display);
@@ -329,6 +371,12 @@
   container-type: size;
   background: var(--color-lacquer);
 }
+@media (max-aspect-ratio: 1 / 1) {
+  /* Tall enough for the turned sheet (see below) to hold the whole form */
+  .contact-desk { height: max(100svh, 58rem); }
+}
+/* Holds the clip, so the clip can be turned without turning the form */
+.contact-film { position: absolute; inset: 0; }
 /* 16:9 film frame covering the desk, so the form can be placed in % of it. */
 .contact-stage {
   position: absolute;
@@ -385,18 +433,31 @@
   .contact-head { width: 36%; flex-shrink: 0; }
   .contact-form { margin-top: 0.2em; }
 }
-/* Taller than wide (phones, tablets held upright): the screen only shows a
- * tall slice of the frame. Centre it on the sheet, just left of where the
- * seal lands, and size the form to the screen. */
+/* Taller than wide (phones, tablets held upright): the frame is turned a
+ * quarter clockwise. The sheet fills the top two thirds, and the seal and the
+ * paste lie below it, from where the seal comes up to stamp the page. */
 @container (max-aspect-ratio: 1 / 1) {
-  .contact-stage { transform: translate(-41%, -50%); }
+  .contact-stage {
+    width: max(100cqw, 56.25cqh);
+    aspect-ratio: 9 / 16;
+  }
+  .contact-film {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    /* The clip's own box, before the turn */
+    width: max(177.78cqw, 100cqh);
+    height: max(100cqw, 56.25cqh);
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
   .contact-paper {
-    left: 41%;
-    right: auto;
-    width: min(82cqw, 34em);
-    transform: translateX(-50%);
+    left: max(11%, calc(50% - 50cqw + 1.25rem));
+    right: max(11%, calc(50% - 50cqw + 1.25rem));
     /* Clear the fixed header, which sits over the top of the sheet */
-    padding-top: 2.2em;
+    top: max(7%, calc(50% - 50cqh + 4.75rem));
+    bottom: 34%;
+    padding: 0.4em 0.2em;
+    font-size: clamp(15px, 1.65cqh, 22px);
   }
 }
 .contact-foot {
@@ -426,11 +487,9 @@
   aspect-ratio: 16 / 9;
   transform: translate(-50%, -50%);
 }
+/* Holds the clip, so the clip can be turned without turning the text over it */
+.scene-film { position: absolute; inset: 0; }
 /* The sheet of the filmed handscroll once fully unrolled (last frame). */
-/* Project text grows and shrinks with the screen height, like the sheet it sits on */
-@media (min-width: 768px) {
-  .sheet-scale { scale: clamp(0.62, tan(atan2(100vh, 760px)), 2); }
-}
 .scene-sheet {
   position: absolute;
   left: 10.5%;
@@ -440,6 +499,94 @@
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+}
+/* One page per project, side by side; --shift is the page the scroll is on.
+ * The sheet sits left of the frame's centre, so each page is nudged back
+ * under the viewport's (padding % resolves against the whole track). */
+.scene-track {
+  display: flex;
+  height: 100%;
+  width: calc(var(--pages) * 100%);
+  transform: translateX(calc(var(--shift) * -100% / var(--pages)));
+  will-change: transform;
+}
+.scene-page {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: calc(8% / var(--pages));
+}
+.sheet-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  padding-inline: 0.5rem;
+}
+.works-head {
+  top: 0;
+  right: 0;
+  padding-top: 5rem;
+  text-align: right;
+}
+@media (min-width: 768px) {
+  .sheet-panel { width: min(58vw, 42rem); padding-inline: 1rem; }
+  .works-head { padding-top: 6rem; }
+  /* Project text grows and shrinks with the screen height, like the sheet it sits on */
+  .sheet-scale { scale: clamp(0.62, tan(atan2(100vh, 760px)), 2); }
+}
+/* Taller than wide (phones, tablets held upright): the frame is turned a
+ * quarter clockwise. The whole scroll then fits the screen, hangs vertically
+ * and unrolls downward, and the projects follow each other down the sheet. */
+@media (max-aspect-ratio: 1 / 1) {
+  .scene-stage {
+    width: max(112vw, 56.25vh);
+    aspect-ratio: 9 / 16;
+  }
+  .scene-film {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    /* The clip's own box, before the turn */
+    width: max(199.1vw, 100vh);
+    height: max(112vw, 56.25vh);
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .scene-sheet {
+    left: 15.5%;
+    right: 17.5%;
+    /* Stay clear of the header and the hint when the frame is cropped */
+    top: max(12%, calc(50% - 50vh + 4.5rem));
+    bottom: max(17.5%, calc(50% - 50vh + 3.5rem));
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  }
+  .scene-track {
+    flex-direction: column;
+    width: 100%;
+    height: calc(var(--pages) * 100%);
+    transform: translateY(calc(var(--shift) * -100% / var(--pages)));
+  }
+  .scene-page { padding-left: 0; }
+  /* On wide upright screens (tablets) the text grows with the sheet: the panel
+   * is laid out narrower by the same factor it is then scaled up by */
+  .sheet-scale {
+    --s: clamp(1, tan(atan2(100vw, 520px)), 1.5);
+    scale: var(--s);
+  }
+  .sheet-panel { width: calc(100% / var(--s)); padding-inline: 6%; }
+  /* The rolled-up scroll lies across the top: the title goes below it */
+  .works-head {
+    top: auto;
+    right: auto;
+    left: 0;
+    bottom: 19%;
+    padding-top: 0;
+    text-align: left;
+  }
 }
 
 /* ============================================================

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useReducedMotion, type MotionValue } from 'framer-motion';
+import { type MotionValue } from 'framer-motion';
 import { ScenePlate } from '@/components/motifs/ScenePlate';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 type Scene = 'hero' | 'scroll' | 'gate' | 'brush';
 type Props = {
@@ -40,7 +41,7 @@ export function SceneVideo({
   priority = false,
   className = ''
 }: Props) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {

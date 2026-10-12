@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
+import { motion, useScroll, useTransform, type MotionStyle } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
 import projectsData from '@/content/data/projects.json';
 import { Seal } from '@/components/motifs/Seal';
@@ -48,7 +48,7 @@ function ProjectPanel({
 }) {
   return (
     <article
-      className="relative w-[80vw] md:w-[min(58vw,42rem)] flex flex-col px-2 md:px-4 sheet-scale"
+      className="sheet-panel sheet-scale"
       style={{ color: 'var(--color-vermillion)' }}
     >
       <div
@@ -194,20 +194,20 @@ function WorksHandscroll({
   const inkOpacity = useScrollRange(scrollYProgress, [0.2, 0.27], [0, 1]);
 
   const pages = projects.length + 1;
-  const { stops, offsets } = useMemo(() => {
+  const { stops, steps } = useMemo(() => {
     const span = (0.95 - 0.3) / (pages - 1);
     const stops: number[] = [];
-    const offsets: string[] = [];
+    const steps: number[] = [];
     for (let k = 0; k < pages - 1; k++) {
       // Hold on page k for the first 45% of its span, then slide to k + 1.
       stops.push(0.3 + (k + 0.45) * span, 0.3 + (k + 1) * span);
-      offsets.push(`${(-k / pages) * 100}%`, `${(-(k + 1) / pages) * 100}%`);
+      steps.push(k, k + 1);
     }
-    return { stops, offsets };
+    return { stops, steps };
   }, [pages]);
-  const x = useTransform(scrollYProgress, stops, offsets);
-  // Padding percentages resolve against the track (pages × sheet), hence the division.
-  const nudge = { paddingLeft: `${8 / pages}%` };
+  // The page the scroll is on, as a number. The stylesheet turns it into a
+  // sideways slide, or a downward one when the frame is turned (tall screens).
+  const shift = useTransform(scrollYProgress, stops, steps);
 
   // Keyboard nav: ArrowRight/ArrowLeft = jump one panel (= one viewport-height
   // of vertical scroll, since the handscroll is bound to scrollYProgress)
@@ -240,23 +240,21 @@ function WorksHandscroll({
     >
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="scene-fade-y absolute inset-0">
-          <div className="scene-stage">
+          <div className="scene-stage" style={{ '--pages': pages } as CSSProperties}>
             {/* scroll.jpg is the open sheet (reduced motion); the clip starts rolled up */}
-            <SceneVideo scene="scroll" poster="scroll-start" progress={unroll} />
+            <div className="scene-film">
+              <SceneVideo scene="scroll" poster="scroll-start" progress={unroll} />
+            </div>
 
-            {/* Projects, written on the unrolled sheet. The sheet sits left of the
-                frame's centre, so each page is nudged back under the viewport's. */}
+            {/* Projects, written on the unrolled sheet */}
             <motion.div style={{ opacity: inkOpacity }} className="scene-sheet">
-              <motion.div
-                style={{ x, width: `${pages * 100}%` }}
-                className="flex h-full will-change-transform"
-              >
+              <motion.div className="scene-track" style={{ '--shift': shift } as MotionStyle}>
                 {projects.map((p, i) => (
-                  <div key={p.slug} className="flex-1 flex items-center justify-center" style={nudge}>
+                  <div key={p.slug} className="scene-page">
                     <ProjectPanel p={p} index={i} locale={locale} />
                   </div>
                 ))}
-                <div className="flex-1 flex items-center justify-center" style={nudge}>
+                <div className="scene-page">
                   <EndPanel t={t} />
                 </div>
               </motion.div>
@@ -264,19 +262,20 @@ function WorksHandscroll({
           </div>
         </div>
 
-        {/* Sits on the empty lacquer to the right of the rolled-up scroll */}
+        {/* Sits on the empty lacquer beside the rolled-up scroll */}
         <motion.div
           style={{ opacity: headerOpacity }}
-          className="absolute top-0 right-0 z-20 px-6 lg:px-10 pt-20 md:pt-24 text-right pointer-events-none"
+          className="works-head absolute z-20 px-6 lg:px-10 pointer-events-none"
         >
           <div className="kicker mb-3">{t('kicker')}</div>
           <h2 id="works-title" className="display text-4xl md:text-5xl text-[var(--color-ivory)]">
             <em>{t('title')}</em>
           </h2>
-          <p className="lede italic opacity-70 mt-2 max-w-md ml-auto">{t('subtitle')}</p>
+          <p className="lede italic opacity-70 mt-2 max-w-md">{t('subtitle')}</p>
         </motion.div>
 
-        <div className="absolute bottom-6 left-0 right-0 z-20 px-16 text-center kicker-mono opacity-50 pointer-events-none">
+        {/* Upright screens: one line, left of the back-to-top button */}
+        <div className="absolute bottom-6 left-0 right-0 z-20 px-16 text-center portrait:pl-6 portrait:pr-20 portrait:text-left kicker-mono opacity-50 pointer-events-none">
           ↓ {t('scrollHint')} →
           <span className="ml-2 opacity-50 hidden md:inline">· ← → keys</span>
         </div>

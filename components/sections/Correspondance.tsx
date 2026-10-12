@@ -5,9 +5,10 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ScenePlate } from '@/components/motifs/ScenePlate';
 import { useSfxContext } from '@/components/providers/SfxProvider';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 const schema = z.object({
   name: z.string().min(2),
@@ -28,7 +29,7 @@ const STAMP_LANDS_MS = 2350;
  */
 export function Correspondance() {
   const t = useTranslations('final');
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const { play } = useSfxContext();
   const [status, setStatus] = useState<Status>('idle');
   const successRef = useRef<HTMLDivElement | null>(null);
@@ -80,6 +81,7 @@ export function Correspondance() {
 
       <div className="contact-desk">
         <div className="contact-stage">
+          <div className="contact-film">
           {reduce ? (
             <ScenePlate scene={sent ? 'stamp-end' : 'stamp'} />
           ) : (
@@ -98,6 +100,7 @@ export function Correspondance() {
               <source src="/scenes/stamp.mp4" type="video/mp4" />
             </video>
           )}
+          </div>
 
           <div className="contact-paper">
             <div className="contact-head">
