@@ -1,11 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { GoldDust } from '@/components/motifs/GoldDust';
 import { SceneVideo } from '@/components/motifs/SceneVideo';
 import { useScrollRange } from '@/lib/useScrollRange';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 /**
  * Palace gate between Act III and the Correspondance.
@@ -20,7 +21,7 @@ import { useScrollRange } from '@/lib/useScrollRange';
  */
 export function Gate() {
   const t = useTranslations('gate');
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
 

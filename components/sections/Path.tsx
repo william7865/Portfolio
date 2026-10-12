@@ -1,11 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, type MotionValue } from 'framer-motion';
+import { motion, useScroll, type MotionValue } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { SceneVideo } from '@/components/motifs/SceneVideo';
 import { ParisClock } from '@/components/system/ParisClock';
 import { useScrollRange } from '@/lib/useScrollRange';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 type Item = {
   period: string;
@@ -28,7 +29,7 @@ const LINE_TO = 0.6;
 export function Path() {
   const t = useTranslations('now');
   const items = t.raw('items') as Item[];
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
 
   const ref = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });

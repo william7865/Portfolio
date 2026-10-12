@@ -2,23 +2,25 @@
 
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { AnimatePresence, motion, useReducedMotion, useScroll } from 'framer-motion';
+import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import { SceneVideo } from '@/components/motifs/SceneVideo';
 import { Seal } from '@/components/motifs/Seal';
 import { useEasterEgg } from '@/components/providers/EasterEggProvider';
 import { useIdlePulse } from '@/lib/useIdlePulse';
 import { useScrollRange } from '@/lib/useScrollRange';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Prologue. The lacquer desk filmed from above: the tools lined up along the
- * top, the handscroll still tied shut (Act I is that scroll being unrolled),
- * the window's shadow drifting. The name sits on the bare lacquer below.
+ * top (down the right side on tall screens), the handscroll still tied shut
+ * (Act I is that scroll being unrolled), the window's shadow drifting. The
+ * name sits on the bare lacquer.
  */
 export function Hero() {
   const t = useTranslations('hero');
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const { sealClick } = useEasterEgg();
   const [pulseKey, setPulseKey] = useState(0);
   const idlePulse = useIdlePulse(30_000);
@@ -43,10 +45,12 @@ export function Hero() {
       <motion.div
         aria-hidden="true"
         style={{ y: deskY }}
-        className="absolute inset-0 pointer-events-none"
+        className="hero-desk absolute inset-0 pointer-events-none"
       >
-        {/* Phones show a tall slice: inkstone and seal paste */}
-        <SceneVideo scene="hero" priority className="object-[78%_50%] md:object-center" />
+        {/* Turned a quarter on tall screens, so the tools stay whole (see .hero-film) */}
+        <div className="hero-film">
+          <SceneVideo scene="hero" priority />
+        </div>
         <div className="hero-desk-tone absolute inset-0" />
       </motion.div>
 
@@ -58,10 +62,10 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-          className="md:max-w-[70%]"
+          className="hero-copy"
         >
           <h1 className="hero-name">
-            William Lin
+            William <span>Lin</span>
           </h1>
 
           <div className="mt-7 md:mt-10 max-w-md">
