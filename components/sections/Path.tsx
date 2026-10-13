@@ -46,7 +46,7 @@ export function Path() {
         {/* Soft top and bottom edges: the sheet slides in over the same lacquer as the page */}
         <div className="scene-fade-thin absolute inset-0">
           <div className="path-stage">
-            {/* brush.jpg is the finished line (reduced motion); the clip starts on a blank sheet */}
+            {/* brush.webp is the finished line (reduced motion); the clip starts on a blank sheet */}
             <SceneVideo scene="brush" poster="brush-start" progress={paint} />
 
             <div className="path-text">

@@ -254,7 +254,7 @@ function WorksHandscroll({
 
         <div className="scene-fade-y absolute inset-0">
           <div className="scene-stage" style={{ '--pages': pages } as CSSProperties}>
-            {/* scroll.jpg is the open sheet (reduced motion); the clip starts rolled up */}
+            {/* scroll.webp is the open sheet (reduced motion); the clip starts rolled up */}
             <div className="scene-film">
               <SceneVideo scene="scroll" poster="scroll-start" progress={unroll} />
             </div>

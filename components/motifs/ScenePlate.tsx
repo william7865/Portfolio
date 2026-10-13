@@ -20,12 +20,15 @@ export function ScenePlate({
 }: Props) {
   return (
     <Image
-      src={`/scenes/${scene}.jpg`}
+      src={`/scenes/${scene}.webp`}
       alt=""
       aria-hidden="true"
       fill
       sizes={sizes}
       priority={priority}
+      // A priority still is the first screen's main image: decode it with the
+      // first paint instead of letting it slip to a later frame.
+      decoding={priority ? 'sync' : 'async'}
       className={`object-cover select-none pointer-events-none ${className}`}
     />
   );

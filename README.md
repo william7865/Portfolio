@@ -32,6 +32,8 @@ npm run lint
 npm run typecheck
 ```
 
+Les deux polices chinoises (`app/fonts/`) ne contiennent que les caractères utilisés sur le site. Après avoir ajouté un nouveau caractère, relancer `npm run fonts:hanzi` : un test échoue tant que ce n'est pas fait.
+
 ## Déploiement
 
 Vercel. Variables d'environnement :
