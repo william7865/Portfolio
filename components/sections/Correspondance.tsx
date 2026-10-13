@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ScenePlate } from '@/components/motifs/ScenePlate';
 import { useSfxContext } from '@/components/providers/SfxProvider';
+import { useNearViewport } from '@/lib/useNearViewport';
 import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 const schema = z.object({
@@ -34,13 +35,17 @@ export function Correspondance() {
   const [status, setStatus] = useState<Status>('idle');
   const successRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  // Last screen of the page: the clip and its still wait until the visitor is close
+  const near = useNearViewport(videoRef);
+  const [stampStill, setStampStill] = useState(false);
 
   useEffect(() => {
     if (status !== 'success') return;
     const video = videoRef.current;
     if (video) {
       video.currentTime = 0;
-      void video.play().catch(() => {});
+      // Where playback is refused (Low Power Mode…), show the stamped sheet as a still
+      void video.play().catch(() => setStampStill(true));
     }
     // The gong lands with the seal; focus follows once the stamp is on the page
     const gong = setTimeout(() => play('gong', 0.35), reduce ? 0 : STAMP_LANDS_MS);
@@ -76,24 +81,25 @@ export function Correspondance() {
   const sent = status === 'success';
 
   return (
-    <section id="contact" aria-labelledby="final-title" className="relative">
+    <section aria-labelledby="final-title" className="relative">
       <div aria-hidden="true" className="contact-lead" />
 
-      <div className="contact-desk">
+      {/* #contact lands here, on the sheet, rather than on the lead-in above it */}
+      <div id="contact" className="contact-desk">
         <div className="contact-stage">
           <div className="contact-film">
-          {reduce ? (
+          {reduce || stampStill ? (
             <ScenePlate scene={sent ? 'stamp-end' : 'stamp'} />
           ) : (
             <video
               ref={videoRef}
               aria-hidden="true"
               tabIndex={-1}
-              poster="/scenes/stamp.jpg"
+              poster={near ? '/scenes/stamp.jpg' : undefined}
               muted
               playsInline
               disablePictureInPicture
-              preload="auto"
+              preload={near ? 'auto' : 'none'}
               className="absolute inset-0 h-full w-full object-cover select-none pointer-events-none"
             >
               <source media="(max-width: 767px)" src="/scenes/stamp-sm.mp4" type="video/mp4" />

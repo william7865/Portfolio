@@ -1,4 +1,5 @@
 import './globals.css';
+import { SITE_URL } from '@/lib/site';
 import { Cormorant_Garamond, Ma_Shan_Zheng, Noto_Serif_SC, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 
 const cormorant = Cormorant_Garamond({
@@ -19,7 +20,7 @@ const maShan = Ma_Shan_Zheng({
 
 const notoSerifSc = Noto_Serif_SC({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['700'],
   variable: '--font-noto-serif-sc',
   display: 'swap',
   preload: false
@@ -42,13 +43,15 @@ const jetbrains = JetBrains_Mono({
 export const metadata = {
   title: 'William Lin · 林',
   description: 'Portfolio · Développeur Full Stack',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://williamlin.dev')
+  metadataBase: new URL(SITE_URL)
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    // `lang` is corrected per locale by the [lang] layout before hydration
     <html
       lang="fr"
+      suppressHydrationWarning
       className={`${cormorant.variable} ${maShan.variable} ${notoSerifSc.variable} ${interTight.variable} ${jetbrains.variable}`}
     >
       <body className="relative min-h-screen" suppressHydrationWarning>{children}</body>

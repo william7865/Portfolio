@@ -82,7 +82,7 @@ export function Skills() {
               <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-x-14 gap-y-8">
               {/* Category column */}
               <div className="md:sticky md:top-32 self-start">
-                <div className="kicker-mono mb-3 opacity-80">№ {String(idx + 1).padStart(2, '0')}</div>
+                <div className="kicker-mono mb-3">№ {String(idx + 1).padStart(2, '0')}</div>
                 <div
                   className="font-display-hanzi text-8xl text-[var(--color-gold-bright)] leading-none mb-3"
                   style={{ textShadow: '0 0 22px rgba(233,196,106,0.45)' }}
@@ -90,7 +90,7 @@ export function Skills() {
                   {CATEGORY_HANZI[cat].glyph}
                 </div>
                 <div className="kicker">{cat}</div>
-                <div className="font-display italic text-[var(--color-gold)] opacity-70 mt-2 text-lg">
+                <div className="font-display italic text-[var(--color-gold-bright)] opacity-85 mt-2 text-lg">
                   {CATEGORY_HANZI[cat].label}
                 </div>
               </div>
@@ -124,7 +124,7 @@ export function Skills() {
                       <div className="font-display text-2xl text-[var(--color-ivory)]">
                         {s.name}
                       </div>
-                      <div className="kicker-mono opacity-50 mt-1">
+                      <div className="kicker-mono mt-1" style={{ color: 'var(--color-ivory)', opacity: 0.7 }}>
                         ★ {s.level} / 5 · {s.lastUsed}
                       </div>
                     </div>

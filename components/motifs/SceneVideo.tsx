@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { type MotionValue } from 'framer-motion';
 import { ScenePlate } from '@/components/motifs/ScenePlate';
+import { useNearViewport } from '@/lib/useNearViewport';
 import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 type Scene = 'hero' | 'scroll' | 'gate' | 'brush';
@@ -29,10 +30,14 @@ const PHONE = '(max-width: 767px)';
 const EASE = 0.25;
 /** Below this gap (seconds) the playhead is considered arrived. */
 const SETTLED = 0.01;
+/** How long a primed clip gets to show it can decode a frame before we give up on it. */
+const PROOF_MS = 2500;
 
 /**
  * Decorative video backdrop. Fills its positioned parent.
- * Under prefers-reduced-motion only the poster frame is rendered.
+ *
+ * Falls back to the scene's still image under prefers-reduced-motion, and for a
+ * scrubbed clip the browser will not decode (see `still` below).
  */
 export function SceneVideo({
   scene,
@@ -43,12 +48,18 @@ export function SceneVideo({
 }: Props) {
   const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLVideoElement | null>(null);
+  // A scrubbed clip is megabytes and sits screens below the fold: it is only
+  // fetched once the visitor gets close, after the page itself has loaded.
+  const near = useNearViewport(ref);
+  // Set when a scrubbed clip turns out not to be drivable in this browser.
+  const [still, setStill] = useState(false);
 
   useEffect(() => {
     const video = ref.current;
-    if (!video || !progress) return;
+    if (!video || !progress || !near || still) return;
 
     let frame = 0;
+    let proof = 0;
     let blobUrl: string | null = null;
     let cancelled = false;
 
@@ -82,33 +93,53 @@ export function SceneVideo({
       if (!frame) frame = requestAnimationFrame(tick);
     };
 
-    // A browser keeps showing the poster until the first seek, even once the
-    // clip is loaded. Seek straight to where the scroll already is.
-    const land = () => {
+    // iOS Safari neither loads nor paints the frames of a clip that has never
+    // played: seeking one only dismisses the poster and leaves the element
+    // empty. Playing it for an instant (allowed without a tap for a muted
+    // inline clip) unlocks seeking. Where even that is refused (Low Power Mode,
+    // autoplay switched off) the clip cannot be scrubbed at all, so after a
+    // grace period we fall back to the still rather than show an empty scene.
+    const prime = async () => {
+      try {
+        await video.play();
+        video.pause();
+      } catch {
+        /* refused: decided by the check below */
+      }
+      if (cancelled) return;
+      // A browser keeps showing the poster until the first seek, even once the
+      // clip is loaded. Seek straight to where the scroll already is.
       video.currentTime = Math.min(Math.max(progress.get(), 0), 1) * (video.duration - 0.05);
       wake();
+      proof = window.setTimeout(() => {
+        if (!cancelled && video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) setStill(true);
+      }, PROOF_MS);
     };
+    const onMetadata = () => void prime();
 
-    video.addEventListener('loadedmetadata', land);
+    video.addEventListener('loadedmetadata', onMetadata);
     const unsubscribe = progress.on('change', wake);
 
     return () => {
       cancelled = true;
       unsubscribe();
-      video.removeEventListener('loadedmetadata', land);
+      video.removeEventListener('loadedmetadata', onMetadata);
       cancelAnimationFrame(frame);
+      window.clearTimeout(proof);
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
-  }, [progress, reduce, scene]);
+  }, [progress, reduce, scene, near, still]);
 
-  if (reduce) return <ScenePlate scene={scene} priority={priority} className={className} />;
+  if (reduce || still) {
+    return <ScenePlate scene={scene} priority={priority} className={className} />;
+  }
 
   return (
     <video
       ref={ref}
       aria-hidden="true"
       tabIndex={-1}
-      poster={`/scenes/${poster}.jpg`}
+      poster={!progress || near ? `/scenes/${poster}.jpg` : undefined}
       muted
       playsInline
       disablePictureInPicture

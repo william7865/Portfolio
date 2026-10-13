@@ -12,11 +12,11 @@ export function Header() {
   const lang = (params?.lang as string) || 'fr';
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 pointer-events-none">
+    <header className="site-header fixed top-0 inset-x-0 z-40 pointer-events-none">
       <div className="flex items-center justify-between px-6 lg:px-10 py-5">
         <Link
           href={`/${lang}`}
-          aria-label={t('home')}
+          aria-label={`林 · LIN, ${t('home')}`}
           className="pointer-events-auto kicker-mono opacity-80 hover:opacity-100 hover:text-[var(--color-gold-bright)] transition-colors"
         >
           林 · LIN

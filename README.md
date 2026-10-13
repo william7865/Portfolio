@@ -39,7 +39,8 @@ Vercel. Variables d'environnement :
 - `RESEND_API_KEY` (https://resend.com)
 - `CONTACT_TO_EMAIL`
 - `CONTACT_FROM_EMAIL`
-- `NEXT_PUBLIC_BASE_URL`
+
+L'adresse canonique du site (sitemap, image de partage, JSON-LD) est fixée dans [`lib/site.ts`](lib/site.ts).
 
 ## Spec & changements
 

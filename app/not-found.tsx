@@ -5,7 +5,7 @@ export default function NotFound() {
     <main
       style={{
         background:
-          'radial-gradient(70% 50% at 50% 0%, #6a0c12 0%, transparent 60%), #4a0a0e',
+          'radial-gradient(70% 50% at 50% 0%, #9e2a17 0%, transparent 60%), #7a180f',
         color: '#fef3c7',
         minHeight: '100vh',
         display: 'flex',

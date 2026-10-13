@@ -1,6 +1,6 @@
-type Props = { lang: string };
+import { SITE_URL as BASE } from '@/lib/site';
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || 'https://williamlin.dev';
+type Props = { lang: string };
 
 export function StructuredData({ lang }: Props) {
   const person = {

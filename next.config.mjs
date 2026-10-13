@@ -37,7 +37,17 @@ const nextConfig = {
   poweredByHeader: false,
   outputFileTracingRoot: import.meta.dirname,
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }];
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      // Clips and stills are megabytes and not content-hashed: a day in the
+      // browser cache, then a background refresh, instead of a re-check per visit.
+      {
+        source: '/scenes/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }
+        ]
+      }
+    ];
   }
 };
 

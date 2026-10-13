@@ -5,7 +5,7 @@ export default async function LocaleNotFound() {
   const t = await getTranslations('notFound');
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 text-center">
+    <div className="min-h-screen flex items-center justify-center px-6 text-center">
       <div className="max-w-lg">
         <p className="kicker">{t('kicker')}</p>
         <h1 className="display italic font-light text-[clamp(4rem,12vw,7rem)] my-6 leading-none text-[var(--color-ivory)]">
@@ -19,6 +19,6 @@ export default async function LocaleNotFound() {
           {t('back')}
         </Link>
       </div>
-    </main>
+    </div>
   );
 }
