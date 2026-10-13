@@ -1,23 +1,31 @@
 {
   "skipLink": "Skip to content",
+  "meta": {
+    "title": "William Lin, full stack developer in Paris",
+    "description": "Portfolio of William Lin, full stack developer in Paris: projects, skills and experience."
+  },
   "mute": {
     "on": "Sound on",
     "off": "Sound off"
   },
   "nav": {
+    "switch": "Switch the site to French",
     "home": "Back to home",
     "top": "Back to top"
   },
   "hero": {
+    "seal": "William Lin's seal",
     "role": "Full stack developer in Paris.",
     "lede": "I build web applications, front to back. React, Next.js, .NET and Python, day to day.",
     "links": {
+      "label": "Quick links",
       "projects": "Projects",
       "contact": "Contact",
       "cv": "Résumé (PDF)"
     }
   },
   "works": {
+    "keysHint": "or the ← → keys",
     "kicker": "ACT I · PROJECTS",
     "title": "The Handscroll",
     "subtitle": "Three recent projects.",
@@ -116,6 +124,7 @@
     }
   },
   "footer": {
+    "navLabel": "Links",
     "signature": "BUILT WITH NEXT.JS",
     "cv": "CV · PDF"
   },

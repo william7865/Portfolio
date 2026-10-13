@@ -1,23 +1,31 @@
 {
   "skipLink": "Passer au contenu",
+  "meta": {
+    "title": "William Lin, développeur full stack à Paris",
+    "description": "Portfolio de William Lin, développeur full stack à Paris : projets, compétences et parcours."
+  },
   "mute": {
     "on": "Activer le son",
     "off": "Couper le son"
   },
   "nav": {
+    "switch": "Passer le site en anglais",
     "home": "Retour à l'accueil",
     "top": "Remonter en haut de page"
   },
   "hero": {
+    "seal": "Sceau de William Lin",
     "role": "Développeur full stack à Paris.",
     "lede": "Je développe des applications web, du front au back. React, Next.js, .NET et Python au quotidien.",
     "links": {
+      "label": "Accès rapide",
       "projects": "Projets",
       "contact": "Contact",
       "cv": "CV (PDF)"
     }
   },
   "works": {
+    "keysHint": "ou les flèches ← →",
     "kicker": "ACTE I · PROJETS",
     "title": "Le rouleau",
     "subtitle": "Trois projets récents.",
@@ -116,6 +124,7 @@
     }
   },
   "footer": {
+    "navLabel": "Liens",
     "signature": "BUILT WITH NEXT.JS",
     "cv": "CV · PDF"
   },

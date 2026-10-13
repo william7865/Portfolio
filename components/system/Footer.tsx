@@ -18,11 +18,14 @@ export function Footer() {
             size={28}
             rotate={-5}
             onClick={sealClick}
-            ariaLabel="William Lin signature seal"
+            ariaLabel={t('hero.seal')}
           />
-          <div className="kicker-mono opacity-60">{t('footer.signature')}</div>
+          <div className="kicker-mono opacity-80">{t('footer.signature')}</div>
         </div>
-        <nav className="flex items-center gap-5 font-ui text-xs tracking-[0.2em] uppercase">
+        <nav
+          aria-label={t('footer.navLabel')}
+          className="flex items-center gap-5 font-ui text-xs tracking-[0.2em] uppercase"
+        >
           <a
             href="/CV.pdf"
             className="hover:text-[var(--color-gold-bright)] transition-colors"
@@ -46,7 +49,7 @@ export function Footer() {
             LinkedIn
           </a>
         </nav>
-        <div className="font-mono text-xs opacity-50">© {year} · William Lin</div>
+        <div className="font-mono text-xs">© {year} · William Lin</div>
       </div>
     </footer>
   );

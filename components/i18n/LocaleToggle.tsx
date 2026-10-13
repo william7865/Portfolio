@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export function LocaleToggle() {
+  const t = useTranslations('nav');
   const params = useParams();
   const pathname = usePathname();
   const current = (params?.lang as string) || 'fr';
@@ -24,7 +26,7 @@ export function LocaleToggle() {
   return (
     <Link
       href={target}
-      aria-label={`Switch language to ${next.toUpperCase()}`}
+      aria-label={`FR / EN, ${t('switch')}`}
       className="font-mono text-xs tracking-[0.24em] text-[var(--color-gold)] hover:text-[var(--color-gold-bright)] transition-colors px-2 py-1"
     >
       <span className={current === 'fr' ? 'text-[var(--color-gold-bright)]' : 'opacity-60'}>FR</span>

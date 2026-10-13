@@ -26,7 +26,7 @@
     "year": 2026,
     "role": "Full Stack",
     "tags": ["Next.js 15", "TypeScript", "Leaflet", "Supabase", "Overpass API"],
-    "repo": "https://github.com/william7865/forkmap",
+    "repo": "https://github.com/william7865/FinderMaps",
     "demo": "https://forkmap.vercel.app"
   },
   {

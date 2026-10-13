@@ -102,7 +102,7 @@ function ProjectPanel({
 
         <div
           className="font-mono text-xs tracking-[0.18em] uppercase mb-6"
-          style={{ color: 'rgba(74,10,14,0.6)' }}
+          style={{ color: 'rgba(74,10,14,0.72)' }}
         >
           {p.role}
         </div>
@@ -239,6 +239,19 @@ function WorksHandscroll({
       style={{ height: `${(projects.length + 2) * 100}vh` }}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Sits on the empty lacquer beside the rolled-up scroll. First in the
+            DOM so the section's h2 comes before the projects' h3. */}
+        <motion.div
+          style={{ opacity: headerOpacity }}
+          className="works-head absolute z-20 px-6 lg:px-10 pointer-events-none"
+        >
+          <div className="kicker mb-3">{t('kicker')}</div>
+          <h2 id="works-title" className="display text-4xl md:text-5xl text-[var(--color-ivory)]">
+            <em>{t('title')}</em>
+          </h2>
+          <p className="lede italic mt-2 max-w-md">{t('subtitle')}</p>
+        </motion.div>
+
         <div className="scene-fade-y absolute inset-0">
           <div className="scene-stage" style={{ '--pages': pages } as CSSProperties}>
             {/* scroll.jpg is the open sheet (reduced motion); the clip starts rolled up */}
@@ -262,22 +275,10 @@ function WorksHandscroll({
           </div>
         </div>
 
-        {/* Sits on the empty lacquer beside the rolled-up scroll */}
-        <motion.div
-          style={{ opacity: headerOpacity }}
-          className="works-head absolute z-20 px-6 lg:px-10 pointer-events-none"
-        >
-          <div className="kicker mb-3">{t('kicker')}</div>
-          <h2 id="works-title" className="display text-4xl md:text-5xl text-[var(--color-ivory)]">
-            <em>{t('title')}</em>
-          </h2>
-          <p className="lede italic opacity-70 mt-2 max-w-md">{t('subtitle')}</p>
-        </motion.div>
-
         {/* Upright screens: one line, left of the back-to-top button */}
-        <div className="absolute bottom-6 left-0 right-0 z-20 px-16 text-center portrait:pl-6 portrait:pr-20 portrait:text-left kicker-mono opacity-50 pointer-events-none">
-          ↓ {t('scrollHint')} →
-          <span className="ml-2 opacity-50 hidden md:inline">· ← → keys</span>
+        <div className="absolute bottom-6 left-0 right-0 z-20 px-16 text-center portrait:pl-6 portrait:pr-20 portrait:text-left kicker-mono opacity-80 pointer-events-none">
+          ↓ {t('scrollHint')} <span className="portrait:hidden">→</span>
+          <span className="ml-2 hidden md:inline">· {t('keysHint')}</span>
         </div>
       </div>
     </section>

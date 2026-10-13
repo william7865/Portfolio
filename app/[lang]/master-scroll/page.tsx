@@ -1,8 +1,11 @@
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { GoldRoller } from '@/components/motifs/GoldRoller';
 import { Seal } from '@/components/motifs/Seal';
 import { CalligraphyStroke } from '@/components/motifs/CalligraphyStroke';
+
+/** Hidden page: reachable by those who find it, kept out of search results. */
+export const metadata = { robots: { index: false } };
 
 export default async function MasterScrollPage({
   params
@@ -10,6 +13,7 @@ export default async function MasterScrollPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  setRequestLocale(lang);
   const t = await getTranslations('masterScroll');
 
   return (

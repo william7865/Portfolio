@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { preload } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import { SceneVideo } from '@/components/motifs/SceneVideo';
@@ -20,6 +21,8 @@ const EASE = [0.16, 1, 0.3, 1] as const;
  */
 export function Hero() {
   const t = useTranslations('hero');
+  // The clip's still is the largest thing on the first screen: fetch it first
+  preload('/scenes/hero.jpg', { as: 'image', fetchPriority: 'high' });
   const reduce = usePrefersReducedMotion();
   const { sealClick } = useEasterEgg();
   const [pulseKey, setPulseKey] = useState(0);
@@ -78,7 +81,7 @@ export function Hero() {
           </div>
 
           <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-            <nav aria-label="William Lin" className="flex flex-wrap gap-x-8 gap-y-3">
+            <nav aria-label={t('links.label')} className="flex flex-wrap gap-x-8 gap-y-3">
               <a className="hero-link" href="#projets">
                 {t('links.projects')}
               </a>
@@ -127,7 +130,7 @@ export function Hero() {
                   size={44}
                   rotate={-6}
                   onClick={handleSealClick}
-                  ariaLabel="William Lin signature seal"
+                  ariaLabel={t('seal')}
                 />
               </motion.div>
             </div>

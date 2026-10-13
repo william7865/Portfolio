@@ -262,12 +262,9 @@
 /* ============================================================
  * HERO — the desk, seen from above
  * ============================================================ */
-/* Pulls the photographed lacquer toward the site's vermillion, darkens the
- * strip under the header, and melts the bottom edge into the page. */
+/* Melts the bottom edge of the filmed desk into the page. */
 .hero-desk-tone {
-  background:
-    linear-gradient(180deg, rgba(44, 3, 6, 0.6) 0%, rgba(44, 3, 6, 0) 16%),
-    linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0.7) 22%, rgba(122, 24, 15, 0) 55%);
+  background: linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0.7) 22%, rgba(122, 24, 15, 0) 55%);
 }
 .hero-desk { container-type: size; }
 /* Holds the clip, so the clip can be turned without turning the name */
@@ -291,9 +288,7 @@
   }
   /* The tools reach the bottom of the frame: only melt its very edge */
   .hero-desk-tone {
-    background:
-      linear-gradient(180deg, rgba(44, 3, 6, 0.6) 0%, rgba(44, 3, 6, 0) 14%),
-      linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0) 9%);
+    background: linear-gradient(0deg, var(--color-lacquer) 0%, rgba(122, 24, 15, 0) 9%);
   }
 }
 @media (max-aspect-ratio: 1 / 1) {
@@ -532,6 +527,8 @@
   padding-top: 5rem;
   text-align: right;
 }
+/* Gold is too faint on the filmed lacquer, which is lighter than the page's */
+.works-head .kicker { color: var(--color-ivory); opacity: 0.85; }
 @media (min-width: 768px) {
   .sheet-panel { width: min(58vw, 42rem); padding-inline: 1rem; }
   .works-head { padding-top: 6rem; }
@@ -702,7 +699,7 @@
 .contact-paper textarea { resize: vertical; }
 .contact-paper input::placeholder,
 .contact-paper textarea::placeholder {
-  color: rgba(74, 10, 14, 0.5);
+  color: rgba(74, 10, 14, 0.66);
   font-style: italic;
 }
 .contact-paper input:focus-visible,
@@ -768,6 +765,18 @@
   z-index: 10000;
 }
 .skip-link:focus { left: 1rem; top: 1rem; }
+
+/* The fixed header's gold text passes over everything, the light paper of the
+ * scenes included: a dark band behind it keeps it readable anywhere. */
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6rem;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(44, 3, 6, 0.9) 0%, rgba(44, 3, 6, 0.82) 48%, rgba(44, 3, 6, 0) 100%);
+}
 
 /* ============================================================
  * DASHBOARD — chiseled cards, gold bars (Tang)
