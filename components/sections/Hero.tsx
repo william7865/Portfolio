@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { preload } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import { AnimatePresence, motion, useScroll } from 'framer-motion';
+import { ScenePlate } from '@/components/motifs/ScenePlate';
 import { SceneVideo } from '@/components/motifs/SceneVideo';
 import { Seal } from '@/components/motifs/Seal';
 import { useEasterEgg } from '@/components/providers/EasterEggProvider';
@@ -21,8 +21,6 @@ const EASE = [0.16, 1, 0.3, 1] as const;
  */
 export function Hero() {
   const t = useTranslations('hero');
-  // The clip's still is the largest thing on the first screen: fetch it first
-  preload('/scenes/hero.jpg', { as: 'image', fetchPriority: 'high' });
   const reduce = usePrefersReducedMotion();
   const { sealClick } = useEasterEgg();
   const [pulseKey, setPulseKey] = useState(0);
@@ -52,7 +50,11 @@ export function Hero() {
       >
         {/* Turned a quarter on tall screens, so the tools stay whole (see .hero-film) */}
         <div className="hero-film">
-          <SceneVideo scene="hero" priority />
+          {/* The still is the largest thing on the first screen. As a plain image it
+              paints straight from the HTML, before any script; the clip, which has
+              no poster of its own, takes over on top once it can play. */}
+          <ScenePlate scene="hero" priority sizes="(max-aspect-ratio: 1/1) 178vw, 100vw" />
+          {!reduce && <SceneVideo scene="hero" poster={false} />}
         </div>
         <div className="hero-desk-tone absolute inset-0" />
       </motion.div>

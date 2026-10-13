@@ -1,6 +1,7 @@
 import './globals.css';
 import { SITE_URL } from '@/lib/site';
-import { Cormorant_Garamond, Ma_Shan_Zheng, Noto_Serif_SC, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Cormorant_Garamond, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -10,17 +11,20 @@ const cormorant = Cormorant_Garamond({
   display: 'swap'
 });
 
-const maShan = Ma_Shan_Zheng({
-  subsets: ['latin'],
-  weight: ['400'],
+// The two Chinese faces are self-hosted subsets holding only the characters the
+// site uses (see scripts/subset-hanzi-fonts.mjs): 30 KB instead of the ~500 KB of
+// slices and ~60 KB of blocking CSS that next/font/google ships for a CJK family.
+const maShan = localFont({
+  src: './fonts/ma-shan-zheng.woff2',
+  weight: '400',
   variable: '--font-ma-shan',
   display: 'swap',
   preload: false
 });
 
-const notoSerifSc = Noto_Serif_SC({
-  subsets: ['latin'],
-  weight: ['700'],
+const notoSerifSc = localFont({
+  src: './fonts/noto-serif-sc-700.woff2',
+  weight: '700',
   variable: '--font-noto-serif-sc',
   display: 'swap',
   preload: false
@@ -30,7 +34,9 @@ const interTight = Inter_Tight({
   subsets: ['latin'],
   weight: ['300', '400', '500'],
   variable: '--font-inter-tight',
-  display: 'swap'
+  display: 'swap',
+  // Only used for small labels below the first screen
+  preload: false
 });
 
 const jetbrains = JetBrains_Mono({

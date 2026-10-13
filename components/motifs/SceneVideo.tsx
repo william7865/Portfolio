@@ -16,11 +16,12 @@ type Props = {
    */
   progress?: MotionValue<number>;
   /**
-   * Still shown while the clip loads. Defaults to `<scene>.jpg`, which is also
+   * Still shown while the clip loads. Defaults to `<scene>.webp`, which is also
    * the reduced-motion image; pass another name when that one is not the
-   * clip's first frame.
+   * clip's first frame, or `false` when the caller already paints a still
+   * underneath.
    */
-  poster?: string;
+  poster?: string | false;
   priority?: boolean;
   className?: string;
 };
@@ -48,8 +49,10 @@ export function SceneVideo({
 }: Props) {
   const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLVideoElement | null>(null);
-  // A scrubbed clip is megabytes and sits screens below the fold: it is only
-  // fetched once the visitor gets close, after the page itself has loaded.
+  // Clips are megabytes. A scrubbed one sits screens below the fold and is only
+  // fetched once the visitor gets close; a looping one (the hero) waits for the
+  // page itself to finish loading, so it does not take bandwidth from the first
+  // paint. Either way `near` turns true only after the load event.
   const near = useNearViewport(ref);
   // Set when a scrubbed clip turns out not to be drivable in this browser.
   const [still, setStill] = useState(false);
@@ -139,7 +142,7 @@ export function SceneVideo({
       ref={ref}
       aria-hidden="true"
       tabIndex={-1}
-      poster={!progress || near ? `/scenes/${poster}.jpg` : undefined}
+      poster={poster && (!progress || near) ? `/scenes/${poster}.webp` : undefined}
       muted
       playsInline
       disablePictureInPicture
@@ -148,8 +151,9 @@ export function SceneVideo({
       preload="auto"
       className={`absolute inset-0 h-full w-full object-cover select-none pointer-events-none ${className}`}
     >
-      {/* Scrubbed clips get their source from the effect above */}
-      {!progress && (
+      {/* Scrubbed clips get their source from the effect above. Adding the
+          sources later starts the load by itself; autoplay then takes over. */}
+      {!progress && near && (
         <>
           <source media={PHONE} src={`/scenes/${scene}-sm.mp4`} type="video/mp4" />
           <source src={`/scenes/${scene}.mp4`} type="video/mp4" />

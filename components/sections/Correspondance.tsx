@@ -95,7 +95,7 @@ export function Correspondance() {
               ref={videoRef}
               aria-hidden="true"
               tabIndex={-1}
-              poster={near ? '/scenes/stamp.jpg' : undefined}
+              poster={near ? '/scenes/stamp.webp' : undefined}
               muted
               playsInline
               disablePictureInPicture
